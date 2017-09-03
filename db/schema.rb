@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903104034) do
+ActiveRecord::Schema.define(version: 20170903113645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,22 @@ ActiveRecord::Schema.define(version: 20170903104034) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "type_new"
+  end
+
+  create_table "daily_cashflows", force: :cascade do |t|
+    t.integer "amount"
+    t.text "stories"
+    t.datetime "occur_at"
+    t.bigint "user_id"
+    t.bigint "friend_id"
+    t.bigint "purpose_id"
+    t.bigint "cashflow_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cashflow_type_id"], name: "index_daily_cashflows_on_cashflow_type_id"
+    t.index ["friend_id"], name: "index_daily_cashflows_on_friend_id"
+    t.index ["purpose_id"], name: "index_daily_cashflows_on_purpose_id"
+    t.index ["user_id"], name: "index_daily_cashflows_on_user_id"
   end
 
   create_table "friends", force: :cascade do |t|
@@ -48,4 +64,8 @@ ActiveRecord::Schema.define(version: 20170903104034) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "daily_cashflows", "cashflow_types"
+  add_foreign_key "daily_cashflows", "friends"
+  add_foreign_key "daily_cashflows", "purposes"
+  add_foreign_key "daily_cashflows", "users"
 end

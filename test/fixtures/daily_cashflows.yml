@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  amount: 1
+  stories: MyText
+  occur_at: 2017-09-03 18:36:45
+  user: one
+  friend: one
+  purpose: one
+  cashflow_type: one
+
+two:
+  amount: 1
+  stories: MyText
+  occur_at: 2017-09-03 18:36:45
+  user: two
+  friend: two
+  purpose: two
+  cashflow_type: two
