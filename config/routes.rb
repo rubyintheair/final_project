@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
-
   
-  
-  
-
-
   get "login" => "sessions#new"
   post "login" => "sessions#create"
   get "logout" => "sessions#destroy"
@@ -13,5 +8,6 @@ Rails.application.routes.draw do
   resources :users
   resources :purposes
   resources :cashflow_types
+  resources :friends
   root "homes#index"
 end
