@@ -1,0 +1,2 @@
+module CashflowTypesHelper
+end
