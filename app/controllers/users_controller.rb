@@ -9,11 +9,12 @@ class UsersController < ApplicationController
   def create 
     @user = User.new(users_params) 
     if @user.save 
+      login(@user)
       flash[:success] = "User created"
       render "index"
     else 
       flash[:error] = "Can not create user"
-      redirect_back
+      render "new"
     end 
   end 
 
