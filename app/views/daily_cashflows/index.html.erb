@@ -1,2 +1,9 @@
 <h1>DailyCashflows#index</h1>
 <p>Find me in app/views/daily_cashflows/index.html.erb</p>
+<h1>So luong Cashflow_types</h1> 
+<%= @cashflow_types.count %>
+<%= form_for current_user.daily_cashflows.new do |f| %>
+  <%= f.number_field :amount %>
+  <%= f.datetime_field :occur_at %>
+  <%= f.text_field :content %>
+<% end %>
