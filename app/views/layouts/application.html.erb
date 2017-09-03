@@ -19,10 +19,13 @@
         </div>
       <% else %>
         <div class="navbar-item">
+          <%= link_to "Homepage",root_path %>
+        </div>
+        <div class="navbar-item">
           <%= link_to "Logout",logout_path %>
         </div>
         <div class="navbar-item">
-          <%= link_to "Create Category", new_purpose_path %>
+          <%= link_to "Create Spending Purpose", new_purpose_path %>
         </div>
       <% end %>
     </div>
