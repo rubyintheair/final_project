@@ -1,3 +1,16 @@
+GIT
+  remote: https://github.com/codahale/bcrypt-ruby.git
+  revision: 23b0517e20e7ddf2e733c1bcdb22b0b12166f042
+  specs:
+    bcrypt (3.1.11)
+
+GIT
+  remote: https://github.com/harley/bulma-rails.git
+  revision: 89ac2dd7dea247efde926b29ee7fe65fa58b627f
+  specs:
+    bulma-rails (0.4.3)
+      sass (~> 3.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -51,6 +64,10 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    carrierwave (1.1.0)
+      activemodel (>= 4.0.0)
+      activesupport (>= 4.0.0)
+      mime-types (>= 1.16)
     childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
     concurrent-ruby (1.0.5)
@@ -160,8 +177,11 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  bcrypt!
+  bulma-rails!
   byebug
   capybara (~> 2.13)
+  carrierwave (~> 1.0)
   jbuilder (~> 2.5)
   pg (~> 0.18)
   puma (~> 3.7)
