@@ -1,2 +1,6 @@
 <h1>CashflowTypes#new</h1>
 <p>Find me in app/views/cashflow_types/new.html.erb</p>
+<%= form_for CashflowType.new do |f| %>
+  <%= f.text_field :trend %>
+  <%= f.submit "Create new Cashflow_type"%>
+<% end %>
