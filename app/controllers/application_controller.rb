@@ -2,6 +2,14 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
 
+  private
+
+  def require_login
+    unless current_user
+      redirect_to root_path, flash: {error: "Access denied"}
+    end 
+  end 
+
   def login(user)
     session[:user_id] = user.id
   end 
@@ -10,11 +18,16 @@ class ApplicationController < ActionController::Base
     session[:user_id] = nil
   end 
 
-  private
   def current_user
     # return @current_user if @current_user
     # @current_user = User.find_by(id: session[:user_id])
     @current_user ||= User.find_by(id: session[:user_id])
+  end 
+
+  def authenticate_user!
+    unless current_user
+      redirect_to login_path
+    end 
   end 
 
 end
