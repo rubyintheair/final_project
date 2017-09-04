@@ -1,9 +1,9 @@
 <h1>Friends#Index</h1>
 <p>Find me in app/views/friends/index.html.erb</p>
 <h1>Total friends</h1>
-<%= @friends.count %>
+<%= Friend.all.count %>
 <h1>Friends name cac loai</h1>
-<% @friends.each do |f| %>
+<% Friend.all.each do |f| %>
   friend_name: <%= f.name %> <br>
   friend_years: <%= f.friend_years%> <br>
 <% end %>

@@ -6,22 +6,8 @@
   <%= f.number_field :amount, placeholder: "Amount" %>
   <%= f.datetime_field :occur_at %>
   <%= f.text_area :content, placeholder: "Content" %>
-  <div class="select">
-    <select>
-      <% @friends.each do |friend|%>
-        <option><%= friend.name %></option>
-      <% end %>
-    </select>
-    <select>
-      <% @cashflow_types.each do |type|%>
-        <option><%= type.trend %></option>
-      <% end %>
-    </select>
-    <select>
-      <% @purposes.each do |purpose|%>
-        <option><%= purpose.purpose_name %></option>
-      <% end %>
-    </select>
-  </div>
+  <%= select_tag "friends", options_from_collection_for_select(@friends, "id", "name") %>
+  <%= select_tag "cashflow_types", options_from_collection_for_select(@cashflow_types, "id", "trend") %>
+  <%= select_tag "purposes", options_from_collection_for_select(@purposes, "id", "purpose_name") %>
   <%= f.submit "Create new cashflow nhaz" %>
 <% end %>
