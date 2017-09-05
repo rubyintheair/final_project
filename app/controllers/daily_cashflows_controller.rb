@@ -9,9 +9,11 @@ class DailyCashflowsController < ApplicationController
     @daily_cash_flow.purpose = Purpose.find(params[:purposes_id].to_i)
     if @daily_cash_flow.save 
       if Friend.find(params[:friends_id].to_i)
+        flash[:success] = "Create Daily Cashflow with friend successfully"
         @daily_cash_flow.friend = Friend.find(params[:friends_id].to_i)
+      else 
+        flash[:success] = "Create Daily Cashflow without friend successfully"
       end 
-      flash[:success] = "Create Daily Cashflow successfully"
       render "index"
     else 
       flash[:error] = "Fail to create a daily Cashflow #{@daily_cash_flow.errors.full_messages.to_sentence}"
@@ -25,5 +27,7 @@ class DailyCashflowsController < ApplicationController
 
   def index
     @daily_cash_flows = DailyCashflow.all
+    @total = 0
+    # DailyCashflow.all.inject(0) { |total, transaction| total + transaction} 
   end
 end
