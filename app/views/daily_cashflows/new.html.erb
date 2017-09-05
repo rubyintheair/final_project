@@ -1,6 +1,6 @@
 <h1>DailyCashflows#new</h1>
 <p>Find me in app/views/daily_cashflows/new.html.erb</p>
-<p>So luong Cashflow_types <%= @cashflow_types.count %></p>
+<p>So luong Cashflow_types <%= CashflowType.all.count  %></p>
 
 <%= form_for @daily_cash_flow do |f| %>
   <div>
@@ -14,15 +14,15 @@
   </div>
   <div>
     <label class="label">Friend name: </label>
-    <%= select_tag "friends", options_from_collection_for_select(@friends, "id", "name") %>
+    <%= select_tag "friends_id", options_from_collection_for_select(Friend.all, "id", "name") %>
   </div>
   <div>
     <label class="label">Cashflow type: </label>
-    <%= select_tag "cashflow_types", options_from_collection_for_select(@cashflow_types, "id", "trend") %>
+    <%= select_tag "cashflow_types_id", options_from_collection_for_select(CashflowType.all, "id", "trend") %>
   </div>
   <div>
     <label class="label">Spending purpose: </label>
-    <%= select_tag "purposes", options_from_collection_for_select(@purposes, "id", "purpose_name") %>
+    <%= select_tag "purposes_id", options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
   </div>
   <%= f.submit "Create new cashflow nhaz" %>
 <% end %>
