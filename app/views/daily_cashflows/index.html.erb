@@ -4,11 +4,26 @@
 
 <h1>So luong Daily_cashflows: <%= DailyCashflow.all.count %></h1>
 
-<% DailyCashflow.all.each do |transaction| %>
-  <%= transaction.amount %>
-  <%= transaction.content %>
-  <%= transaction.occur_at %>
-<% end %>
+<table class="table is-bordered is-striped">
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>Amount</th>
+      <th>Content</th>
+      <th>Occur at</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% DailyCashflow.all.each do |transaction, index| %>
+      <tr>
+        <th><%= index %></th>
+        <td><%= transaction.amount %></td>
+        <td><%= transaction.content %></td>
+        <td><%= transaction.occur_at %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 
 
