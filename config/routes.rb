@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'currencies/new'
+
+  get 'currencies/index'
+
   get 'banks/display'
 
   get 'terms/new'
@@ -11,6 +15,7 @@ Rails.application.routes.draw do
   get "logout" => "sessions#destroy"
   get "bank" => "banks#display"
 
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :users
   resources :purposes
@@ -18,5 +23,6 @@ Rails.application.routes.draw do
   resources :friends
   resources :daily_cashflows
   resources :terms
+  resources :currencies 
   root "homes#index"
 end
