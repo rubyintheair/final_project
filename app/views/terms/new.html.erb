@@ -1,2 +1,6 @@
 <h1>Terms#new</h1>
 <p>Find me in app/views/terms/new.html.erb</p>
+<%= form_for Term.new do |f| %>
+  <%= f.number_field :month, placeholder: "Month" %>
+  <%= f.submit %>
+<% end %>
