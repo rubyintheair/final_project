@@ -11,7 +11,7 @@
       <th>Amount</th>
       <th>Content</th>
       <th>Occur at</th>
-      <th>Cashflow_types</th>
+      <th>Cashflow_type</th>
       <th>Purpose</th>
       <th>Friend</th>
       <th>Stories</th>
@@ -26,6 +26,8 @@
         <td><%= transaction.occur_at %></td>
         <td><%= transaction.cashflow_type.trend %></td>
         <td><%= transaction.purpose.purpose_name %></td>
+        <td><%= transaction.friend.present? ? transaction.friend.name : 'No friend' %></td>
+        <td>No story</td>
       </tr>
     <% end %>
   </tbody>
@@ -35,6 +37,10 @@
       <th>
         <%= @total %>
       </th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
       <th></th>
       <th></th>
     </tr>

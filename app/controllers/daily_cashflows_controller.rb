@@ -7,10 +7,12 @@ class DailyCashflowsController < ApplicationController
     @daily_cash_flow = current_user.daily_cashflows.build(daily_cashflow_params)
     @daily_cash_flow.cashflow_type = CashflowType.find(params[:cashflow_types_id].to_i)
     @daily_cash_flow.purpose = Purpose.find(params[:purposes_id].to_i)
+    @daily_cash_flow.friend = Friend.find(params[:friends_id].to_i)
     if @daily_cash_flow.save 
       if Friend.find(params[:friends_id].to_i)
         flash[:success] = "Create Daily Cashflow with friend successfully"
         @daily_cash_flow.friend = Friend.find(params[:friends_id].to_i)
+        @daily_cash_flow.save 
       else 
         flash[:success] = "Create Daily Cashflow without friend successfully"
       end 
