@@ -22,7 +22,7 @@ end
 if Purpose.count == 0 
   ["Housing", "Utilities", "Food", "Clothing", "Medical/Healthcare", "Donations/Gifts", 
   "Savings and Insurance", "Entertainment and Recreation", 
-  "Transportation", "Personal/Debt Payments/Misc", "Earned Income", "Portfolio Income", ""].each do |purpose|
+  "Transportation", "Personal/Debt Payments/Misc", "Earned Income", "Portfolio Income", "Passive Income"].each do |purpose|
     purpose = Purpose.create(purpose_name: purpose)
     if purpose.persisted?
       puts "Saved purpose with name = #{purpose}" 

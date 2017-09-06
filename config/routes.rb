@@ -21,7 +21,12 @@ Rails.application.routes.draw do
   resources :purposes
   resources :cashflow_types
   resources :friends
-  resources :daily_cashflows
+  resources :daily_cashflows do 
+    collection do 
+      post :search
+      get :search
+    end 
+  end 
   resources :terms
   resources :currencies 
   root "homes#index"

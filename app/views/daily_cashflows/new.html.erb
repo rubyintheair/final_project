@@ -17,8 +17,10 @@
     <%= select_tag "cashflow_types_id", options_from_collection_for_select(CashflowType.all, "id", "trend") %>
   </div>
   <div>
-    <label class="label">Spending purpose: </label>
-    <%= select_tag "purposes_id", options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
+    <% if CashflowType.find_by(id: 2) %>
+      <label class="label">Spending purpose: </label>
+      <%= select_tag "purposes_id", options_from_collection_for_select(Purpose.all[1..10], "id", "purpose_name") %>
+    <% end %>
   </div>
   <%= f.submit "Create new cashflow nhaz" %>
 <% end %>

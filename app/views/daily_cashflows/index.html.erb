@@ -56,6 +56,14 @@
                                           purpose_7: @purpose_7, purpose_8: @purpose_8, purpose_9: @purpose_9,
                                           purpose_10: @purpose_10} %>
 
-<%= form_tag %>
+<%= form_tag search_daily_cashflows_path do %>
+  <%= date_field_tag(:start_date, nil, placeholder: "Start date") %>
+  <%= date_field_tag(:end_date, nil, placeholder: "End date") %>
+  <%= submit_tag "Submit finding period" %>
+<% end %>
+
+<% if @count %>
+  <h1>Run this world</h1>
+<% end %>
 
  

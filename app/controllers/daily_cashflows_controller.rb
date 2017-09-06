@@ -16,10 +16,6 @@ class DailyCashflowsController < ApplicationController
     end 
   end 
 
-  def daily_cashflow_params
-    params.require(:daily_cashflow).permit(:amount, :occur_at, :content)
-  end 
-
   def index
     @daily_cash_flows = DailyCashflow.all
     @incomes = @daily_cash_flows.select {|e| e.cashflow_type_id == 1}.sum {|e| e.amount}
@@ -38,5 +34,19 @@ class DailyCashflowsController < ApplicationController
     @the_last_day = @daily_cash_flows.map {|e| e.occur_at }.max
     @the_last_day_cashflows = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }
     @the_last_day_cashflows_total = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.sum {|e| e.amount}
+    if params[:action] == "search"
+      @count = @period_cashflows.count
+    end 
+  end 
+
+  def daily_cashflow_params
+    params.require(:daily_cashflow).permit(:amount, :occur_at, :content)
+  end 
+
+  def search 
+    @start_date = params[:start_date]
+    end_date = params[:end_date]
+    @period_cashflows = DailyCashflow.where("occur_at": params[:start_date]).first
+    # @period_cashflows = DailyCashflow.where("occur_at > ? AND occur_at < ?", start_date, end_date)
   end 
 end
