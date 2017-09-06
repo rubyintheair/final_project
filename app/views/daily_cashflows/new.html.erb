@@ -13,10 +13,6 @@
     <%= f.text_area :content, placeholder: "Content" %>
   </div>
   <div>
-    <label class="label">Friend name: </label>
-    <%= select_tag "friends_id", options_from_collection_for_select(Friend.all, "id", "name") %>
-  </div>
-  <div>
     <label class="label">Cashflow type: </label>
     <%= select_tag "cashflow_types_id", options_from_collection_for_select(CashflowType.all, "id", "trend") %>
   </div>
