@@ -6,10 +6,10 @@ class CashflowTypesController < ApplicationController
     @cashflowtype = CashflowType.new(cashflowtype_params)
     if @cashflowtype.save 
       flash[:success] = "Quy created a cashflowtype successfully"
-      render "index"
+      redirect_to cashflow_types_path
     else 
       flash[:error] = "It's failed to create a cashflowtype"
-      render "new"
+      redirect_to new_cashflow_type_path
     end 
   end 
 

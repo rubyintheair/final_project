@@ -6,10 +6,10 @@ class TermsController < ApplicationController
     @term = Term.new(term_params)
     if @term.save
       flash[:success] = "Create a term successfully"
-      render "index"
+      redirect_to terms_path
     else 
       flash[:error] = "Khong tao duoc Term #{@term.errors.full_messages.to_sentence}"
-      render "new"
+      redirect_to new_term_path
     end 
   end 
 

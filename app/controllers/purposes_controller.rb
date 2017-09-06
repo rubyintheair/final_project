@@ -6,10 +6,10 @@ class PurposesController < ApplicationController
     @purpose = Purpose.new(purpose_params)
     if @purpose.save 
       flash[:success] = "Created new purpose successfully."
-      render "index"
+      redirect_to purposes_path
     else 
       flash[:error] = "Fail in create new purpose."
-      render "new"
+      redirect_to new_purpose_path
     end 
   end
 

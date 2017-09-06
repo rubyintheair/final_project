@@ -6,10 +6,10 @@ class CurrenciesController < ApplicationController
     @currency = Currency.new(currency_params)
     if @currency.save 
       flash[:success] = "Quy da tao Currency thanh cong"
-      render "index"
+      redirect_to currencies_path
     else 
       flash[:error] = "Quy khong the tao Currency roi #{@currency.errors.full_messages.to_sentence}"
-      render "new"
+      redirect_to new_currency_path
     end 
   end 
 
