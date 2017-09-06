@@ -14,6 +14,7 @@ class CurrenciesController < ApplicationController
   end 
 
   def index
+    @currencies = Currency.all
   end
 
   def currency_params

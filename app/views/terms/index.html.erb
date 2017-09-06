@@ -1,6 +1,6 @@
 <h1>Terms#index</h1>
 <p>Find me in app/views/terms/index.html.erb</p>
 <h1>So luong term da tao: <%= Term.all.count %></h1>
-<% Term.all.each do |e| %>
+<% @terms.each do |e| %>
   <%= e.month %>
 <% end %>

@@ -14,6 +14,7 @@ class TermsController < ApplicationController
   end 
 
   def index
+    @terms = Term.all
   end
 
   def term_params
