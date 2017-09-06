@@ -13,10 +13,10 @@ class UsersController < ApplicationController
     if @user.save 
       login(@user)
       flash[:success] = "User created"
-      render "index"
+      redirect_to users_path
     else 
       flash[:error] = "Can not create user"
-      render "new"
+      redirect_to new_user_path
     end 
   end 
 

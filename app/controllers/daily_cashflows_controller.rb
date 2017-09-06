@@ -16,10 +16,10 @@ class DailyCashflowsController < ApplicationController
       else 
         flash[:success] = "Create Daily Cashflow without friend successfully"
       end 
-      render "index"
+      redirect_to daily_cashflows_path
     else 
       flash[:error] = "Fail to create a daily Cashflow #{@daily_cash_flow.errors.full_messages.to_sentence}"
-      render "new"
+      redirect_to new_daily_cashflow_path
     end 
   end 
 
@@ -28,12 +28,14 @@ class DailyCashflowsController < ApplicationController
   end 
 
   def index
-
     @daily_cash_flows = DailyCashflow.all
-    @incomes = DailyCashflow.all.select {|e| e.cashflow_type_id == 2}.sum {|e| e.amount}
-    @outcomes = DailyCashflow.all.select {|e| e.cashflow_type_id == 3}.sum {|e| e.amount}
+    @incomes = @daily_cash_flows.select {|e| e.cashflow_type_id == 2}.sum {|e| e.amount}
+    @outcomes = @daily_cash_flows.select {|e| e.cashflow_type_id == 3}.sum {|e| e.amount}
     @total = @incomes - @outcomes
-    @purpose_3 = DailyCashflow.all.select {|e| e.purpose_id == 3}.sum {|e| e.amount}
-    @purpose_4 = DailyCashflow.all.select {|e| e.purpose_id == 4}.sum {|e| e.amount}
+    @purpose_3 = @daily_cash_flows.select {|e| e.purpose_id == 3}.sum {|e| e.amount}
+    @purpose_4 = @daily_cash_flows.select {|e| e.purpose_id == 4}.sum {|e| e.amount}
+    @the_last_day = @daily_cash_flows.map {|e| e.occur_at }.max
+    @the_last_day_cashflows = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }
+    @the_last_day_cashflows_total = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.sum {|e| e.amount}
   end 
 end

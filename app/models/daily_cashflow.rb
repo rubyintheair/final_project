@@ -5,10 +5,14 @@ class DailyCashflow < ApplicationRecord
   belongs_to :cashflow_type
   validates :amount, :occur_at, :content, presence: true
   validate :not_longer_than_year_ago?
+  
 
   def not_longer_than_year_ago?
-    if occur_at < 1.year.ago 
-      errors.add(:base, "Must be less than 1 year")
+    if occur_at < 50.years.ago 
+      errors.add(:base, "Must be less than 50 years")
+    elsif occur_at > Time.now
+      errors.add(:base, "Must not greater than present")
     end 
   end
+
 end
