@@ -28,8 +28,12 @@ class DailyCashflowsController < ApplicationController
   end 
 
   def index
+
     @daily_cash_flows = DailyCashflow.all
-    @total = 0
-    # DailyCashflow.all.inject(0) { |total, transaction| total + transaction} 
-  end
+    @incomes = DailyCashflow.all.select {|e| e.cashflow_type_id == 2}.sum {|e| e.amount}
+    @outcomes = DailyCashflow.all.select {|e| e.cashflow_type_id == 3}.sum {|e| e.amount}
+    @total = @incomes - @outcomes
+    @purpose_3 = DailyCashflow.all.select {|e| e.purpose_id == 3}.sum {|e| e.amount}
+    @purpose_4 = DailyCashflow.all.select {|e| e.purpose_id == 4}.sum {|e| e.amount}
+  end 
 end

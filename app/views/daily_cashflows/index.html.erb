@@ -1,5 +1,4 @@
-<h1>DailyCashflows#index</h1>
-<p>Find me in app/views/daily_cashflows/index.html.erb</p>
+
 <h1>So luong Cashflow_types: <%= CashflowType.all.count %></h1> 
 
 <h1>So luong Daily_cashflows: <%= DailyCashflow.all.count %></h1>
@@ -37,15 +36,24 @@
       <th>
         <%= @total %>
       </th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>
+        Incomes: <%= @incomes %>
+      </th>
+      <th>
+        Outcomes: <%= @outcomes %>
+      </th>
+      <th>
+        <%= Purpose.all.third.purpose_name %>: <%= @purpose_3%>
+      </th>
+      <th>
+        <%= Purpose.all.fourth.purpose_name %>: <%= @purpose_4%>
+      </th>
       <th></th>
       <th></th>
     </tr>
   </tfoot>
 </table>
+
 
 
 
