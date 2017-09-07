@@ -1,5 +1,6 @@
 <h1>Welcome to search page</h1>
 <h1>Liet ke danh sach cac transaction co trong period</h1>
+<h1>So luong transaction: <%= @period_cashflows.count %></h1>
 <%= render "table_purpose", locals: {searched_cashflows: @period_cashflows, outcomes: @outcomes,
                                       incomes: @incomes,  total: @total}%>
   

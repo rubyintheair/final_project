@@ -20,7 +20,7 @@ else
 end 
 
 if Purpose.count == 0 
-  @all_purposes = ["Housing", "Utilities", "Food", "Clothing", "Medical/Healthcare", "Donations/Gifts", 
+  @all_purposes = ["None", "Housing", "Utilities", "Food", "Clothing", "Medical/Healthcare", "Donations/Gifts", 
   "Savings and Insurance", "Entertainment and Recreation", 
   "Transportation", "Personal/Debt Payments/Misc", "Earned Income", "Portfolio Income", "Passive Income"]
   @all_purposes.each do |purpose|
