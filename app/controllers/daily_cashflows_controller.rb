@@ -17,20 +17,24 @@ class DailyCashflowsController < ApplicationController
   end 
 
   def index
-    @daily_cash_flows = DailyCashflow.all
-    @incomes = @daily_cash_flows.select {|e| e.cashflow_type_id == 1}.sum {|e| e.amount}
-    @outcomes = @daily_cash_flows.select {|e| e.cashflow_type_id == 2}.sum {|e| e.amount}
+    @daily_cash_flows = current_user.daily_cashflows.all
+    @incomes = current_user.type_cashflow(@daily_cash_flows, 2).sum {|e| e.amount}
+    @outcomes = current_user.type_cashflow(@daily_cash_flows, 3).sum {|e| e.amount}
     @total = @incomes - @outcomes
-    @purpose_1 = @daily_cash_flows.select {|e| e.purpose_id == 1}.sum {|e| e.amount}
-    @purpose_2 = @daily_cash_flows.select {|e| e.purpose_id == 2}.sum {|e| e.amount}
-    @purpose_3 = @daily_cash_flows.select {|e| e.purpose_id == 3}.sum {|e| e.amount}
-    @purpose_4 = @daily_cash_flows.select {|e| e.purpose_id == 4}.sum {|e| e.amount}
-    @purpose_5 = @daily_cash_flows.select {|e| e.purpose_id == 5}.sum {|e| e.amount}
-    @purpose_6 = @daily_cash_flows.select {|e| e.purpose_id == 6}.sum {|e| e.amount}
-    @purpose_7 = @daily_cash_flows.select {|e| e.purpose_id == 7}.sum {|e| e.amount}
-    @purpose_8 = @daily_cash_flows.select {|e| e.purpose_id == 8}.sum {|e| e.amount}
-    @purpose_9 = @daily_cash_flows.select {|e| e.purpose_id == 9}.sum {|e| e.amount}
-    @purpose_10 = @daily_cash_flows.select {|e| e.purpose_id == 10}.sum {|e| e.amount}
+    
+    @purpose_1 = current_user.purpose_cashflow( @daily_cash_flows, 1).sum {|e| e.amount}
+    @purpose_2 = current_user.purpose_cashflow( @daily_cash_flows, 2).sum {|e| e.amount}
+    @purpose_3 = current_user.purpose_cashflow( @daily_cash_flows, 3).sum {|e| e.amount}
+    @purpose_4 = current_user.purpose_cashflow( @daily_cash_flows, 4).sum {|e| e.amount}
+    @purpose_5 = current_user.purpose_cashflow( @daily_cash_flows, 5).sum {|e| e.amount}
+    @purpose_6 = current_user.purpose_cashflow( @daily_cash_flows, 6).sum {|e| e.amount}
+    @purpose_7 = current_user.purpose_cashflow( @daily_cash_flows, 7).sum {|e| e.amount}
+    @purpose_8 = current_user.purpose_cashflow( @daily_cash_flows, 8).sum {|e| e.amount}
+    @purpose_9 = current_user.purpose_cashflow( @daily_cash_flows, 9).sum {|e| e.amount}
+    @purpose_10 = current_user.purpose_cashflow( @daily_cash_flows, 10).sum {|e| e.amount}
+
+    @all_purposes = [@purpose_1, @purpose_2, @purpose_3, @purpose_4, @purpose_5, @purpose_6, @purpose_7, @purpose_8, @purpose_9, @purpose_10 ]
+    
     @the_last_day = @daily_cash_flows.map {|e| e.occur_at }.max
     @the_last_day_cashflows = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }
     @the_last_day_cashflows_total = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.sum {|e| e.amount}
@@ -44,12 +48,19 @@ class DailyCashflowsController < ApplicationController
   end 
 
   def search
-    if params[:start_date]
-      @start_date = params[:start_date]
-      @end_date = params[:end_date]
+    @start_date = params[:start_date]
+    @end_date = params[:end_date]
+    @purpose = Purpose.find(params[:purposes_id].to_i).purpose_name
+    if (@start_date && @end_date && @purpose)
       @period_cashflows = DailyCashflow.where("date(occur_at) in (?)", params[:start_date]).first.amount
+      flash[:success] = "We have searched based on START_DATE, END_DATE and PURPOSE"
+    elsif (@start_date && @end_date)
+      @period_cashflows = DailyCashflow.where("date(occur_at) in (?)", params[:start_date]).first.amount
+      flash[:success] = "We have searched based on START_DATE and END_DATE"
+    elsif (@purpose)
+      flash[:success] = "We have searched based on PURPOSE"
     else 
-      @purpose = Purpose.find(params[:purposes_id].to_i).purpose_name
+      flash[:error] = "Nothing in the params"
     end 
   end 
 end

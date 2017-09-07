@@ -2,6 +2,7 @@
 <h1>So luong Cashflow_types: <%= CashflowType.all.count %></h1> 
 <h1>So luong Daily_cashflows: <%= DailyCashflow.all.count %></h1>
 <h1>The last day: <%= @the_last_day%></h1>
+<h1>Income new: <%= @incomes_new %></h1>
 
 <table class="table is-bordered is-striped">
   <thead>
@@ -16,7 +17,7 @@
     </tr>
   </thead>
   <tbody>
-    <% DailyCashflow.all.each do |transaction, index| %>
+    <% @daily_cash_flows.each do |transaction, index| %>
       <tr>
         <th><%= index %></th>
         <td><%= transaction.amount %></td>
@@ -55,6 +56,9 @@
                                           purpose_4: @purpose_4, purpose_5: @purpose_5, purpose_6: @purpose_6,
                                           purpose_7: @purpose_7, purpose_8: @purpose_8, purpose_9: @purpose_9,
                                           purpose_10: @purpose_10} %>
+
+<h1>This table print based on purpose _new _ use total_purposes </h1>
+<%= render "categories_table_new", all_purposes: @all_purposes %>                                          
 
 <%= form_tag search_daily_cashflows_path, :method => :get do %>
   <%= date_field_tag(:start_date, nil, placeholder: "Start date") %>

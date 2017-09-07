@@ -20,9 +20,10 @@ else
 end 
 
 if Purpose.count == 0 
-  ["Housing", "Utilities", "Food", "Clothing", "Medical/Healthcare", "Donations/Gifts", 
+  @all_purposes = ["Housing", "Utilities", "Food", "Clothing", "Medical/Healthcare", "Donations/Gifts", 
   "Savings and Insurance", "Entertainment and Recreation", 
-  "Transportation", "Personal/Debt Payments/Misc", "Earned Income", "Portfolio Income", "Passive Income"].each do |purpose|
+  "Transportation", "Personal/Debt Payments/Misc", "Earned Income", "Portfolio Income", "Passive Income"]
+  @all_purposes.each do |purpose|
     purpose = Purpose.create(purpose_name: purpose)
     if purpose.persisted?
       puts "Saved purpose with name = #{purpose}" 
@@ -34,13 +35,30 @@ else
   end
 end 
 
+
+
+user = User.find(1)
 20.times do 
-  DailyCashflow.create(
+  user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
-    occur_at: Faker::Date.between(50.years.ago, Date.today),
-    content: Faker::Simpsons.quote 
+    occur_at: Faker::Date.between(2.months.ago, Date.today),
+    content: Faker::Simpsons.quote,
+    purpose_id: rand(1..10),
+    cashflow_type_id: 3
   )
 end 
+
+20.times do 
+  user.daily_cashflows.create(
+    amount: rand(1..500) * 1000,
+    occur_at: Faker::Date.between(2.months.ago, Date.today),
+    content: Faker::Simpsons.quote,
+    purpose_id: rand(11..13),
+    cashflow_type_id: 2
+  )
+end 
+
+
 
 
 
