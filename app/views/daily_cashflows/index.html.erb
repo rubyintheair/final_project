@@ -56,14 +56,18 @@
                                           purpose_7: @purpose_7, purpose_8: @purpose_8, purpose_9: @purpose_9,
                                           purpose_10: @purpose_10} %>
 
-<%= form_tag search_daily_cashflows_path do %>
+<%= form_tag search_daily_cashflows_path, :method => :get do %>
   <%= date_field_tag(:start_date, nil, placeholder: "Start date") %>
   <%= date_field_tag(:end_date, nil, placeholder: "End date") %>
   <%= submit_tag "Submit finding period" %>
 <% end %>
 
-<% if @count %>
-  <h1>Run this world</h1>
+<%= form_tag search_daily_cashflows_path, :method => :get do %>
+  <%= select_tag "purposes_id", 
+      options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
+  <%= submit_tag "Submit finding purpose"%>
 <% end %>
+
+
 
  

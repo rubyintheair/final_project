@@ -43,10 +43,13 @@ class DailyCashflowsController < ApplicationController
     params.require(:daily_cashflow).permit(:amount, :occur_at, :content)
   end 
 
-  def search 
-    @start_date = params[:start_date]
-    end_date = params[:end_date]
-    @period_cashflows = DailyCashflow.where("occur_at": params[:start_date]).first
-    # @period_cashflows = DailyCashflow.where("occur_at > ? AND occur_at < ?", start_date, end_date)
+  def search
+    if params[:start_date]
+      @start_date = params[:start_date]
+      @end_date = params[:end_date]
+      @period_cashflows = DailyCashflow.where("date(occur_at) in (?)", params[:start_date]).first.amount
+    else 
+      @purpose = Purpose.find(params[:purposes_id].to_i).purpose_name
+    end 
   end 
 end

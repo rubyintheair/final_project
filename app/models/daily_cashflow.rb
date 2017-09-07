@@ -14,4 +14,12 @@ class DailyCashflow < ApplicationRecord
     end 
   end
 
+  def set_time_or_time_now 
+    if self.occur_at
+      self.occur_at
+    else 
+      Time.now
+    end 
+  end 
+
 end
