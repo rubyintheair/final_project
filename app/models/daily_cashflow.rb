@@ -42,4 +42,6 @@ class DailyCashflow < ApplicationRecord
     cashflows_array.select {|e| e.type_id == type_id}
   end 
 
+  
+
 end

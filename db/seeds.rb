@@ -38,20 +38,20 @@ end
 
 
 user = User.find(1)
-20.times do 
+5.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
-    occur_at: Faker::Date.between(2.months.ago, Date.today),
+    occur_at: Faker::Date.between(1.months.ago, Date.today),
     content: Faker::Simpsons.quote,
     purpose_id: rand(1..10),
     cashflow_type_id: 3
   )
 end 
 
-20.times do 
+5.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
-    occur_at: Faker::Date.between(2.months.ago, Date.today),
+    occur_at: Faker::Date.between(1.months.ago, Date.today),
     content: Faker::Simpsons.quote,
     purpose_id: rand(11..13),
     cashflow_type_id: 2

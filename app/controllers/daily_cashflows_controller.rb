@@ -32,15 +32,15 @@ class DailyCashflowsController < ApplicationController
     @purpose_8 = current_user.purpose_cashflow( @daily_cash_flows, 8).sum {|e| e.amount}
     @purpose_9 = current_user.purpose_cashflow( @daily_cash_flows, 9).sum {|e| e.amount}
     @purpose_10 = current_user.purpose_cashflow( @daily_cash_flows, 10).sum {|e| e.amount}
+    @purpose_11 = current_user.purpose_cashflow( @daily_cash_flows, 11).sum {|e| e.amount}
+    @purpose_12 = current_user.purpose_cashflow( @daily_cash_flows, 12).sum {|e| e.amount}
+    @purpose_13 = current_user.purpose_cashflow( @daily_cash_flows, 13).sum {|e| e.amount}
 
-    @all_purposes = [@purpose_1, @purpose_2, @purpose_3, @purpose_4, @purpose_5, @purpose_6, @purpose_7, @purpose_8, @purpose_9, @purpose_10 ]
+    @all_purposes = [@purpose_1, @purpose_2, @purpose_3, @purpose_4, @purpose_5, @purpose_6, @purpose_7, @purpose_8, @purpose_9, @purpose_10, @purpose_11, @purpose_12, @purpose_13 ]
     
     @the_last_day = @daily_cash_flows.map {|e| e.occur_at }.max
     @the_last_day_cashflows = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }
     @the_last_day_cashflows_total = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.sum {|e| e.amount}
-    if params[:action] == "search"
-      @count = @period_cashflows.count
-    end 
   end 
 
   def daily_cashflow_params
@@ -48,19 +48,23 @@ class DailyCashflowsController < ApplicationController
   end 
 
   def search
-    @start_date = params[:start_date]
-    @end_date = params[:end_date]
-    @purpose = Purpose.find(params[:purposes_id].to_i).purpose_name
-    if (@start_date && @end_date && @purpose)
-      @period_cashflows = DailyCashflow.where("date(occur_at) in (?)", params[:start_date]).first.amount
+    if (params[:start_date] && params[:end_date] && params[:purposes_id])
+      @period_cashflows = DailyCashflow.where("date(occur_at) in (?)", params[:start_date]).select {|e| e.purpose_id == params[:purposes_id].to_i}
       flash[:success] = "We have searched based on START_DATE, END_DATE and PURPOSE"
-    elsif (@start_date && @end_date)
-      @period_cashflows = DailyCashflow.where("date(occur_at) in (?)", params[:start_date]).first.amount
+    elsif (params[:start_date] && params[:end_date])
+      #still not find out the transactions fall from start_date to end_date
+      # @period_cashflows = DailyCashflow.where(("date(occur_at) > ? AND date(occur_at) < ?", @start_date, @end_date)
+      @period_cashflows = DailyCashflow.where("date(occur_at) in (?)", params[:start_date])
       flash[:success] = "We have searched based on START_DATE and END_DATE"
-    elsif (@purpose)
+    elsif (params[:purposes_id])
       flash[:success] = "We have searched based on PURPOSE"
+      @period_cashflows = DailyCashflow.where("purpose_id": params[:purposes_id].to_i)
     else 
       flash[:error] = "Nothing in the params"
     end 
+    @incomes = @period_cashflows.select { |e| e.cashflow_type_id == 2 }.sum {|e| e.amount }
+    @outcomes = @period_cashflows.select { |e| e.cashflow_type_id == 3}.sum {|e| e.amount}
+    @total = @incomes - @outcomes
+  
   end 
 end

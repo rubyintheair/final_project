@@ -1,0 +1,43 @@
+<table class="table is-bordered is-striped">
+  <thead>
+    <tr>
+      <th>Index</th>
+      <th>Amount</th>
+      <th>Content</th>
+      <th>Occur at</th>
+      <th>Cashflow_type</th>
+      <th>Purpose</th>
+      <th>Stories</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @period_cashflows.each do |transaction, index| %>
+      <tr>
+        <th><%= index %></th>
+        <td><%= transaction.amount %></td>
+        <td><%= transaction.content %></td>
+        <td><%= transaction.occur_at %></td>
+        <td><%= transaction.cashflow_type.trend %></td>
+        <td><%= transaction.purpose.purpose_name %></td>
+        <td>No story</td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Total</th>
+      <th>
+        <%= @total %>
+      </th>
+      <th>
+        Incomes: <%= @incomes %>
+      </th>
+      <th>
+        Outcomes: <%= @outcomes %>
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </tfoot>
+</table>
