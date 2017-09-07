@@ -23,7 +23,6 @@ Rails.application.routes.draw do
   resources :friends
   resources :daily_cashflows do 
     collection do 
-      post :search
       get :search
     end 
   end 
