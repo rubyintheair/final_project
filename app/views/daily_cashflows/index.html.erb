@@ -20,7 +20,7 @@
   <%= date_field_tag(:start_date, nil, placeholder: "Start date") %>
   <%= date_field_tag(:end_date, nil, placeholder: "End date") %>
   <%= select_tag "purposes_id", 
-      options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
+      options_from_collection_for_select(Purpose.all, "id", "purpose_name"), include_blank:"" %>
   <%= submit_tag "Submit for finding" %>
 <% end %>
 
