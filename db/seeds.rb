@@ -43,7 +43,7 @@ user = User.find(1)
     amount: rand(1..500) * 1000,
     occur_at: Faker::Date.between(1.months.ago, Date.today),
     content: Faker::Simpsons.quote,
-    purpose_id: rand(1..10),
+    purpose_id: rand(0..12),
     cashflow_type_id: 3
   )
 end 
@@ -53,7 +53,7 @@ end
     amount: rand(1..500) * 1000,
     occur_at: Faker::Date.between(1.months.ago, Date.today),
     content: Faker::Simpsons.quote,
-    purpose_id: rand(11..13),
+    purpose_id: rand(0..12),
     cashflow_type_id: 2
   )
 end 

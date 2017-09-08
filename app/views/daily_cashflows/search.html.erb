@@ -6,4 +6,7 @@
 <h1>Purpose: <%= @purpose %></h1>
 <%= render "table_purpose", locals: {searched_cashflows: @period_cashflows, outcomes: @outcomes,
                                       incomes: @incomes,  total: @total}%>
+
+<h1>All purposes: <%= @all_purposes.count %></h1>
+
   

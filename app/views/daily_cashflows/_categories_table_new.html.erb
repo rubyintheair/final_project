@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <th></th>
-      <% Purpose.all[0..9].each do |e| %>
+      <% Purpose.all.each do |e| %>
         <th><%= e.purpose_name %></th>
       <% end %>
     </tr>
@@ -22,7 +22,7 @@
   <thead>
     <tr>
       <th></th>
-      <% Purpose.all[10..12].each do |e| %>
+      <% Purpose.all.each do |e| %>
         <th><%= e.purpose_name %></th>
       <% end %>
     </tr>
@@ -30,7 +30,7 @@
   <tfoot>
     <tr>
       <th>Total</th>
-      <% all_purposes[10..12].each do |e| %>
+      <% all_purposes.each do |e| %>
         <th><%= e %></th>
       <% end %>
     </tr>

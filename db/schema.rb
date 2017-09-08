@@ -32,23 +32,14 @@ ActiveRecord::Schema.define(version: 20170906133802) do
     t.text "stories"
     t.datetime "occur_at"
     t.bigint "user_id"
-    t.bigint "friend_id"
     t.bigint "purpose_id"
     t.bigint "cashflow_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "content"
     t.index ["cashflow_type_id"], name: "index_daily_cashflows_on_cashflow_type_id"
-    t.index ["friend_id"], name: "index_daily_cashflows_on_friend_id"
     t.index ["purpose_id"], name: "index_daily_cashflows_on_purpose_id"
     t.index ["user_id"], name: "index_daily_cashflows_on_user_id"
-  end
-
-  create_table "friends", force: :cascade do |t|
-    t.string "name"
-    t.integer "friend_years"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "purposes", force: :cascade do |t|
@@ -73,7 +64,6 @@ ActiveRecord::Schema.define(version: 20170906133802) do
   end
 
   add_foreign_key "daily_cashflows", "cashflow_types"
-  add_foreign_key "daily_cashflows", "friends"
   add_foreign_key "daily_cashflows", "purposes"
   add_foreign_key "daily_cashflows", "users"
 end

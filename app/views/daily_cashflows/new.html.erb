@@ -1,24 +1,24 @@
-<h1>DailyCashflows#new</h1>
-<p>Find me in app/views/daily_cashflows/new.html.erb</p>
-<p>So luong Cashflow_types <%= CashflowType.all.count  %></p>
 
+<p>So luong Cashflow_types <%= CashflowType.all.count  %></p>
+<div style="width: 400px">
 <%= form_for @daily_cash_flow do |f| %>
-  <div>
-    <%= f.number_field :amount, placeholder: "Amount" %>
+  <div class="field">
+    <%= f.number_field :amount, placeholder: "Amount", class: "input" %>
   </div>
-  <div>
-    <%= f.datetime_field :occur_at  %>
+  <div class="field">
+    <%= f.datetime_field :occur_at, class: "input" %>
   </div>
-  <div>
-    <%= f.text_area :content, placeholder: "Content" %>
+  <div class="field">
+    <%= f.text_area :content, placeholder: "Content", class: "input" %>
   </div>
-  <div>
+  <div class="field">
     <label class="label">Cashflow type: </label>
-    <%= select_tag "cashflow_types_id", options_from_collection_for_select(CashflowType.all, "id", "trend") %>
+    <%= f.select :cashflow_type_id, options_from_collection_for_select(CashflowType.all, "id", "trend") %>
   </div>
-  <div>
+  <div class="field">
     <label class="label">Spending purpose: </label>
-    <%= select_tag "purposes_id", options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
+    <%= f.select :purpose_id, options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
   </div>
   <%= f.submit "Create new cashflow nhaz" %>
 <% end %>
+</div>
