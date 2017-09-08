@@ -24,6 +24,17 @@ class DailyCashflowsController < ApplicationController
           type.cashflow_type.trend == "Income"
         end.sum{|e| e.amount}
       end 
+    @test_graph_outcome = Purpose.all.map.with_index do |purpose, index|
+      [purpose.purpose_name, current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |type|
+          type.cashflow_type.trend == "Outcome"
+        end.sum{|e| e.amount}]
+      end 
+    
+    @test_graph_income = Purpose.all.map.with_index do |purpose, index|
+      [purpose.purpose_name, current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |type|
+          type.cashflow_type.trend == "Income"
+        end.sum{|e| e.amount}]
+      end 
     @outcome_all_purposes = Purpose.all.map.with_index do |purpose, index|
       current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |type|
           type.cashflow_type.trend == "Outcome"

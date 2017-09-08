@@ -39,6 +39,13 @@
   <%= column_chart DailyCashflow.group_by_day_of_week(:created_at, format: "%a").count %>
   <%= column_chart DailyCashflow.group_by_day_of_week(:occur_at, format: "%a").count %>
   <%= pie_chart Purpose.group(:purpose_name).count %>
+  <%= pie_chart [["Football", 10], ["Basketball", 5]] %>
+  <%= line_chart({ 25.day.ago => 5, 15.day.ago => 15, "2016-010-07 00:00:00 UTC" => 7})%>
+  <h1>Print outcome </h1>
+  <%= pie_chart @test_graph_outcome %>
+  <h1>Print income </h1>
+  <%= pie_chart @test_graph_income %>
+  
 
 
  
