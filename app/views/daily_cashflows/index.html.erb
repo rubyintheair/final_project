@@ -13,7 +13,6 @@
       <th>Occur at</th>
       <th>Cashflow_type</th>
       <th>Purpose</th>
-      <th>Stories</th>
     </tr>
   </thead>
   <tbody>
@@ -25,7 +24,6 @@
         <td><%= transaction.occur_at %></td>
         <td><%= transaction.cashflow_type.trend %></td>
         <td><%= transaction.purpose.purpose_name %></td>
-        <td>No story</td>
       </tr>
     <% end %>
   </tbody>
@@ -43,7 +41,6 @@
       </th>
       <th></th>
       <th></th>
-      <th></th>
     </tr>
   </tfoot>
 </table>
@@ -51,15 +48,10 @@
 <br>
 <%= render "last_day_table", the_last_day_cashflows: @the_last_day_cashflows %>
 <br>
-<h1>This table print based on purpose </h1>
-<%= render "categories_table", locales: {purpose_1: @purpose_1, purpose_2: @purpose_2, purpose_3: @purpose_3, 
-                                          purpose_4: @purpose_4, purpose_5: @purpose_5, purpose_6: @purpose_6,
-                                          purpose_7: @purpose_7, purpose_8: @purpose_8, purpose_9: @purpose_9,
-                                          purpose_10: @purpose_10} %>
 
 <h1>This table print based on purpose _new _ use total_purposes </h1>
 <h1>Print outcome_type </h1>
-<%= render "categories_table_new", all_purposes: @all_purposes %>                                          
+<%= render "categories_table_new", {incomes: @income_all_purposes, outcomes: @outcome_all_purposes} %>                                          
 
 <%= form_tag search_daily_cashflows_path, :method => :get do %>
   <%= date_field_tag(:start_date, nil, placeholder: "Start date") %>

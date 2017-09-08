@@ -15,10 +15,20 @@ class DailyCashflowsController < ApplicationController
   end 
 
   def index
-    @daily_cash_flows = current_user.daily_cashflows.all
+    @daily_cash_flows = current_user.daily_cashflows
     @incomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Income"}.sum {|e| e.amount}
     @outcomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Outcome"}.sum {|e| e.amount}
     @total = @incomes - @outcomes
+    @income_all_purposes = Purpose.all.map.with_index do |purpose, index|
+      current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |type|
+          type.cashflow_type.trend == "Income"
+        end.sum{|e| e.amount}
+      end 
+    @outcome_all_purposes = Purpose.all.map.with_index do |purpose, index|
+      current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |type|
+          type.cashflow_type.trend == "Outcome"
+        end.sum{|e| e.amount}
+      end 
     @all_purposes = Purpose.all.map.with_index do |purpose, index|
       current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.sum{|e| e.amount}
       end 
@@ -26,10 +36,10 @@ class DailyCashflowsController < ApplicationController
     @the_last_day = @daily_cash_flows.map {|e| e.occur_at.to_date }.max
 
     @the_last_day_cashflows = @daily_cash_flows.select {|e| e.occur_at.to_date == @the_last_day }
-    @the_last_day_cashflows_incomes = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.select do |e|
+    @the_last_day_cashflows_incomes = @daily_cash_flows.select {|e| e.occur_at.to_date == @the_last_day }.select do |e|
                                         e.cashflow_type.trend == "Income"
                                       end.sum {|e| e.amount}
-    @the_last_day_cashflows_outcomes = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.select do |e|
+    @the_last_day_cashflows_outcomes = @daily_cash_flows.select {|e| e.occur_at.to_date == @the_last_day }.select do |e|
                                         e.cashflow_type.trend == "Outcome"
                                       end.sum {|e| e.amount}                                      
     @the_last_day_cashflows_total = @the_last_day_cashflows_incomes - @the_last_day_cashflows_outcomes
