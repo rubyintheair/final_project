@@ -4,54 +4,16 @@
 <h1>The last day: <%= @the_last_day%></h1>
 <h1>Income new: <%= @incomes_new %></h1>
 
-<table class="table is-bordered is-striped">
-  <thead>
-    <tr>
-      <th>Index</th>
-      <th>Amount</th>
-      <th>Content</th>
-      <th>Occur at</th>
-      <th>Cashflow_type</th>
-      <th>Purpose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @daily_cash_flows.each do |transaction, index| %>
-      <tr>
-        <th><%= index %></th>
-        <td><%= transaction.amount %></td>
-        <td><%= transaction.content %></td>
-        <td><%= transaction.occur_at %></td>
-        <td><%= transaction.cashflow_type.trend %></td>
-        <td><%= transaction.purpose.purpose_name %></td>
-      </tr>
-    <% end %>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th>Total</th>
-      <th>
-        <%= @total %>
-      </th>
-      <th>
-        Incomes: <%= @incomes %>
-      </th>
-      <th>
-        Outcomes: <%= @outcomes %>
-      </th>
-      <th></th>
-      <th></th>
-    </tr>
-  </tfoot>
-</table>
 
+<%= render "display_by_attribute", {cashflows: @daily_cash_flows, total: @total, incomes: @incomes, outcomes: @outcomes }%>
 <br>
-<%= render "last_day_table", the_last_day_cashflows: @the_last_day_cashflows %>
+<h1>Display the last day</h1>
+<%= render "display_by_attribute", {cashflows: @the_last_day_cashflows, total: @the_last_day_cashflows_total, incomes: @the_last_day_cashflows_incomes, outcomes: @the_last_day_cashflows_incomes }%>
 <br>
 
 <h1>This table print based on purpose _new _ use total_purposes </h1>
 <h1>Print outcome_type </h1>
-<%= render "categories_table_new", {incomes: @income_all_purposes, outcomes: @outcome_all_purposes} %>                                          
+<%= render "display_by_purposes", {incomes: @income_all_purposes, outcomes: @outcome_all_purposes} %>                                          
 
 <%= form_tag search_daily_cashflows_path, :method => :get do %>
   <%= date_field_tag(:start_date, nil, placeholder: "Start date") %>
