@@ -74,8 +74,8 @@ class DailyCashflowsController < ApplicationController
         @period_cashflows = @cashflows.select {|e| e.purpose_id == params[:purposes_id].to_i } 
       end 
     end     
-    @incomes = @period_cashflows.select { |e| e.cashflow_type_id == 2 }.sum {|e| e.amount }
-    @outcomes = @period_cashflows.select { |e| e.cashflow_type_id == 3}.sum {|e| e.amount}
+    @incomes = @period_cashflows.select { |e| e.cashflow_type.trend == "Income" }.sum {|e| e.amount }
+    @outcomes = @period_cashflows.select { |e| e.cashflow_type.trend == "Outcome" }.sum {|e| e.amount}
     @total = @incomes - @outcomes
 
     @all_purposes = Purpose.all[0..12].map.with_index do |purpose, index|

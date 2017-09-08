@@ -13,7 +13,8 @@
 
 <h1>This table print based on purpose _new _ use total_purposes </h1>
 <h1>Print outcome_type </h1>
-<%= render "display_by_purposes", {incomes: @income_all_purposes, outcomes: @outcome_all_purposes} %>                                          
+<%= render "display_by_purposes", {incomes: @income_all_purposes, outcomes: @outcome_all_purposes} %>                    
+
 
 <%= form_tag search_daily_cashflows_path, :method => :get do %>
   <%= date_field_tag(:start_date, nil, placeholder: "Start date") %>
