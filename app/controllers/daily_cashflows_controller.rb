@@ -19,9 +19,9 @@ class DailyCashflowsController < ApplicationController
   def index
     @daily_cash_flows = current_user.daily_cashflows.all
     #tat ca incomes cua current_user
-    @incomes = current_user.type_cashflow(@daily_cash_flows, 2).sum {|e| e.amount}
+    @incomes = @daily_cash_flows.select {|e| e.cashflow_type_id == 2}.sum {|e| e.amount}
     #tat ca outcomes cua current_user
-    @outcomes = current_user.type_cashflow(@daily_cash_flows, 3).sum {|e| e.amount}
+    @outcomes = @daily_cash_flows.select {|e| e.cashflow_type_id == 3}.sum {|e| e.amount}
     #totals
     @total = @incomes - @outcomes
     
@@ -43,10 +43,16 @@ class DailyCashflowsController < ApplicationController
     @all_purposes = [@purpose_1, @purpose_2, @purpose_3, @purpose_4, @purpose_5, @purpose_6, @purpose_7, @purpose_8, @purpose_9, @purpose_10, @purpose_11, @purpose_12, @purpose_13 ]
     
     #tim ngay gan nhat cua tat ca transactions
-    @the_last_day = @daily_cash_flows.map {|e| e.occur_at }.max
+    @the_last_day = @daily_cash_flows.map {|e| e.occur_at.to_date }.max
 
-    @the_last_day_cashflows = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }
-    @the_last_day_cashflows_total = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.sum {|e| e.amount}
+    @the_last_day_cashflows = @daily_cash_flows.select {|e| e.occur_at.to_date == @the_last_day }
+    @the_last_day_cashflows_incomes = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.select do |e|
+                                        e.cashflow_type_id == 2
+                                      end.sum {|e| e.amount}
+    @the_last_day_cashflows_outcomes = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.select do |e|
+                                        e.cashflow_type_id == 3
+                                      end.sum {|e| e.amount}                                      
+    @the_last_day_cashflows_total = @the_last_day_cashflows_incomes - @the_last_day_cashflows_outcomes
   end 
 
   def daily_cashflow_params
