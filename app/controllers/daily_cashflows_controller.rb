@@ -16,34 +16,10 @@ class DailyCashflowsController < ApplicationController
 
   def index
     @daily_cash_flows = current_user.daily_cashflows.all
-    #tat ca incomes cua current_user
-    @incomes = @daily_cash_flows.select {|e| e.cashflow_type_id == 2}.sum {|e| e.amount}
-    #tat ca outcomes cua current_user
-    @outcomes = @daily_cash_flows.select {|e| e.cashflow_type_id == 3}.sum {|e| e.amount}
-    #totals
+    @incomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Income"}.sum {|e| e.amount}
+    @outcomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Outcome"}.sum {|e| e.amount}
     @total = @incomes - @outcomes
-    
-    #gia tri sum theo purpose cua tat ca transactions
-    #Quy se bat dau nhu the nao day????? Bat dau tu current_user hay la tu purpose hay daily_cashflow
-    #Quy se bat dau tu purpose 
-
-    @purpose_1 = current_user.purpose_cashflow( @daily_cash_flows, 1).sum {|e| e.amount}
-    @purpose_2 = current_user.purpose_cashflow( @daily_cash_flows, 2).sum {|e| e.amount}
-    @purpose_3 = current_user.purpose_cashflow( @daily_cash_flows, 3).sum {|e| e.amount}
-    @purpose_4 = current_user.purpose_cashflow( @daily_cash_flows, 4).sum {|e| e.amount}
-    @purpose_5 = current_user.purpose_cashflow( @daily_cash_flows, 5).sum {|e| e.amount}
-    @purpose_6 = current_user.purpose_cashflow( @daily_cash_flows, 6).sum {|e| e.amount}
-    @purpose_7 = current_user.purpose_cashflow( @daily_cash_flows, 7).sum {|e| e.amount}
-    @purpose_8 = current_user.purpose_cashflow( @daily_cash_flows, 8).sum {|e| e.amount}
-    @purpose_9 = current_user.purpose_cashflow( @daily_cash_flows, 9).sum {|e| e.amount}
-    @purpose_10 = current_user.purpose_cashflow( @daily_cash_flows, 10).sum {|e| e.amount}
-    @purpose_11 = current_user.purpose_cashflow( @daily_cash_flows, 11).sum {|e| e.amount}
-    @purpose_12 = current_user.purpose_cashflow( @daily_cash_flows, 12).sum {|e| e.amount}
-    @purpose_13 = current_user.purpose_cashflow( @daily_cash_flows, 13).sum {|e| e.amount}
-
-    # @all_purposes = [@purpose_1, @purpose_2, @purpose_3, @purpose_4, @purpose_5, @purpose_6, @purpose_7, @purpose_8, @purpose_9, @purpose_10, @purpose_11, @purpose_12, @purpose_13 ]
-    
-    @all_purposes = Purpose.all[0..12].map.with_index do |purpose, index|
+    @all_purposes = Purpose.all.map.with_index do |purpose, index|
       current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.sum{|e| e.amount}
       end 
     #tim ngay gan nhat cua tat ca transactions
@@ -51,10 +27,10 @@ class DailyCashflowsController < ApplicationController
 
     @the_last_day_cashflows = @daily_cash_flows.select {|e| e.occur_at.to_date == @the_last_day }
     @the_last_day_cashflows_incomes = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.select do |e|
-                                        e.cashflow_type_id == 2
+                                        e.cashflow_type.trend == "Income"
                                       end.sum {|e| e.amount}
     @the_last_day_cashflows_outcomes = @daily_cash_flows.select {|e| e.occur_at == @the_last_day }.select do |e|
-                                        e.cashflow_type_id == 3
+                                        e.cashflow_type.trend == "Outcome"
                                       end.sum {|e| e.amount}                                      
     @the_last_day_cashflows_total = @the_last_day_cashflows_incomes - @the_last_day_cashflows_outcomes
   end 
