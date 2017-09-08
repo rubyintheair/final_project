@@ -26,6 +26,9 @@ class DailyCashflowsController < ApplicationController
     @total = @incomes - @outcomes
     
     #gia tri sum theo purpose cua tat ca transactions
+    #Quy se bat dau nhu the nao day????? Bat dau tu current_user hay la tu purpose hay daily_cashflow
+    #Quy se bat dau tu purpose 
+
     @purpose_1 = current_user.purpose_cashflow( @daily_cash_flows, 1).sum {|e| e.amount}
     @purpose_2 = current_user.purpose_cashflow( @daily_cash_flows, 2).sum {|e| e.amount}
     @purpose_3 = current_user.purpose_cashflow( @daily_cash_flows, 3).sum {|e| e.amount}
@@ -40,8 +43,11 @@ class DailyCashflowsController < ApplicationController
     @purpose_12 = current_user.purpose_cashflow( @daily_cash_flows, 12).sum {|e| e.amount}
     @purpose_13 = current_user.purpose_cashflow( @daily_cash_flows, 13).sum {|e| e.amount}
 
-    @all_purposes = [@purpose_1, @purpose_2, @purpose_3, @purpose_4, @purpose_5, @purpose_6, @purpose_7, @purpose_8, @purpose_9, @purpose_10, @purpose_11, @purpose_12, @purpose_13 ]
+    # @all_purposes = [@purpose_1, @purpose_2, @purpose_3, @purpose_4, @purpose_5, @purpose_6, @purpose_7, @purpose_8, @purpose_9, @purpose_10, @purpose_11, @purpose_12, @purpose_13 ]
     
+    @all_purposes = Purpose.all[0..12].map.with_index do |purpose, index|
+      current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.sum{|e| e.amount}
+      end 
     #tim ngay gan nhat cua tat ca transactions
     @the_last_day = @daily_cash_flows.map {|e| e.occur_at.to_date }.max
 
@@ -82,8 +88,7 @@ class DailyCashflowsController < ApplicationController
         flash[:success] = "We have searched based on PURPOSE"
         @period_cashflows = @cashflows.select {|e| e.purpose_id == params[:purposes_id].to_i } 
       end 
-    end 
-    
+    end     
     @incomes = @period_cashflows.select { |e| e.cashflow_type_id == 2 }.sum {|e| e.amount }
     @outcomes = @period_cashflows.select { |e| e.cashflow_type_id == 3}.sum {|e| e.amount}
     @total = @incomes - @outcomes
