@@ -49,5 +49,7 @@
       <%= yield %>
     </div>
   </body>
-  <%= current_user.id %>
+  <% if current_user %>
+    <%= current_user.id %>
+  <% end %>
 </html>
