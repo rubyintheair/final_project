@@ -30,7 +30,8 @@ gem 'bcrypt', git: 'https://github.com/codahale/bcrypt-ruby.git', :require => 'b
 gem 'carrierwave', '~> 1.0'
 gem "bulma-rails", github: "harley/bulma-rails"
 gem 'jquery-rails'
-
+gem "chartkick"
+gem 'groupdate'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

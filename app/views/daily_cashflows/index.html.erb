@@ -15,16 +15,30 @@
 <h1>Print outcome_type </h1>
 <%= render "display_by_purposes", {incomes: @income_all_purposes, outcomes: @outcome_all_purposes} %>                    
 
+<div style="width: 400px">
+  <%= form_tag search_daily_cashflows_path, :method => :get do %>
+    <div class="field">
+      <label>End Date</label>
+      <%= date_field_tag(:start_date, nil, placeholder: "Start date", class: "input")  %>
+    </div>
+    <div class="field">
+      <label>Start Date</label>
+      <%= date_field_tag(:end_date, nil, placeholder: "End date", class: "input") %>
+    </div>
+    <div class="field">
+      <label>Purpose</label>
+      <%= select_tag "purposes_id", 
+          options_from_collection_for_select(Purpose.all, "id", "purpose_name", class: "input"), include_blank:"" %>
+    </div>
+    <%= submit_tag "Submit for finding", class: "button is-primary" %>
+  <% end %>
+</div>
 
-<%= form_tag search_daily_cashflows_path, :method => :get do %>
-  <%= date_field_tag(:start_date, nil, placeholder: "Start date") %>
-  <%= date_field_tag(:end_date, nil, placeholder: "End date") %>
-  <%= select_tag "purposes_id", 
-      options_from_collection_for_select(Purpose.all, "id", "purpose_name"), include_blank:"" %>
-  <%= submit_tag "Submit for finding" %>
-<% end %>
-
-
+  <%= line_chart DailyCashflow.group_by_day(:created_at).count %>
+  <%= line_chart DailyCashflow.group_by_day(:occur_at).count %>
+  <%= column_chart DailyCashflow.group_by_day_of_week(:created_at, format: "%a").count %>
+  <%= column_chart DailyCashflow.group_by_day_of_week(:occur_at, format: "%a").count %>
+  <%= pie_chart Purpose.group(:purpose_name).count %>
 
 
  
