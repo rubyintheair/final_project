@@ -61,13 +61,15 @@ class DailyCashflowsController < ApplicationController
 
   def search
     @cashflows = current_user.daily_cashflows.all
+    @start_date = params[:start_date]
+    @end_date = params[:end_date]
+    @purpose = Purpose.find(params[:purposes_id]).purpose_name
     if (params[:purposes_id] == "14")
       if (params[:start_date] && params[:end_date])
         @period_cashflows = @cashflows.select {|e| e.occur_at.to_date == params[:start_date].to_date}
-        # @period_cashflows = @cashflows.select do |e| 
-        #                       e.occur_at.to_date >= params[:start_date]
-        #                       && e.occur_at.to_date <= params[:end_date]
-        #                     end 
+        @period_cashflows = @cashflows.select do |e| 
+                              (e.occur_at.to_date >= params[:start_date].to_date && e.occur_at.to_date <= params[:end_date].to_date)
+                            end 
         flash[:success] = "We have searched based on START_DATE and END_DATE"
       else 
         flash[:error] = "Nothing in the params"
