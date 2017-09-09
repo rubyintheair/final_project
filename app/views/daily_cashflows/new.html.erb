@@ -16,8 +16,12 @@
     <%= f.select :cashflow_type_id, options_from_collection_for_select(CashflowType.all, "id", "trend") %>
   </div>
   <div class="field">
-    <label class="label">Spending purpose: </label>
+    <label class="label">Purpose: </label>
     <%= f.select :purpose_id, options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
+  </div>
+  <div class="field">
+    <label class="label">Currency: </label>
+    <%= f.select :currency_id, options_from_collection_for_select(Currency.all, "id", "name")%>
   </div>
   <%= f.submit "Create new cashflow nhaz" %>
 <% end %>

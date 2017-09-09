@@ -15,14 +15,14 @@ if CashflowType.count == 0
   end
 else 
   CashflowType.all.each do |type|
-    puts "Quy is print #{type.trend}!!!"
+    puts "Quy print #{type.trend}!!!"
   end
 end 
 
 if Purpose.count == 0 
-  @all_purposes = ["None", "Housing", "Utilities", "Food", "Clothing", "Medical/Healthcare", "Donations/Gifts", 
-  "Savings and Insurance", "Entertainment and Recreation", 
-  "Transportation", "Personal/Debt Payments/Misc", "Earned Income", "Portfolio Income", "Passive Income"]
+  @all_purposes = ["Housing", "Utilities", "Food", "Clothing", "Medical/Healthcare", "Donations/Gifts", 
+  "Savings and Insurance", "Entertainment and Recreation", "Beauty", "Travel", "Education", "Kids",
+  "Transportation", "Personal/Debt Payments/Misc"]
   @all_purposes.each do |purpose|
     purpose = Purpose.create(purpose_name: purpose)
     if purpose.persisted?
@@ -35,28 +35,38 @@ else
   end
 end 
 
+if Currency.count == 0 
+  @all_currencies = ["USD", "VND", "EUR", "SGD", "CNY", "AUD", "NZD", "JPY", "KPW"]
+  @all_currencies.each do |currency|
+    currency = Currency.create(name: currency)
+    if currency.persisted?
+      puts "Saved purpose with name = #{currency}" 
+    end 
+  end 
+else 
+  Currency.all.each do |currency|
+    puts "Quy print #{currency.name}!!!"
+  end
+end 
 
 
-user = User.find(1)
+
+User.create(name: "Quy Nguyen", email: "quy.nguyenngoctp@gmail.com", password: "heo1010") if User.count == 0 
+user = User.first
+
 5.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
     occur_at: Faker::Date.between(1.months.ago, Date.today),
     content: Faker::Simpsons.quote,
-    purpose_id: rand(0..12),
-    cashflow_type_id: 3
+    purpose_id: rand(0..Purpose.count),
+    cashflow_type_id: rand(0..CashflowType.count),
+    currency_id: rand(0..Currency.count)
   )
 end 
 
-5.times do 
-  user.daily_cashflows.create(
-    amount: rand(1..500) * 1000,
-    occur_at: Faker::Date.between(1.months.ago, Date.today),
-    content: Faker::Simpsons.quote,
-    purpose_id: rand(0..12),
-    cashflow_type_id: 2
-  )
-end 
+
+
 
 
 
