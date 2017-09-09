@@ -1,7 +1,7 @@
 <table class="table is-bordered is-striped">
   <thead>
     <tr>
-    <% ["Index", "Amount", "Content", "Occur at", "Cashflow_type", "Purpose"].each do |e| %>
+    <% ["Index", "Amount", "Content", "Currency", "Occur at", "Cashflow_type", "Purpose"].each do |e| %>
       <th><%= e %></th>
     <% end %>
     </tr>
@@ -12,6 +12,7 @@
         <th><%= index %></th>
         <td><%= transaction.amount %></td>
         <td><%= transaction.content %></td>
+        <td><%= transaction.currency.name %></td>
         <td><%= transaction.occur_at %></td>
         <td><%= transaction.cashflow_type.trend %></td>
         <td><%= transaction.purpose.purpose_name %></td>

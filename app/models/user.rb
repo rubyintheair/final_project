@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_secure_password
   has_many :daily_cashflows, dependent: :destroy
 
+  
+
   def date_cashflows(date)
     DailyCashflow.where("date(occur_at) in (?)", date)
   end 

@@ -19,6 +19,23 @@ class DailyCashflowsController < ApplicationController
     @incomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Income"}.sum {|e| e.amount}
     @outcomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Outcome"}.sum {|e| e.amount}
     @total = @incomes - @outcomes
+    
+    
+
+    @currency_vnd = @daily_cash_flows.select {|e| e.currency.name == "VND"}
+    @currency_eur = @daily_cash_flows.select {|e| e.currency.name == "EUR"}
+    @currency_usd = @daily_cash_flows.select {|e| e.currency.name == "USD"}
+
+    @currency_all = Currency.all.map.with_index do |currency, index|
+      @daily_cash_flows.select {|e| e.currency_id.to_i == index + 1}
+    end 
+
+
+    
+    
+
+    #Quy can tim 
+
     @income_all_purposes = Purpose.all.map.with_index do |purpose, index|
       current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |type|
           type.cashflow_type.trend == "Income"
@@ -56,9 +73,7 @@ class DailyCashflowsController < ApplicationController
     @the_last_day_cashflows_total = @the_last_day_cashflows_incomes - @the_last_day_cashflows_outcomes
   end 
 
-  def daily_cashflow_params
-    params.require(:daily_cashflow).permit(:amount, :occur_at, :content, :cashflow_type_id, :purpose_id)
-  end 
+  
 
   def search
     @cashflows = current_user.daily_cashflows.all
@@ -92,4 +107,9 @@ class DailyCashflowsController < ApplicationController
       @period_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.sum{|e| e.amount}
       end 
   end 
+
+  def daily_cashflow_params
+    params.require(:daily_cashflow).permit(:amount, :occur_at, :content, :cashflow_type_id, :purpose_id, :currency_id)
+  end 
+
 end

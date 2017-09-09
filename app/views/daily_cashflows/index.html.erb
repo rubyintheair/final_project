@@ -1,8 +1,43 @@
 
-<h1>So luong Cashflow_types: <%= CashflowType.all.count %></h1> 
-<h1>So luong Daily_cashflows: <%= DailyCashflow.all.count %></h1>
+<h1>So luong Cashflow types: <%= CashflowType.all.count %></h1> 
+<h1>So luong Daily cashflows: <%= DailyCashflow.all.count %></h1>
 <h1>The last day: <%= @the_last_day%></h1>
 <h1>Income new: <%= @incomes_new %></h1>
+
+<br>
+==============VND================<br>
+<% @currency_vnd.each do |e| %>
+  Purpose: <%= e.purpose.purpose_name %><br>
+  Currency: <%= e.currency.name %><br>
+  Amount: <%= e.amount %><br>
+  ===================<br>
+<% end %>
+
+==============USD=====================<br>
+<% @currency_usd.each do |e| %>
+  Purpose: <%= e.purpose.purpose_name %><br>
+  Currency: <%= e.currency.name %><br>
+  Amount: <%= e.amount %><br>
+  ===================<br>
+<% end %>
+<!--
+===============EUR==================<br>
+<% @currency_eur.each do |e| %>
+  Purpose: <%= e.purpose.purpose_name %><br>
+  Currency: <%= e.currency.name %><br>
+  Amount: <%= e.amount %><br>
+  ===================<br>
+<% end %>
+-->
+
+Test currency_all - La 1 array collect lai cac daily_cash_flows theo currency, moi element trong array nay la 1 array<br>
+<% @currency_all[0].each do |e| %>
+  Purpose: <%= e.purpose.purpose_name %><br>
+  Currency: <%= e.currency.name %><br>
+  Amount: <%= e.amount %><br>
+  ===================<br>
+<% end %>
+
 
 
 <%= render "display_by_attribute", {cashflows: @daily_cash_flows, total: @total, incomes: @incomes, outcomes: @outcomes }%>

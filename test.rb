@@ -43,3 +43,32 @@ def search
     @total = @incomes - @outcomes
   
   end 
+
+
+  <% @currency_vnd_incomes.each do |e| %>
+  Purpose: <%= e.purpose.purpose_name %><br>
+  Currency: <%= e.currency.name %><br>
+  Amount: <%= e.amount %><br>
+  Currency_id : <%= e.currency_id %><br>
+  ===================
+<% end %>
+
+<%= @currency_vnd_incomes   %>
+
+<%= @cashflow_currency_income.each_with_index do |e, index| %>
+  <% unless index == @cashflow_currency_income.count - 1 %>
+    <%= e %>
+    <%= e.count %><br>
+  <% else %>
+    <br>
+    This is an array
+    <%= e.count %>
+    <%= e.class %>
+    <%= e.count %>
+    <% e.each do |cf| %>
+      <%= cf.currency %>
+      <%= cf.purpose.purpose_name %>
+      <%= e.count %>
+    <% end %>
+  <% end %>
+<% end %>
