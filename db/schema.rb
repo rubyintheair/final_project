@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170906133802) do
+ActiveRecord::Schema.define(version: 20170909012219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20170906133802) do
 
   create_table "daily_cashflows", force: :cascade do |t|
     t.integer "amount"
-    t.text "stories"
     t.datetime "occur_at"
     t.bigint "user_id"
     t.bigint "purpose_id"
@@ -37,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170906133802) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "content"
+    t.string "currency_id"
     t.index ["cashflow_type_id"], name: "index_daily_cashflows_on_cashflow_type_id"
     t.index ["purpose_id"], name: "index_daily_cashflows_on_purpose_id"
     t.index ["user_id"], name: "index_daily_cashflows_on_user_id"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 20170906133802) do
     t.string "purpose_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "cashflow_type_id"
   end
 
   create_table "terms", force: :cascade do |t|

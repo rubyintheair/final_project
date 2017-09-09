@@ -2,6 +2,7 @@ class DailyCashflow < ApplicationRecord
   belongs_to :user
   belongs_to :purpose
   belongs_to :cashflow_type
+  belongs_to :currency, class_name: "Currency", foreign_key: "currency_id"
   validates :amount, :occur_at, :content, presence: true
   validate :not_longer_than_year_ago?
   
