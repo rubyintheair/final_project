@@ -16,25 +16,40 @@ class DailyCashflowsController < ApplicationController
 
   def index
     @daily_cash_flows = current_user.daily_cashflows
-    @incomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Income"}.sum {|e| e.amount}
-    @outcomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Outcome"}.sum {|e| e.amount}
-    @total = @incomes - @outcomes
-    
-    
-
-    @currency_vnd = @daily_cash_flows.select {|e| e.currency.name == "VND"}
-    @currency_eur = @daily_cash_flows.select {|e| e.currency.name == "EUR"}
-    @currency_usd = @daily_cash_flows.select {|e| e.currency.name == "USD"}
-
     @currency_all = Currency.all.map.with_index do |currency, index|
       @daily_cash_flows.select {|e| e.currency_id.to_i == index + 1}
     end 
 
+    @currency_income_all = Currency.all.map.with_index do |currency, index|
+      @daily_cash_flows.select {|e| e.currency_id.to_i == index + 1 && e.cashflow_type.trend == "Income"}
+    end 
+
+    @currency_outcome_all = Currency.all.map.with_index do |currency, index|
+      @daily_cash_flows.select {|e| e.currency_id.to_i == index + 1 && e.cashflow_type.trend == "Outcome"}
+    end 
+
+    @currency_vnd = @daily_cash_flows.select {|e| e.currency.name == "VND"}
+    @currency_vnd_line_chart = DailyCashflow.where("user_id": current_user.id).where("currency_id": "2")
+    @currency_usd_line_chart = DailyCashflow.where("user_id": current_user.id).where("currency_id": "1")
+    @currency_usd = @daily_cash_flows.select {|e| e.currency.name == "USD"}
+    
+
+    @currency_usd_income = @currency_usd.select {|e| e.cashflow_type.trend == "Income"}.sum {|e| e.amount}
+    @currency_usd_outcome = @currency_usd.select {|e| e.cashflow_type.trend == "Outcome"}.sum {|e| e.amount}
+    @currency_usd_total = @currency_usd_income - @currency_usd_outcome
+
+
+    @currency_vnd_income = @currency_vnd.select {|e| e.cashflow_type.trend == "Income"}.sum {|e| e.amount}
+    @currency_vnd_outcome = @currency_vnd.select {|e| e.cashflow_type.trend == "Outcome"}.sum {|e| e.amount}
+    @currency_vnd_total = @currency_vnd_income - @currency_vnd_outcome
 
     
-    
 
-    #Quy can tim 
+    
+    @incomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Income"}.sum {|e| e.amount}
+    @outcomes = @daily_cash_flows.select {|e| e.cashflow_type.trend == "Outcome"}.sum {|e| e.amount}
+    @total = @incomes - @outcomes
+
 
     @income_all_purposes = Purpose.all.map.with_index do |purpose, index|
       current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |type|

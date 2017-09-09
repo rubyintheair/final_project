@@ -4,43 +4,14 @@
 <h1>The last day: <%= @the_last_day%></h1>
 <h1>Income new: <%= @incomes_new %></h1>
 
+<h1>Display USD</h1>
+<%= render "display_by_attribute", {cashflows: @currency_usd, total: @currency_usd_total, incomes: @currency_usd_income, outcomes: @currency_usd_outcome }%>
 <br>
-==============VND================<br>
-<% @currency_vnd.each do |e| %>
-  Purpose: <%= e.purpose.purpose_name %><br>
-  Currency: <%= e.currency.name %><br>
-  Amount: <%= e.amount %><br>
-  ===================<br>
-<% end %>
-
-==============USD=====================<br>
-<% @currency_usd.each do |e| %>
-  Purpose: <%= e.purpose.purpose_name %><br>
-  Currency: <%= e.currency.name %><br>
-  Amount: <%= e.amount %><br>
-  ===================<br>
-<% end %>
-<!--
-===============EUR==================<br>
-<% @currency_eur.each do |e| %>
-  Purpose: <%= e.purpose.purpose_name %><br>
-  Currency: <%= e.currency.name %><br>
-  Amount: <%= e.amount %><br>
-  ===================<br>
-<% end %>
--->
-
-Test currency_all - La 1 array collect lai cac daily_cash_flows theo currency, moi element trong array nay la 1 array<br>
-<% @currency_all[0].each do |e| %>
-  Purpose: <%= e.purpose.purpose_name %><br>
-  Currency: <%= e.currency.name %><br>
-  Amount: <%= e.amount %><br>
-  ===================<br>
-<% end %>
-
-
-
-<%= render "display_by_attribute", {cashflows: @daily_cash_flows, total: @total, incomes: @incomes, outcomes: @outcomes }%>
+<h1>Display VND</h1>
+Total VND: <%=  @currency_vnd_total %>
+Currency VND count: <%= @currency_vnd.count %>
+Income VND: <%= @currency_vnd_income %>
+<%= render "display_by_attribute", {cashflows: @currency_vnd, total: @currency_vnd_total, incomes: @currency_vnd_income, outcomes: @currency_vnd_outcome }%>
 <br>
 <h1>Display the last day</h1>
 <%= render "display_by_attribute", {cashflows: @the_last_day_cashflows, total: @the_last_day_cashflows_total, incomes: @the_last_day_cashflows_incomes, outcomes: @the_last_day_cashflows_incomes }%>
@@ -80,6 +51,13 @@ Test currency_all - La 1 array collect lai cac daily_cash_flows theo currency, m
   <%= pie_chart @test_graph_outcome %>
   <h1>Print income </h1>
   <%= pie_chart @test_graph_income %>
+  
+  <%= line_chart  @daily_cash_flows.group(:occur_at).sum(:amount) %>
+  <br>
+  <h1>Line chart of VND currency</h1>
+  <%= line_chart @currency_vnd_line_chart.group(:occur_at).sum(:amount) %>
+  <h1>Line chart of USD currency</h1>
+  <%= line_chart @currency_usd_line_chart.group(:occur_at).sum(:amount) %>
   
 
 

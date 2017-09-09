@@ -61,7 +61,7 @@ user = User.first
     content: Faker::Simpsons.quote,
     purpose_id: rand(0..Purpose.count),
     cashflow_type_id: rand(0..CashflowType.count),
-    currency_id: rand(0..Currency.count)
+    currency_id: rand(0..1)
   )
 end 
 
