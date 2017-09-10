@@ -155,7 +155,111 @@ class DailyCashflowsController < ApplicationController
     @pie_usd = CashflowType.all.map.with_index do |type, index|
       [type.trend, @cashflows.select {|cf| cf.cashflow_type_id == index + 1 && cf.currency_id == "1"}.sum {|e| e.amount} ]
     end 
+    
+    @last_week_cashflows = DailyCashflow.where("occur_at >= ? AND occur_at <= ?", 1.week.ago, Time.now)
+    @last_week_vnd_income = @last_week_cashflows.where("currency_id": "2").where("cashflow_type_id": "1")
+    @last_week_vnd_outcome = @last_week_cashflows.where("currency_id": "2").where("cashflow_type_id": "2")
+    
+    @last_day = @cashflows.map {|e| e.occur_at.to_date}.max
+    @last_day_cashflows = @cashflows.where("occur_at": @last_day)
+    @last_day_vnd_income_purpose = Purpose.all.map.with_index do |purpose, index|
+      [ purpose.purpose_name, @last_day_cashflows.select do |cf| 
+        (cf.purpose_id == index + 1 && cf.currency_id == "2" && cf.cashflow_type.trend == "Income")
+      end.sum {|e| e.amount } ]
+    end 
 
-  end 
+    @last_day_vnd_outcome_purpose = Purpose.all.map.with_index do |purpose, index|
+      [ purpose.purpose_name, 
+        @last_day_cashflows.select do |cf|
+          (cf.purpose_id == index + 1 && cf.currency_id == "2" && cf.cashflow_type.trend == "Outcome")
+        end.sum {|e| e.amount} ]
+    end 
+
+    @last_day_usd_income_purpose = Purpose.all.map.with_index do |purpose, index|
+      [ purpose.purpose_name, @last_day_cashflows.select do |cf| 
+        (cf.purpose_id == index + 1 && cf.currency_id == "1" && cf.cashflow_type.trend == "Income")
+      end.sum {|e| e.amount } ]
+    end 
+
+
+
+    @last_day_usd_outcome_purpose = Purpose.all.map.with_index do |purpose, index|
+      [ purpose.purpose_name, 
+        @last_day_cashflows.select do |cf|
+          (cf.purpose_id == index + 1 && cf.currency_id == "1" && cf.cashflow_type.trend == "Outcome")
+        end.sum {|e| e.amount} ]
+    end 
+
+  end
+
+  def daily_report
+    #Daily report se co gi?
+    # 1. Pie daily income, outcome vnd xong
+    # 2. Pie daily income, outcome usd 
+    # 3. Pie donut daily purpose income/outcome vnd xong  
+    # 4. Pie donut daily purpose income/outcome usd xong
+    # 5. Line 1.week.ago income/outcome vnd xong 
+    # 6. Line 1.week.ago income/outcome usd xong
+    # 7. list as file excel xong
+
+    @cashflows = DailyCashflow.where("user_id": current_user.id)
+    @last_week_cashflows = DailyCashflow.where("occur_at >= ? AND occur_at <= ?", 1.week.ago, Time.now)
+    @last_week_vnd_income = @last_week_cashflows.where("currency_id": "2").where("cashflow_type_id": "1")
+    @last_week_vnd_outcome = @last_week_cashflows.where("currency_id": "2").where("cashflow_type_id": "2")
+    @last_week_usd_income = @last_week_cashflows.where("currency_id": "1").where("cashflow_type_id": "1")
+    @last_week_usd_outcome = @last_week_cashflows.where("currency_id": "1").where("cashflow_type_id": "2")
+    
+    @last_day = @cashflows.map {|e| e.occur_at.to_date}.max
+    @last_day_cashflows = @cashflows.where("occur_at": @last_day)
+    @last_day_vnd_income = @last_day_cashflows.where("currency_id": "2").where("cashflow_type_id": "1").sum {|e| e.amount}
+    @last_day_vnd_outcome = @last_day_cashflows.where("currency_id": "2").where("cashflow_type_id": "2").sum {|e| e.amount}
+    @last_day_vnd_total = @last_day_vnd_income - @last_day_vnd_outcome
+
+    @last_day_usd_income = @last_day_cashflows.where("currency_id": "1").where("cashflow_type_id": "1").sum {|e| e.amount}
+    @last_day_usd_outcome = @last_day_cashflows.where("currency_id": "1").where("cashflow_type_id": "2").sum {|e| e.amount}
+    @last_day_usd_total = @last_day_usd_income - @last_day_usd_outcome
+
+    @last_day_vnd_cashflow_type = CashflowType.all.map.with_index do |type, index|
+      [
+        type.trend, 
+        @last_day_cashflows.select do |cf|
+          cf.currency.name == "VND" && cf.cashflow_type_id == index + 1
+        end. sum {|e| e.amount}
+      ]
+    end 
+    @last_day_usd_cashflow_type = CashflowType.all.map.with_index do |type, index|
+      [
+        type.trend, 
+        @last_day_cashflows.select do |cf|
+          cf.currency.name == "USD" && cf.cashflow_type_id == index + 1
+        end. sum {|e| e.amount}
+      ]
+    end 
+    @last_day_vnd_income_purpose = Purpose.all.map.with_index do |purpose, index|
+      [ purpose.purpose_name, @last_day_cashflows.select do |cf| 
+        (cf.purpose_id == index + 1 && cf.currency_id == "2" && cf.cashflow_type.trend == "Income")
+      end.sum {|e| e.amount } ]
+    end 
+
+    @last_day_vnd_outcome_purpose = Purpose.all.map.with_index do |purpose, index|
+      [ purpose.purpose_name, 
+        @last_day_cashflows.select do |cf|
+          (cf.purpose_id == index + 1 && cf.currency_id == "2" && cf.cashflow_type.trend == "Outcome")
+        end.sum {|e| e.amount} ]
+    end 
+
+    @last_day_usd_income_purpose = Purpose.all.map.with_index do |purpose, index|
+      [ purpose.purpose_name, @last_day_cashflows.select do |cf| 
+        (cf.purpose_id == index + 1 && cf.currency_id == "1" && cf.cashflow_type.trend == "Income")
+      end.sum {|e| e.amount } ]
+    end 
+
+    @last_day_usd_outcome_purpose = Purpose.all.map.with_index do |purpose, index|
+      [ purpose.purpose_name, 
+        @last_day_cashflows.select do |cf|
+          (cf.purpose_id == index + 1 && cf.currency_id == "1" && cf.cashflow_type.trend == "Outcome")
+        end.sum {|e| e.amount} ]
+      end 
+  end  
 
 end
