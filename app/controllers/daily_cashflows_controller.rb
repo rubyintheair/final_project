@@ -52,8 +52,8 @@ class DailyCashflowsController < ApplicationController
 
 
     @income_all_purposes = Purpose.all.map.with_index do |purpose, index|
-      current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |type|
-          type.cashflow_type.trend == "Income"
+      current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |cf|
+          cf.cashflow_type.trend == "Income" && cf.currency_id == 1
         end.sum{|e| e.amount}
       end 
     @test_graph_outcome = Purpose.all.map.with_index do |purpose, index|
@@ -67,6 +67,7 @@ class DailyCashflowsController < ApplicationController
           type.cashflow_type.trend == "Income"
         end.sum{|e| e.amount}]
       end 
+
     @outcome_all_purposes = Purpose.all.map.with_index do |purpose, index|
       current_user.daily_cashflows.select {|cashflow| cashflow.purpose_id == index + 1}.select do |type|
           type.cashflow_type.trend == "Outcome"
@@ -88,7 +89,18 @@ class DailyCashflowsController < ApplicationController
     @the_last_day_cashflows_total = @the_last_day_cashflows_incomes - @the_last_day_cashflows_outcomes
   end 
 
-  
+  def index_1
+    @all_cashflows = DailyCashflow.where("user_id": current_user.id)
+    @last_day = current_user.daily_cashflows.map {|e| e.occur_at.to_date }.max
+    @last_day_cashflows = DailyCashflow.where("user_id": current_user.id).where("occur_at": @last_day)
+    @currency_vnd_line_chart = DailyCashflow.where("user_id": current_user.id).where("currency_id": "2").where("occur_at > ? AND occur_at <= ?", 1.month.ago, @last_day)
+    @currency_usd_income_line_chart = DailyCashflow.where("user_id": current_user.id).where("cashflow_type_id": "1").where("currency_id": "1")
+    @currency_usd_outcome_line_chart = DailyCashflow.where("user_id": current_user.id).where("cashflow_type_id": "2").where("currency_id": "1").where("occur_at > ? AND occur_at <= ?", 1.month.ago, @last_day)
+    @currency_vnd_income_line_chart = DailyCashflow.where("user_id": current_user.id).where("cashflow_type_id": "1").where("currency_id": "2")
+    @currency_vnd_outcome_line_chart = DailyCashflow.where("user_id": current_user.id).where("cashflow_type_id": "2").where("currency_id": "2")
+    @currency_vnd_income_line_chart_new = DailyCashflow.where("user_id": current_user.id).where("currency_id": "2")
+    @test = @all_cashflows.where("currency_id": "2").where("cashflow_type_id": "1")
+  end 
 
   def search
     @cashflows = current_user.daily_cashflows.all
@@ -125,6 +137,25 @@ class DailyCashflowsController < ApplicationController
 
   def daily_cashflow_params
     params.require(:daily_cashflow).permit(:amount, :occur_at, :content, :cashflow_type_id, :purpose_id, :currency_id)
+  end 
+
+  def index_2 
+    @cashflows = DailyCashflow.where("user_id": current_user.id)
+    @income_vnd = @cashflows.where("currency_id": "2").where("cashflow_type_id": "1")
+    @outcome_vnd = @cashflows.where("currency_id": "2").where("cashflow_type_id": "2")
+    @income_vnd_amount = @income_vnd.map {|e| e.amount}
+    @outcome_vnd_amount = @outcome_vnd.map {|e| e.amount}
+    # @total_vnd = [@income_vnd_amount, @outcome_vnd_amount].transpose.map {|e| e.sum}
+    #Phai viet ham daily total rou
+    @income_usd = @cashflows.where("currency_id": "1").where("cashflow_type_id": "1")
+    @outcome_usd = @cashflows.where("currency_id": "1").where("cashflow_type_id": "2")
+    @pie_vnd = CashflowType.all.map.with_index do |type, index|
+      [type.trend, @cashflows.select {|cf| cf.cashflow_type_id == index + 1 && cf.currency_id == "2"}.sum{|e| e.amount} ]
+    end 
+    @pie_usd = CashflowType.all.map.with_index do |type, index|
+      [type.trend, @cashflows.select {|cf| cf.cashflow_type_id == index + 1 && cf.currency_id == "1"}.sum {|e| e.amount} ]
+    end 
+
   end 
 
 end

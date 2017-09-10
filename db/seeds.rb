@@ -54,14 +54,50 @@ end
 User.create(name: "Quy Nguyen", email: "quy.nguyenngoctp@gmail.com", password: "heo1010") if User.count == 0 
 user = User.first
 
-20.times do 
+10.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
-    occur_at: Faker::Date.between(1.months.ago, Date.today),
+    occur_at: Faker::Date.between(1.year.ago, 2.days.ago),
     content: Faker::Simpsons.quote,
     purpose_id: rand(0..Purpose.count),
     cashflow_type_id: rand(0..CashflowType.count),
-    currency_id: rand(0..1)
+    currency_id: "1"
+  )
+end 
+
+
+10.times do 
+  user.daily_cashflows.create(
+    amount: rand(1..500) * 1000,
+    occur_at: Date.today,
+    content: Faker::Simpsons.quote,
+    purpose_id: rand(0..Purpose.count),
+    cashflow_type_id: rand(0..CashflowType.count),
+    currency_id: "1"
+  )
+end 
+
+
+10.times do 
+  user.daily_cashflows.create(
+    amount: rand(1..500) * 1000,
+    occur_at: Date.today,
+    content: Faker::Simpsons.quote,
+    purpose_id: rand(0..Purpose.count),
+    cashflow_type_id: rand(0..CashflowType.count),
+    currency_id: "2"
+  )
+end 
+
+
+10.times do 
+  user.daily_cashflows.create(
+    amount: rand(1..500) * 1000,
+    occur_at: Faker::Date.between(1.year.ago, 2.days.ago),
+    content: Faker::Simpsons.quote,
+    purpose_id: rand(0..Purpose.count),
+    cashflow_type_id: rand(0..CashflowType.count),
+    currency_id: "2"
   )
 end 
 

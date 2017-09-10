@@ -1,0 +1,31 @@
+<h1>Welcome to index 2 page</h1>
+<br>
+<h1>Quy hay de y su khac biet trong truc hoanh voi truc tung nha</h1>
+<h1>Display VND Income</h1>
+<h1>Cach 1: Use sum </h1>
+<%= line_chart @income_vnd.group(:occur_at).sum(:amount) %>
+<br><h1>Cach 2: Use .count </h1>
+<%= line_chart @income_vnd.group(:occur_at).count %>
+
+<br><h1>Display VND Outcome</h1><br>
+<h1>Cach 1: Use sum </h1>
+<%= line_chart @outcome_vnd.group(:occur_at).sum(:amount) %>
+<br><h1>Cach 2: Use .count </h1>
+<%= line_chart @outcome_vnd.group(:occur_at).count %>
+
+<h1>Display USD Income</h1><br>
+<h1>Cach 1: Use sum </h1>
+<%= line_chart @income_usd.group(:occur_at).sum(:amount) %>
+<br><h1>Cach 2: Use .count </h1>
+<%= line_chart @income_usd.group(:occur_at).count %>
+
+<h1>Display USD Outcome</h1><br>
+<h1>Cach 1: Use sum </h1>
+<%= line_chart @outcome_usd.group(:occur_at).sum(:amount) %>
+<br><h1>Cach 2: Use .count </h1>
+<%= line_chart @outcome_usd.group(:occur_at).count %>
+
+<br><h1>Pie chart VND </h1>
+<%= pie_chart @pie_vnd %>
+<br><h1>Pie chart USD </h1>
+<%= pie_chart @pie_usd %>

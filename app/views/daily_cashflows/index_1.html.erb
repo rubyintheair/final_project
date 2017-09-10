@@ -1,0 +1,135 @@
+<h1>The last day is: <%= @last_day %></h1>
+<table class="table is-bordered is-striped">
+  <thead>
+    <tr>
+    <% ["Index", "Amount", "Content", "Currency", "Occur at", "Cashflow_type", "Purpose"].each do |e| %>
+      <th><%= e %></th>
+    <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @all_cashflows.each do |transaction, index| %>
+      <tr>
+        <th><%= index %></th>
+        <td><%= transaction.amount %></td>
+        <td><%= transaction.content %></td>
+        <td><%= transaction.currency.name %></td>
+        <td><%= transaction.occur_at %></td>
+        <td><%= transaction.cashflow_type.trend %></td>
+        <td><%= transaction.purpose.purpose_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Total</th>
+      <th>
+        
+      </th>
+      <th>
+        
+      </th>
+      <th>
+        
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </tfoot>
+</table>
+
+
+<h1>The last day is: <%= @last_day %></h1>
+<table class="table is-bordered is-striped">
+  <thead>
+    <tr>
+    <% ["Index", "Amount", "Content", "Currency", "Occur at", "Cashflow_type", "Purpose"].each do |e| %>
+      <th><%= e %></th>
+    <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @last_day_cashflows.each do |transaction, index| %>
+      <tr>
+        <th><%= index %></th>
+        <td><%= transaction.amount %></td>
+        <td><%= transaction.content %></td>
+        <td><%= transaction.currency.name %></td>
+        <td><%= transaction.occur_at %></td>
+        <td><%= transaction.cashflow_type.trend %></td>
+        <td><%= transaction.purpose.purpose_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>Total</th>
+      <th>
+        
+      </th>
+      <th>
+        
+      </th>
+      <th>
+        
+      </th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </tfoot>
+</table>
+
+<h1>Line chart of USD currency income</h1>
+  <%= line_chart @currency_usd_income_line_chart.group(:occur_at).sum(:amount) %><br>
+<h1>Line chart of USD currency outcome</h1>
+  <%= line_chart @currency_usd_outcome_line_chart.group(:occur_at).sum(:amount) %><br>
+
+<h1>Line chart of VND currency income</h1>
+  <%= line_chart @currency_vnd_income_line_chart.group(:occur_at).sum(:amount) %><br>
+<h1>Line chart of VND currency outcome</h1>
+  <%= line_chart @currency_vnd_outcome_line_chart.group(:occur_at).sum(:amount) %><br>
+
+
+
+<%= line_chart @all_cashflows.group(:currency_id).group(:cashflow_type_id).group(:purpose_id).count %>
+
+<%= line_chart @all_cashflows.map { |cashflow|
+    {name: cashflow.purpose.purpose_name, data: cashflow.amount}
+  } 
+%>
+
+<br>
+<h1>Display: line_chart @all_cashflows.group(:cashflow_type_id).count </h1>
+<%= line_chart @all_cashflows.group(:cashflow_type_id).count %>
+
+<br>
+<h1>Display: line_chart @all_cashflows.group(:purpose_id).count </h1>
+<%= line_chart @all_cashflows.group(:purpose_id).count %>
+
+<br>
+<h1>Display: line_chart @all_cashflows.group(:currency_id).count </h1>
+<%= line_chart @all_cashflows.group(:currency_id).count %>
+
+<h1> Display: line_chart @currency_vnd_income_line_chart_new.group(:currency_id).count </h1>
+<%= line_chart @currency_vnd_income_line_chart_new.group(:currency_id).count %>
+
+<h1> Display: @currency_vnd_income_line_chart.group(:occur_at).count </h1>
+<%= @currency_vnd_income_line_chart.group(:occur_at).count %>
+
+
+<!--
+Quy muon line chart nay the hien dieu gi?
+Quy muon no the hien income va outcome trong 1 nam qua
+Neu vay thi Quy phai bat dau tu DailyCashflow hay la tu Cashflowtype?
+-->
+
+Test line chart
+<%= line_chart DailyCashflow.where("user_id": current_user.id).map { |cf|
+    {name: cf.cashflow_type.trend, data: cf.amount}
+} %>
+
+<%= line_chart @test.group_by_month(:occur_at).sum(:amount) %><br>
+
+
