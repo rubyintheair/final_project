@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20170905132121) do
     t.datetime "occur_at"
     t.bigint "user_id"
     t.bigint "purpose_id"
-    t.string "cashflow_type"
-    t.string "currency"
+    t.integer "cashflow_type"
+    t.integer "currency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "content"

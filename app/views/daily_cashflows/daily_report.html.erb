@@ -1,32 +1,21 @@
 <h1>Welcome to Daily Report</h1>
 <% unless current_user.daily_cashflows.count < 1 %>
   <h1>These graph display the data of: <%= @last_day %></h1>
-  
+
   <div class="columns">
-    <div class="column">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-header-title">
-          Income VS outcome in VND currency 
+    <% ["VND", "USD"].each do |type| %>
+      <div class="column">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-title">
+            Income VS outcome in <%= type %>currency
+            </div>
           </div>
+          <%= pie_chart current_user.cashflow_by_day(@last_day, type), width: "550px", height: "200px", download: true %>
         </div>
-        <%= pie_chart @last_day_vnd_cashflow_type, width: "550px", height: "200px", download: true %>
       </div>
     </div>
-
-    <div class="column ">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-header-title">
-          Income VS outcome in USD currency
-          </div>
-        </div>
-        <%= pie_chart @last_day_usd_cashflow_type, width: "550px", height: "200px", download: true %>
-      </div>
-    </div>
-  </div>
-
-  <br>
+  <% end %>
 
   <div class="columns">
     <div class="column">
@@ -105,7 +94,7 @@
 <br>
 
   <div class="columns">
-    
+
     <div class="column">
       <div class="card">
         <div class="card-header" style="margin-bottom: 15px">
@@ -131,7 +120,7 @@
   </div>
 
   <br>
-  
+
   <h1>Report each transaction as excel file </h1>
   <%= render "display_by_attribute", {cashflows:@last_day_cashflows, total:  @last_day_vnd_total, incomes:  @last_day_vnd_income, outcomes:  @last_day_vnd_outcome }%>
 
@@ -152,7 +141,7 @@
             <td><%= @last_day_usd_income %></td>
             <td><%= @last_day_usd_outcome %></td>
             <td><%= @last_day_usd_total %></td>
-            
+
           <% elsif index == 1 %>
             <td><%= @last_day_vnd_income %></td>
             <td><%= @last_day_vnd_outcome %></td>

@@ -49,5 +49,11 @@ class DailyCashflow < ApplicationRecord
   end
 
 
+  def self.on_day(date)
+    where("DATE(occur_at) = ?", date.to_date)
+  end
 
+  def self.between(from, to)
+    where("occur_at > ? AND occur_at < ?", from, to)
+  end
 end
