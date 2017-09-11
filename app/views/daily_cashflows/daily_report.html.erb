@@ -1,61 +1,91 @@
 <h1>Welcome to Daily Report</h1>
-<%#<%= line_chart @income_vnd.group(:occur_at).sum(:amount) %>
-<h1>These graph display the data of: <%= @last_day %></h1>
-<h1>Income VS outcome in VND currency </h1>
-<%= pie_chart @last_day_vnd_cashflow_type %>
-<br>
-<h1>Income VS outcome in USD currency </h1>
-<%= pie_chart @last_day_usd_cashflow_type %>
-<br>
-<h1>Income by purpose in VND currency</h1>
-<%= pie_chart @last_day_vnd_income_purpose  %>
-<br>
-<h1>Outcome by purpose in VND currency</h1>
-<%= pie_chart @last_day_vnd_outcome_purpose  %>
-<br>
-<h1>Income by purpose in USD currency</h1>
-<%= pie_chart @last_day_usd_income_purpose %>
-<br>
-<h1>Outcome by purpose in USD currency</h1>
-<%= pie_chart @last_day_usd_outcome_purpose  %>
-<br>
-<h1>Income in VND currency during last week </h1>
-<%= line_chart @last_week_vnd_income.group_by_day(:occur_at).sum(:amount), width: "500px", height: "200px"%>
-<br>
-<h1>Outcome in VND currency during last week </h1>
-<%= line_chart @last_week_vnd_outcome.group_by_day(:occur_at).sum(:amount), width: "500px", height: "200px" %>
-<br>
-<h1>Income in USD currency during last week </h1>
-<%= line_chart @last_week_usd_income.group_by_day(:occur_at).sum(:amount), width: "500px", height: "200px"%>
-<br>
-<h1>Outcome in USD currency during last week </h1>
-<%= line_chart @last_week_usd_outcome.group_by_day(:occur_at).sum(:amount), colors: ["pink", "#999"], width: "500px", height: "200px" %>
-<h1>Report each transaction as excel file </h1>
-<%= render "display_by_attribute", {cashflows: @last_day_cashflows, total:  @last_day_vnd_total, incomes:  @last_day_vnd_income, outcomes:  @last_day_vnd_outcome }%>
+<% unless current_user.daily_cashflows.count < 1 %>
+  <h1>These graph display the data of: <%= @last_day %></h1>
+  
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-title">
+      Income VS outcome in VND currency 
+      </div>
+    </div>
+    <%= pie_chart @last_day_vnd_cashflow_type, width: "500px", height: "200px", download: true %>
+  </div>
+  <br>
 
-<table class="table is-bordered is-striped">
-  <thead>
-    <tr>
-      <th>Currency</th>
-      <% ["Income", "Outcome", "Income - Outcome"].each do |e| %>
-        <th><%= e %></th>
-      <% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% ["USD", "VND"].each_with_index do |currency, index| %>
+  <div class="card">
+    <div class="card-header">
+      <div class="card-header-title">
+      Income VS outcome in USD currency
+      </div>
+    </div>
+    <%= pie_chart @last_day_usd_cashflow_type, width: "500px", height: "200px" %>
+  </div>
+
+  <br>
+
+  <div class="card">
+    <h1>Income by purpose in VND currency</h1>
+    <%= pie_chart @last_day_vnd_income_purpose, width: "600px", height: "350px"  %>
+  </div>
+  <br>
+  <div class="card">
+    <h1>Outcome by purpose in VND currency</h1>
+    <%= pie_chart @last_day_vnd_outcome_purpose, width: "600px", height: "300px", legend: false  %>
+  </div>
+  <br>
+  <div class="card">
+    <h1>Income by purpose in USD currency</h1>
+    <%= pie_chart @last_day_usd_income_purpose, width: "600px", height: "350px" %>
+  </div>
+  <br>
+  <div class="card">
+    <h1>Outcome by purpose in USD currency</h1>
+    <%= pie_chart @last_day_usd_outcome_purpose, width: "600px", height: "350px"  %>
+  </div>
+  <br>
+  <div class="card">
+    <h1>Income in VND currency during last week </h1>
+    <%= line_chart @last_week_vnd_income.group_by_day(:occur_at).sum(:amount), width: "500px", height: "200px"%>
+  </div>
+  <br>
+  <div class="card">
+    <h1>Outcome in VND currency during last week </h1>
+    <%= line_chart @last_week_vnd_outcome.group_by_day(:occur_at).sum(:amount), width: "500px", height: "200px" %>
+  </div>
+  <br>
+  <h1>Income in USD currency during last week </h1>
+  <%= line_chart @last_week_usd_income.group_by_day(:occur_at).sum(:amount), width: "500px", height: "200px"%>
+  <br>
+  <h1>Outcome in USD currency during last week </h1>
+  <%= line_chart @last_week_usd_outcome.group_by_day(:occur_at).sum(:amount), colors: ["pink", "#999"], width: "500px", height: "200px" %>
+  <h1>Report each transaction as excel file </h1>
+  <%= render "display_by_attribute", {cashflows:@last_day_cashflows, total:  @last_day_vnd_total, incomes:  @last_day_vnd_income, outcomes:  @last_day_vnd_outcome }%>
+
+  <table class="table is-bordered is-striped">
+    <thead>
       <tr>
-        <td><%= currency %></td>
-        <% if index == 0 %>
-          <td><%= @last_day_usd_income %></td>
-          <td><%= @last_day_usd_outcome %></td>
-          <td><%= @last_day_usd_total %></td>
-        <% elsif index == 1 %>
-          <td><%= @last_day_vnd_income %></td>
-          <td><%= @last_day_vnd_outcome %></td>
-          <td><%= @last_day_vnd_total %></td>
+        <th>Currency</th>
+        <% ["Income", "Outcome", "Income - Outcome", "Outcome - The largest purpose", "Outcome - The smallest purpose", "Income - The largest purpose", "Income - The smallest purpose"].each do |e| %>
+          <th><%= e %></th>
         <% end %>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% ["USD", "VND"].each_with_index do |currency, index| %>
+        <tr>
+          <td><%= currency %></td>
+          <% if index == 0 %>
+            <td><%= @last_day_usd_income %></td>
+            <td><%= @last_day_usd_outcome %></td>
+            <td><%= @last_day_usd_total %></td>
+            
+          <% elsif index == 1 %>
+            <td><%= @last_day_vnd_income %></td>
+            <td><%= @last_day_vnd_outcome %></td>
+            <td><%= @last_day_vnd_total %></td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -54,7 +54,7 @@ end
 User.create(name: "Quy Nguyen", email: "quy.nguyenngoctp@gmail.com", password: "heo1010") if User.count == 0 
 user = User.first
 
-10.times do 
+5.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
     occur_at: Faker::Date.between(1.year.ago, 2.days.ago),
@@ -66,7 +66,7 @@ user = User.first
 end 
 
 
-10.times do 
+5.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
     occur_at: Date.today,
@@ -78,7 +78,7 @@ end
 end 
 
 
-10.times do 
+5.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
     occur_at: Date.today,
@@ -90,7 +90,7 @@ end
 end 
 
 
-10.times do 
+5.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
     occur_at: Faker::Date.between(1.year.ago, 2.days.ago),

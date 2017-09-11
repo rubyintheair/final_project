@@ -32,6 +32,7 @@ gem "bulma-rails", github: "harley/bulma-rails"
 gem 'jquery-rails'
 gem "chartkick"
 gem 'groupdate'
+gem 'hightop'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

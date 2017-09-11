@@ -206,11 +206,11 @@ class DailyCashflowsController < ApplicationController
     @last_week_cashflows = DailyCashflow.where("occur_at >= ? AND occur_at <= ?", 1.week.ago, Time.now)
     @last_week_vnd_income = @last_week_cashflows.where("currency_id": "2").where("cashflow_type_id": "1")
     @last_week_vnd_outcome = @last_week_cashflows.where("currency_id": "2").where("cashflow_type_id": "2")
-    @last_week_usd_income = @last_week_cashflows.where("currency_id": "1").where("cashflow_type_id": "1")
-    @last_week_usd_outcome = @last_week_cashflows.where("currency_id": "1").where("cashflow_type_id": "2")
+    @last_week_usd_income = @last_week_cashflows.where("currency_id": "1").where("cashflow_type_id": 1)
+    @last_week_usd_outcome = @last_week_cashflows.where("currency_id": "1").where("cashflow_type_id": 2)
     
     @last_day = @cashflows.map {|e| e.occur_at.to_date}.max
-    @last_day_cashflows = @cashflows.where("occur_at": @last_day)
+    @last_day_cashflows = @cashflows.where("date(occur_at) in (?)", @last_day)
     @last_day_vnd_income = @last_day_cashflows.where("currency_id": "2").where("cashflow_type_id": "1").sum {|e| e.amount}
     @last_day_vnd_outcome = @last_day_cashflows.where("currency_id": "2").where("cashflow_type_id": "2").sum {|e| e.amount}
     @last_day_vnd_total = @last_day_vnd_income - @last_day_vnd_outcome
@@ -260,6 +260,8 @@ class DailyCashflowsController < ApplicationController
           (cf.purpose_id == index + 1 && cf.currency_id == "1" && cf.cashflow_type.trend == "Outcome")
         end.sum {|e| e.amount} ]
       end 
+
+    
   end  
 
 end
