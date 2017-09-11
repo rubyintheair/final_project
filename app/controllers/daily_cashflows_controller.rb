@@ -262,6 +262,25 @@ class DailyCashflowsController < ApplicationController
       end 
 
     
+  end 
+
+
+  def monthly_report
+    #Daily report se co gi?
+    # 1. Pie daily income, outcome vnd xong
+    # 2. Pie daily income, outcome usd 
+    # 3. Pie donut daily purpose income/outcome vnd xong  
+    # 4. Pie donut daily purpose income/outcome usd xong
+    # 5. Line 1.week.ago income/outcome vnd xong 
+    # 6. Line 1.week.ago income/outcome usd xong
+    # 7. list as file excel xong
+
+    @cashflows = DailyCashflow.where("user_id": current_user.id)
+    @cashflows_vnd_income = @cashflows.where("currency_id": "2").where("cashflow_type_id": "1")
+    @cashflows_vnd_outcome = @cashflows.where("currency_id": "2").where("cashflow_type_id": "2")
+    @cashflows_usd_income = @cashflows.where("currency_id": "1").where("cashflow_type_id": "1")
+    @cashflows_usd_outcome = @cashflows.where("currency_id": "1").where("cashflow_type_id": "2") 
+    
   end  
 
 end

@@ -2,62 +2,136 @@
 <% unless current_user.daily_cashflows.count < 1 %>
   <h1>These graph display the data of: <%= @last_day %></h1>
   
-  <div class="card">
-    <div class="card-header">
-      <div class="card-header-title">
-      Income VS outcome in VND currency 
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">
+          Income VS outcome in VND currency 
+          </div>
+        </div>
+        <%= pie_chart @last_day_vnd_cashflow_type, width: "550px", height: "200px", download: true %>
       </div>
     </div>
-    <%= pie_chart @last_day_vnd_cashflow_type, width: "500px", height: "200px", download: true %>
-  </div>
-  <br>
 
-  <div class="card">
-    <div class="card-header">
-      <div class="card-header-title">
-      Income VS outcome in USD currency
+    <div class="column ">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">
+          Income VS outcome in USD currency
+          </div>
+        </div>
+        <%= pie_chart @last_day_usd_cashflow_type, width: "550px", height: "200px", download: true %>
       </div>
     </div>
-    <%= pie_chart @last_day_usd_cashflow_type, width: "500px", height: "200px" %>
   </div>
 
   <br>
 
-  <div class="card">
-    <h1>Income by purpose in VND currency</h1>
-    <%= pie_chart @last_day_vnd_income_purpose, width: "600px", height: "350px"  %>
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">
+            Income by purpose in VND currency
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:row">
+        <%= pie_chart @last_day_vnd_income_purpose, width: "550px", height: "350px"  %>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">
+            Outcome by purpose in VND currency
+          </div>
+        </div>
+        <%= pie_chart @last_day_vnd_outcome_purpose, width: "550px", height: "350px" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">
+            Income by purpose in USD currency
+          </div>
+        </div>
+        <%= pie_chart @last_day_usd_income_purpose, width: "550px", height: "350px" %>
+      </div>
+    </div>
+    <div class="column">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-header-title">
+            Outcome by purpose in USD currency
+          </div>
+        </div>
+        <%= pie_chart @last_day_usd_outcome_purpose, width: "550px", height: "350px"  %>
+      </div>
+    </div>
   </div>
   <br>
-  <div class="card">
-    <h1>Outcome by purpose in VND currency</h1>
-    <%= pie_chart @last_day_vnd_outcome_purpose, width: "600px", height: "300px", legend: false  %>
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 15px">
+          <div class="card-header-title">
+            Income in VND currency during last week
+          </div>
+        </div>
+        <%= line_chart @last_week_vnd_income.group_by_day(:occur_at).sum(:amount), width: "550px", height: "300px"%>
+      </div>
+    </div>
+    <br>
+      <div class="column">
+        <div class="card">
+          <div class="card-header" style="margin-bottom: 15px">
+            <div class="card-header-title">
+              Outcome in VND currency during last week
+            </div>
+          </div>
+          <%= line_chart @last_week_vnd_outcome.group_by_day(:occur_at).sum(:amount), width: "550px", height: "300px" %>
+        </div>
+      </div>
+    </div>
+
+
+<br>
+
+  <div class="columns">
+    
+    <div class="column">
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 15px">
+          <div class="card-header-title">
+            Income in USD currency during last week
+          </div>
+        </div>
+        <%= line_chart @last_week_usd_income.group_by_day(:occur_at).sum(:amount), width: "550px", height: "300px"%>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 15px">
+          <div class="card-header-title">
+            Outcome in USD currency during last week
+          </div>
+        </div>
+        <%= line_chart @last_week_usd_outcome.group_by_day(:occur_at).sum(:amount), colors: ["pink", "#999"], width: "500px", height: "300px" %>
+      </div>
+    </div>
+
   </div>
+
   <br>
-  <div class="card">
-    <h1>Income by purpose in USD currency</h1>
-    <%= pie_chart @last_day_usd_income_purpose, width: "600px", height: "350px" %>
-  </div>
-  <br>
-  <div class="card">
-    <h1>Outcome by purpose in USD currency</h1>
-    <%= pie_chart @last_day_usd_outcome_purpose, width: "600px", height: "350px"  %>
-  </div>
-  <br>
-  <div class="card">
-    <h1>Income in VND currency during last week </h1>
-    <%= line_chart @last_week_vnd_income.group_by_day(:occur_at).sum(:amount), width: "500px", height: "200px"%>
-  </div>
-  <br>
-  <div class="card">
-    <h1>Outcome in VND currency during last week </h1>
-    <%= line_chart @last_week_vnd_outcome.group_by_day(:occur_at).sum(:amount), width: "500px", height: "200px" %>
-  </div>
-  <br>
-  <h1>Income in USD currency during last week </h1>
-  <%= line_chart @last_week_usd_income.group_by_day(:occur_at).sum(:amount), width: "500px", height: "200px"%>
-  <br>
-  <h1>Outcome in USD currency during last week </h1>
-  <%= line_chart @last_week_usd_outcome.group_by_day(:occur_at).sum(:amount), colors: ["pink", "#999"], width: "500px", height: "200px" %>
+  
   <h1>Report each transaction as excel file </h1>
   <%= render "display_by_attribute", {cashflows:@last_day_cashflows, total:  @last_day_vnd_total, incomes:  @last_day_vnd_income, outcomes:  @last_day_vnd_outcome }%>
 

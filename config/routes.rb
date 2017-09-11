@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get "index_1" => "daily_cashflows#index_1"
   get "index_2" => "daily_cashflows#index_2"
   get "daily_report" => "daily_cashflows#daily_report"
+  get "monthly_report" => "daily_cashflows#monthly_report"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :users
