@@ -12,9 +12,9 @@
         <th><%= index %></th>
         <td><%= transaction.amount %></td>
         <td><%= transaction.content %></td>
-        <td><%= transaction.currency.name %></td>
+        <td><%= transaction.currency %></td>
         <td><%= transaction.occur_at %></td>
-        <td><%= transaction.cashflow_type.trend %></td>
+        <td><%= transaction.cashflow_type %></td>
         <td><%= transaction.purpose.purpose_name %></td>
       </tr>
     <% end %>

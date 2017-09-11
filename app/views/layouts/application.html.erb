@@ -25,16 +25,7 @@
           <%= link_to "Logout",logout_path %>
         </div>
         <div class="navbar-item">
-          <%= link_to "Create Spending Purpose", new_purpose_path %>
-        </div>
-        <div class="navbar-item">
-          <%= link_to "Create Cashflow type", new_cashflow_type_path %>
-        </div>
-        <div class="navbar-item">
-          <%= link_to "Create a friend's name", new_friend_path %>
-        </div>
-        <div class="navbar-item">
-          <%= link_to "Create a daily cashflow", new_daily_cashflow_path	 %>
+          <%= link_to "Create new transaction", new_daily_cashflow_path %>
         </div>
         <div class="navbar-item">
           <%= link_to "General Report", daily_cashflows_path %>
@@ -44,9 +35,6 @@
         </div>
         <div class="navbar-item">
           <%= link_to "Monthly Report", monthly_report_path %>
-        </div>
-        <div class="navbar-item">
-          <%= link_to "......", banks_display_path %>
         </div>
       <% end %>
     </div>
