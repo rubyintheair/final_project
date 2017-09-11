@@ -1,5 +1,5 @@
 <h1>Welcome to Daily Report</h1>
-<% unless current_user.daily_cashflows.count < 1 %>
+<% if current_user.daily_cashflows.count >= 1 %>
   <h1>These graph display the data of: <%= @last_day %></h1>
   
   <div class="columns">

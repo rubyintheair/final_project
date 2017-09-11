@@ -266,20 +266,12 @@ class DailyCashflowsController < ApplicationController
 
 
   def monthly_report
-    #Daily report se co gi?
-    # 1. Pie daily income, outcome vnd xong
-    # 2. Pie daily income, outcome usd 
-    # 3. Pie donut daily purpose income/outcome vnd xong  
-    # 4. Pie donut daily purpose income/outcome usd xong
-    # 5. Line 1.week.ago income/outcome vnd xong 
-    # 6. Line 1.week.ago income/outcome usd xong
-    # 7. list as file excel xong
-
     @cashflows = DailyCashflow.where("user_id": current_user.id)
-    @cashflows_vnd_income = @cashflows.where("currency_id": "2").where("cashflow_type_id": "1")
-    @cashflows_vnd_outcome = @cashflows.where("currency_id": "2").where("cashflow_type_id": "2")
-    @cashflows_usd_income = @cashflows.where("currency_id": "1").where("cashflow_type_id": "1")
-    @cashflows_usd_outcome = @cashflows.where("currency_id": "1").where("cashflow_type_id": "2") 
+    @monthly_cashflows = @cashflows.where("date(occur_at) > (?) AND date(occur_at) < (?)", 1.month.ago.beginning_of_month, 1.month.ago.end_of_month)
+    @cashflows_vnd_income = @monthly_cashflows.where("currency_id": "2").where("cashflow_type_id": "1")
+    @cashflows_vnd_outcome = @monthly_cashflows.where("currency_id": "2").where("cashflow_type_id": "2")
+    @cashflows_usd_income = @monthly_cashflows.where("currency_id": "1").where("cashflow_type_id": "1")
+    @cashflows_usd_outcome = @monthly_cashflows.where("currency_id": "1").where("cashflow_type_id": "2") 
     
   end  
 
