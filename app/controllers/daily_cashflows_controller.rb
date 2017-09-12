@@ -208,19 +208,19 @@ class DailyCashflowsController < ApplicationController
     @last_day_cashflows_vnd = current_user.cashflow_by_day(@last_day, "VND")
     @last_day_cashflows_usd = current_user.cashflow_by_day(@last_day, "USD")
 
-    @last_day_vnd_income = current_user.sum_by_day(@last_day, "VND")["Income"]
-    @last_day_vnd_outcome = current_user.sum_by_day(@last_day, "VND")["Outcome"]
-    @last_day_vnd_total = @last_day_vnd_income - @last_day_vnd_outcome 
-    @last_day_usd_income = current_user.sum_by_day(@last_day, "USD")["Income"]
-    @last_day_usd_outcome = current_user.sum_by_day(@last_day, "USD")["Outcome"]
-    @last_day_usd_total = @last_day_usd_income - @last_day_usd_outcome 
+    @last_day_vnd_sum_by_day = current_user.sum_by_day(@last_day, "VND")
+    @last_day_usd_sum_by_day = current_user.sum_by_day(@last_day, "USD")
+    
 
     @last_day_vnd_income_purpose = current_user.cashflow_by_day_purpose(@last_day, "VND", "Income")
     @last_day_vnd_outcome_purpose = current_user.cashflow_by_day_purpose(@last_day, "VND", "Outcome")
-    @this_week_vnd_cashflows = current_user.cashflow_by_between(Date.today.beginning_of_week, Date.today, "VND")
-    @this_week_usd_cashflows = current_user.cashflow_by_between(Date.today.beginning_of_week, Date.today, "USD")
-    @this_week_usd_cashflows = current_user.daily_cashflows.between(Date.today.beginning_of_week, Date.today).where(currency: "USD").where(cashflow_type: "Income")
+    
+    @this_week_vnd_income_cashflows = current_user.sum_by_between(Date.today.beginning_of_week, Date.today, "VND", "Income")
+    @this_week_vnd_outcome_cashflows = current_user.sum_by_between(Date.today.beginning_of_week, Date.today, "VND", "Outcome")
+    @this_week_usd_income_cashflows = current_user.sum_by_between(Date.today.beginning_of_week, Date.today, "USD", "Income")
+    @this_week_usd_outcome_cashflows = current_user.sum_by_between(Date.today.beginning_of_week, Date.today, "USD", "Outcome")
 
+    # current_user.daily_cashflows.where("occur_at >= ? AND occur_at <= ?", Date.today.beginning_of_week, Date.today).where(currency: "VND").where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount)
 
 
     

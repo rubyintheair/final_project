@@ -7,16 +7,27 @@ class User < ApplicationRecord
     daily_cashflows.on_day(date).where(currency: currency).group(:cashflow_type).count
   end
 
-  def cashflow_by_between(from, to, currency)
-    daily_cashflows.between(from, to).where(currency: currency).group(:cashflow_type).count
+  def cashflow_by_between(from, to, currency, cashflow_type)
+    daily_cashflows.between(from, to).where(currency: currency).where(cashflow_type: cashflow_type).group_by_day(:occur_at).count
   end 
+
+  def cashflow_by_between_general(from, to, currency, cashflow_type)
+    daily_cashflows.between(from, to).where(currency: currency).where(cashflow_type: cashflow_type).group_by_day(:occur_at)
+  end 
+
+  def sum_by_between(from, to, currency, cashflow_type)
+    cashflow_by_between_general(from, to, currency, cashflow_type).sum(:amount)
+    daily_cashflows.between(from, to).where(currency: currency).where(cashflow_type: cashflow_type).group_by_day(:occur_at).sum(:amount)
+  end 
+
+  
 
   def sum_by_day(date, currency)
     daily_cashflows.on_day(date).where(currency: currency).group(:cashflow_type).sum(:amount)
   end 
 
   def cashflow_by_day_purpose(date, currency, cashflow_type)
-    daily_cashflows.on_day(date).where(currency: currency).where(cashflow_type: cashflow_type).group(:purpose_id).count.to_a.map{|k,v| [Purpose.find(k).purpose_name, v] }.to_h
+    daily_cashflows.on_day(date).where(currency: currency).where(cashflow_type: cashflow_type).group(:purpose_id).sum(:amount).to_a.map{|k,v| [Purpose.find(k).purpose_name, v] }.to_h
   end
 
   

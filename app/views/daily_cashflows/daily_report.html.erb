@@ -30,15 +30,14 @@
 
   
   <div class="columns">
-    
     <div class="column">
       <div class="card">
         <div class="card-header" style="margin-bottom: 15px">
           <div class="card-header-title">
-            Income in USD currency during last week
+            Income in VND currency of this week
           </div>
         </div>
-        <%#<%= line_chart @last_day_cashflows_vnd.group_by_day(:occur_at).sum(:amount), width: "550px", height: "300px"%>%>
+        <%= line_chart @this_week_vnd_income_cashflows, width: "550px", height: "300px"%>
       </div>
     </div>
 
@@ -46,17 +45,41 @@
       <div class="card">
         <div class="card-header" style="margin-bottom: 15px">
           <div class="card-header-title">
-            Outcome in USD currency during last week
+            Outcome in VND currency of this week
           </div>
         </div>
-        <%= line_chart @this_week_usd_cashflows.group_by_day(:occur_at).sum(:amount), colors: ["pink", "#999"], width: "500px", height: "300px" %>
+        <%= line_chart @this_week_vnd_outcome_cashflows, colors: ["pink", "#999"], width: "500px", height: "300px" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 15px">
+          <div class="card-header-title">
+            Income in USD currency of this week
+          </div>
+        </div>
+        <%= line_chart @this_week_usd_income_cashflows, width: "550px", height: "300px"%>
       </div>
     </div>
 
+    <div class="column">
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 15px">
+          <div class="card-header-title">
+            Outcome in USD currency of this week
+          </div>
+        </div>
+        <%= line_chart @this_week_usd_outcome_cashflows, colors: ["pink", "#999"], width: "500px", height: "300px" %>
+      </div>
+    </div>
   </div>
 
   <%= pie_chart @last_day_vnd_income_purpose %>
   <%= pie_chart @last_day_vnd_outcome_purpose %>
+  
   <br>
   
   <h1>Report each transaction as excel file </h1>
@@ -76,14 +99,14 @@
         <tr>
           <td><%= currency %></td>
           <% if index == 0 %>
-            <td><%= @last_day_usd_income %></td>
-            <td><%= @last_day_usd_outcome %></td>
-            <td><%= @last_day_usd_total %></td>
+            <td><%= @last_day_usd_sum_by_day["Income"] || @last_day_usd_sum_by_day["Income"] = 0 %></td>
+            <td><%= @last_day_usd_sum_by_day["Outcome"] || @last_day_usd_sum_by_day["Outcome"] = 0 %></td>
+            <td><%= (@last_day_usd_sum_by_day["Income"] - @last_day_usd_sum_by_day["Outcome"]) %></td>
             
           <% elsif index == 1 %>
-            <td><%= @last_day_vnd_income %></td>
-            <td><%= @last_day_vnd_outcome %></td>
-            <td><%= @last_day_vnd_total %></td>
+            <td><%= @last_day_vnd_sum_by_day["Income"] || @last_day_vnd_sum_by_day["Income"] = 0 %></td>
+            <td><%= @last_day_vnd_sum_by_day["Outcome"] || @last_day_vnd_sum_by_day["Outcome"] = 0 %></td>
+            <td><%= (@last_day_vnd_sum_by_day["Income"] - @last_day_vnd_sum_by_day["Outcome"] )%></td>
           <% end %>
         </tr>
       <% end %>
