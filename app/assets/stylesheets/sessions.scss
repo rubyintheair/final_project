@@ -1,3 +1,20 @@
 // Place all the styles related to the Sessions controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.login-background {
+   position: relative;
+}
+
+.login-background:after {
+    content : "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: url("http://travelfashiongirl.com/wp-content/uploads/2016/12/best-travel-shoes-cover.jpg"); 
+    width: 100%;
+    opacity : 0.4;
+    z-index: -1;
+    height: 80vh;
+}
