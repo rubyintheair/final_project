@@ -30,7 +30,7 @@
 }
 
 .navbar {
-    background-color: #005580;
+    background-color: $firstcolor;
 }
 
 .general-field {
@@ -42,11 +42,24 @@
 }
 
 .card-header {
-    // background-color: #b3cce6;
+    background-color:  $firstcolor;
     // border: 0.1px solid #19324d;
+    .card-header-title {
+        color: white;
+        font-family: "Helvetica";
+    }
+    
 }
 
 .card {
     // border: 0.1px solid #005580;
     border: hidden;
+}
+
+.table{
+    th {
+    background-color: $firstcolor;
+    color: white !important;
+    font-family: "Helvetica";
+    }
 }
