@@ -1,18 +1,18 @@
 
 <%= form_for User.new do |f| %>
-  <div class="field">
-    <%= f.text_field :name, placeholder: "Name", class: "input" %>
+  <div class="field general-field new-user-field">
+    <%= f.text_field :name, placeholder: "Name", class: "input " %>
   </div>
-  <div class="field">
+  <div class="field general-field new-user-field">
   <%= f.text_field :email, placeholder: "Email", class: "input" %>
   </div>
-  <div class="field">
+  <div class="field general-field new-user-field">
   <%= f.password_field :password, placeholder: "Password", class: "input" %>
   </div>
-  <div class="field">
-  <%= f.password_field :password_confirmation, placeholder: "Password confirmation", class: "input" %>
+  <div class="field general-field new-user-field">
+  <%= f.password_field :password_confirmation, placeholder: "Password confirmation", class: "input " %>
   </div>
-  <div class="field">
-  <%= f.submit "Tao acount nhaz", class: "button is-primary"%>
+  <div class="field general-submit new-user-submit">
+  <%= f.submit "Create new account", class: "button is-primary"%>
   </div>
 <% end %>

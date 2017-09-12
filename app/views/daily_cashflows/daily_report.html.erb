@@ -1,7 +1,6 @@
-<h1>Welcome to Daily Report</h1>
+
+<div class="daily-report">
 <% if current_user.daily_cashflows.count >= 1 %>
-  <h1>These graph display the data of: <%= @last_day %></h1>
-  
   <div class="columns">
     <div class="column">
       <div class="card">
@@ -10,7 +9,9 @@
           Income VS outcome in VND currency 
           </div>
         </div>
-        <%= pie_chart @last_day_cashflows_vnd, width: "550px", height: "200px", download: true %>
+        <div class="card-content">
+          <%= pie_chart @last_day_cashflows_vnd,  width: "550px", height: "200px", download: true %>
+        </div>
       </div>
     </div>
 
@@ -21,12 +22,69 @@
           Income VS outcome in USD currency
           </div>
         </div>
-        <%= pie_chart @last_day_cashflows_usd, width: "550px", height: "200px", download: true %>
+        <div class="card-content">
+          <%= pie_chart @last_day_cashflows_usd, download: true, width: "550px", height: "200px"%>
+        </div>
       </div>
     </div>
   </div>
 
   <br>
+
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 15px">
+          <div class="card-header-title">
+            Income in VND based on purpose
+          </div>
+        </div>
+        <div class="card-content">
+          <%= pie_chart @last_day_vnd_income_purpose, width: "550px", height: "220px", download: true%>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 15px">
+          <div class="card-header-title">
+            Outcome in VND based on purpose
+          </div>
+        </div>
+        <div class="card-content">
+          <%= pie_chart @last_day_vnd_outcome_purpose, width: "550px", height: "220px", download: true %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns">
+    <div class="column">
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 15px">
+          <div class="card-header-title">
+            Income in USD based on purpose
+          </div>
+        </div>
+        <div class="card-content">
+          <%= pie_chart @last_day_usd_income_purpose, width: "550px", height: "220px", download: true%>
+        </div>
+      </div>
+    </div>
+
+    <div class="column">
+      <div class="card">
+        <div class="card-header" style="margin-bottom: 15px">
+          <div class="card-header-title">
+            Outcome in USD based on purpose
+          </div>
+        </div>
+        <%= pie_chart @last_day_usd_outcome_purpose, width: "550px", height: "220px", download: true %>
+      </div>
+    </div>
+  </div>
+
 
   
   <div class="columns">
@@ -77,54 +135,7 @@
     </div>
   </div>
 
-  <div class="columns">
-    <div class="column">
-      <div class="card">
-        <div class="card-header" style="margin-bottom: 15px">
-          <div class="card-header-title">
-            Income in VND based on purpose
-          </div>
-        </div>
-        <%= pie_chart @last_day_vnd_income_purpose, width: "550px", height: "220px", download: true%>
-      </div>
-    </div>
-
-    <div class="column">
-      <div class="card">
-        <div class="card-header" style="margin-bottom: 15px">
-          <div class="card-header-title">
-            Outcome in VND based on purpose
-          </div>
-        </div>
-        <%= pie_chart @last_day_vnd_outcome_purpose, width: "550px", height: "220px", download: true %>
-      </div>
-    </div>
-  </div>
-
-  <div class="columns">
-    <div class="column">
-      <div class="card">
-        <div class="card-header" style="margin-bottom: 15px">
-          <div class="card-header-title">
-            Income in USD based on purpose
-          </div>
-        </div>
-        <%= pie_chart @last_day_usd_income_purpose, width: "550px", height: "220px", download: true%>
-      </div>
-    </div>
-
-    <div class="column">
-      <div class="card">
-        <div class="card-header" style="margin-bottom: 15px">
-          <div class="card-header-title">
-            Outcome in USD based on purpose
-          </div>
-        </div>
-        <%= pie_chart @last_day_usd_outcome_purpose, width: "550px", height: "220px", download: true %>
-      </div>
-    </div>
-  </div>
-
+  
 
   
   
@@ -138,7 +149,7 @@
     <thead>
       <tr>
         <th>Currency</th>
-        <% ["Income", "Outcome", "Income - Outcome", "Outcome - The largest purpose", "Outcome - The smallest purpose", "Income - The largest purpose", "Income - The smallest purpose"].each do |e| %>
+        <% ["Income", "Outcome", "Income - Outcome"].each do |e| %>
           <th><%= e %></th>
         <% end %>
       </tr>
@@ -162,3 +173,4 @@
     </tbody>
   </table>
 <% end %>
+</div>

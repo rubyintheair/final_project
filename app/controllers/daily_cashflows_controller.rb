@@ -1,4 +1,6 @@
 class DailyCashflowsController < ApplicationController
+  before_action :authenticate_user!
+  
   def new
     @daily_cash_flow = current_user.daily_cashflows.build(occur_at: Time.now)
   end
@@ -217,10 +219,10 @@ class DailyCashflowsController < ApplicationController
     @last_day_usd_income_purpose = current_user.cashflow_by_day_purpose(@last_day, "USD", "Income")
     @last_day_usd_outcome_purpose = current_user.cashflow_by_day_purpose(@last_day, "USD", "Outcome")
     
-    @this_week_vnd_income_cashflows = current_user.sum_by_between_general(Date.today.beginning_of_week, Date.today, "VND", "Income").group_by_day(:occur_at).sum(:amount)
-    @this_week_vnd_outcome_cashflows = current_user.sum_by_between_general(Date.today.beginning_of_week, Date.today, "VND", "Outcome").group_by_day(:occur_at).sum(:amount)
-    @this_week_usd_income_cashflows = current_user.sum_by_between_general(Date.today.beginning_of_week, Date.today, "USD", "Income").group_by_day(:occur_at).sum(:amount)
-    @this_week_usd_outcome_cashflows = current_user.sum_by_between_general(Date.today.beginning_of_week, Date.today, "USD", "Outcome").group_by_day(:occur_at).sum(:amount)
+    @this_week_vnd_income_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", "Income").group_by_day(:occur_at).sum(:amount)
+    @this_week_vnd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", "Outcome").group_by_day(:occur_at).sum(:amount)
+    @this_week_usd_income_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "USD", "Income").group_by_day(:occur_at).sum(:amount)
+    @this_week_usd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "USD", "Outcome").group_by_day(:occur_at).sum(:amount)
 
     # current_user.daily_cashflows.where("occur_at >= ? AND occur_at <= ?", Date.today.beginning_of_week, Date.today).where(currency: "VND").where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount)
 
@@ -232,12 +234,10 @@ class DailyCashflowsController < ApplicationController
 
 
   def monthly_report
-    @cashflows = DailyCashflow.where("user_id": current_user.id)
-    @monthly_cashflows = @cashflows.where("date(occur_at) > (?) AND date(occur_at) < (?)", 1.month.ago.beginning_of_month, 1.month.ago.end_of_month)
-    @cashflows_vnd_income = @monthly_cashflows.where("currency_id": "2").where("cashflow_type_id": "1")
-    @cashflows_vnd_outcome = @monthly_cashflows.where("currency_id": "2").where("cashflow_type_id": "2")
-    @cashflows_usd_income = @monthly_cashflows.where("currency_id": "1").where("cashflow_type_id": "1")
-    @cashflows_usd_outcome = @monthly_cashflows.where("currency_id": "1").where("cashflow_type_id": "2") 
+    #Trong monthly report, Quy muon co gi?
+    @last_day = current_user.last_date
+    @last_month = current_user.last_date.month
+    @last_month_cashflow = current_user.period_cashflows(@last_day.beginning_of_month, @last_day.end_of_month)
     
   end  
 

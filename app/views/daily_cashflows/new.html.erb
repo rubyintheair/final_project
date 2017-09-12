@@ -1,29 +1,45 @@
-
-
-<div style="width: 400px">
-<%= form_for @daily_cash_flow do |f| %>
-  <div class="field">
-    <%= f.number_field :amount, placeholder: "Amount", class: "input" %>
+<div class="columns is-centered daily_cashflow_form">
+  <div class="column is-4">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-title">Create new transaction</div>
+      </div>
+      <%= form_for @daily_cash_flow do |f| %>
+        <div class="field daily_cashflow_field">
+          <%= f.number_field :amount, placeholder: "Amount", class: "input" %>
+        </div>
+        <div class="field daily_cashflow_field">
+          <%= f.datetime_field :occur_at, class: "input" %>
+        </div>
+        <div class="field daily_cashflow_field">
+          <%= f.text_area :content, placeholder: "Content", class: "input" %>
+        </div>
+        <div class="field daily_cashflow_field">
+          <label class="label">Cashflow type: </label>
+          <div class="control">
+            <div class="select">
+              <%= f.select(:cashflow_type, DailyCashflow.cashflow_types.keys.map {|type| [type.titleize, type]}) %>
+            </div>
+          </div>
+        </div>
+        <div class="field daily_cashflow_field">
+          <label class="label">Purpose: </label>
+          <div class="control">
+            <div class="select is-primary">
+              <%= f.select :purpose_id, options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
+            </div>
+          </div>
+        </div>
+        <div class="field daily_cashflow_field">
+          <label class="label">Currency: </label>
+          <div class="control">
+            <div class="select is-primary">
+              <%= f.select(:currency, DailyCashflow.currencies.keys.map {|currency| [currency.titleize.upcase, currency]}) %>
+            </div>
+          </div>
+        </div>
+        <%= f.submit "Submit", class: "button is-primary" %>
+      <% end %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.datetime_field :occur_at, class: "input" %>
-  </div>
-  <div class="field">
-    <%= f.text_area :content, placeholder: "Content", class: "input" %>
-  </div>
-  <div class="field">
-    <label class="label">Cashflow type: </label>
-    <%#<%= f.select :cashflow_type, options_from_collection_for_select(DailyCashflow::CASHFLOW_TYPES, "Income", "Outcome") %>
-    <%= f.select(:cashflow_type, DailyCashflow.cashflow_types.keys.map {|type| [type.titleize, type]}) %>
-  </div>
-  <div class="field">
-    <label class="label">Purpose: </label>
-    <%= f.select :purpose_id, options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
-  </div>
-  <div class="field">
-    <label class="label">Currency: </label>
-    <%= f.select(:currency, DailyCashflow.currencies.keys.map {|currency| [currency.titleize.upcase, currency]}) %>
-  </div>
-  <%= f.submit "Create new cashflow nhaz" %>
-<% end %>
 </div>

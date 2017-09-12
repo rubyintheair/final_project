@@ -13,15 +13,40 @@
  *= require_tree .
  *= require_self
  */
+ @import "bulma-variables";
  @import "bulma";
  @import "homes";
+ @import "daily_cashflows";
+ @import "daily_report";
+ @import "users";
+
  
  form#new_user {
-   margin-left: 5px;
-   margin-right: 5px;
-   margin-top: 10px;
+  margin: 5px 10px;
 }
 
 .button.is-primary {
     margin-bottom: 5px;
+}
+
+.navbar {
+    background-color: #005580;
+}
+
+.general-field {
+  margin: 20px;
+}
+
+.general-submit {
+  margin-bottom: 50px;
+}
+
+.card-header {
+    // background-color: #b3cce6;
+    // border: 0.1px solid #19324d;
+}
+
+.card {
+    // border: 0.1px solid #005580;
+    border: hidden;
 }

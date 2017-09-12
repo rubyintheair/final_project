@@ -1,0 +1,28 @@
+$color1: rgba(123, 223, 242, 1);
+$color2: rgba(178, 247, 239, 1);
+$color3: rgba(252, 181, 181, 1);
+$color4: rgba(239, 247, 246, 1);
+$color5: rgba(0, 0, 0, 1);
+$color6: rgba(237, 37, 78, 1);
+$color7: rgba(255, 105, 120, 1);
+$color8: rgba(254, 192, 170, 1);
+$pink: #ffb3b3;
+$light-pink: #ffe6e6;
+
+
+$primaryColor: $pink;
+$linkColor: $color6;
+$info: $color2;
+$success: $color7;
+$link-active: $color7;
+
+$navbar-background-color: $primaryColor;
+
+$navbar-item-color: $linkColor;
+$navbar-item-hover-color: $linkColor;
+$navbar-item-hover-background-color: darken($primaryColor, 10%);
+
+$navbar-dropdown-background-color: $primaryColor;
+$navbar-dropdown-item-active-background-color: $primaryColor;
+$navbar-dropdown-item-hover-background-color: darken($primaryColor, 10%);
+$navbar-dropdown-item-hover-color: $linkColor;

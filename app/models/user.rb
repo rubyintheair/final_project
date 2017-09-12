@@ -38,4 +38,8 @@ class User < ApplicationRecord
     daily_cashflows.on_day(last_date)
   end 
 
+  def period_cashflows(from, to)
+    daily_cashflows.between(from, to)
+  end 
+
 end

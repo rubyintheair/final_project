@@ -30,5 +30,5 @@ Rails.application.routes.draw do
   end 
   resources :terms
   resources :currencies 
-  root "homes#index"
+  root "daily_cashflows#daily_report"
 end
