@@ -11,7 +11,7 @@ $light-pink: #ffe6e6;
 
 
 $firstcolor: #ac3973;
-$primaryColor: $pink;
+$primaryColor: $firstcolor;
 $linkColor: $color6;
 $info: $color2;
 $success: $color7;
@@ -21,7 +21,7 @@ $navbar-background-color: $primaryColor;
 
 $navbar-item-color: $linkColor;
 $navbar-item-hover-color: $linkColor;
-$navbar-item-hover-background-color: darken($primaryColor, 10%);
+$navbar-item-hover-background-color: darken($firstcolor, 10%);
 
 $navbar-dropdown-background-color: $primaryColor;
 $navbar-dropdown-item-active-background-color: $primaryColor;

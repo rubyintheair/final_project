@@ -2,12 +2,22 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+// body.daily_cashflows.new {
+//   background-image: url("http://static1.squarespace.com/static/529932aae4b09eb8019084ca/t/54c13b7ee4b04b34af22a62e/1421949832431/coffee+table+flat+lay"); 
+//   height: 100vh;
+//   background-position: center;
+//   background-repeat: repeat;
+//   background-size: cover;
+// }
+
 .daily_cashflow_form {
   margin-top: 20px;
+  opacity: 0.95;
+  // padding-bottom: 10px;
 }
 
 form#new_daily_cashflow {
-  margin: 25px 10px;
+  margin: 15px;
 }
 
 .button.is-primary {
@@ -16,7 +26,7 @@ form#new_daily_cashflow {
 }
 
 .daily_cashflow_field {
-  margin: 30px 10px 10px;
+  margin: 20px;
 }
 
 .general-form {

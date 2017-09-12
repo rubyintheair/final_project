@@ -27,11 +27,15 @@
 
 .button.is-primary {
     margin-bottom: 5px;
+    background-color: lighten($firstcolor, 10%);
 }
 
 .navbar {
     background-color: $firstcolor;
     opacity: 0.8;
+    a {
+        color: white;
+    }
 }
 
 .general-field {
@@ -60,6 +64,7 @@
 .table{
     th {
     background-color: $firstcolor;
+    opacity: 0.9;
     color: white !important;
     font-family: "Helvetica";
     }

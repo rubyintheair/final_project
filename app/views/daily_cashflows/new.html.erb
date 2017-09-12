@@ -25,7 +25,7 @@
         <div class="field daily_cashflow_field">
           <label class="label">Purpose: </label>
           <div class="control">
-            <div class="select is-primary">
+            <div class="select">
               <%= f.select :purpose_id, options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
             </div>
           </div>
@@ -33,7 +33,7 @@
         <div class="field daily_cashflow_field">
           <label class="label">Currency: </label>
           <div class="control">
-            <div class="select is-primary">
+            <div class="select">
               <%= f.select(:currency, DailyCashflow.currencies.keys.map {|currency| [currency.titleize.upcase, currency]}) %>
             </div>
           </div>
