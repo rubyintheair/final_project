@@ -138,7 +138,7 @@ class DailyCashflowsController < ApplicationController
   end 
 
   def daily_cashflow_params
-    params.require(:daily_cashflow).permit(:amount, :occur_at, :content, :cashflow_type_id, :purpose_id, :currency_id)
+    params.require(:daily_cashflow).permit(:amount, :occur_at, :content, :cashflow_type, :purpose_id, :currency)
   end 
 
   def index_2 
@@ -206,7 +206,7 @@ class DailyCashflowsController < ApplicationController
 
     
     @last_day = current_user.last_date
-    @last_day_cashflows = current_user.last_date_cashflows
+    @last_day_cashflows = current_user.last_date_cashflows.where(currency: "VND")
     @last_day_cashflows_vnd = current_user.cashflow_by_day(@last_day, "VND")
     @last_day_cashflows_usd = current_user.cashflow_by_day(@last_day, "USD")
 
@@ -236,9 +236,11 @@ class DailyCashflowsController < ApplicationController
   def monthly_report
     #Trong monthly report, Quy muon co gi?
     @last_day = current_user.last_date
-    @last_month = current_user.last_date.month
-    @last_month_cashflow = current_user.period_cashflows(@last_day.beginning_of_month, @last_day.end_of_month)
-    
+    @last_month = @last_day.last_month
+    @last_month_cashflow = current_user.period_cashflows(@last_month.beginning_of_month, @last_month.end_of_month)
+    @last_month_cashflow_vnd = @last_month_cashflow.where(currency: "VND")
+    # use for pie chart purpose only
+    @last_month_vnd_income_purpose = current_user.cashflow_by_period_purpose(@last_month.beginning_of_month, @last_month.end_of_month, "VND", "Income")
   end  
 
 end

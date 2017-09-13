@@ -30,6 +30,10 @@ class User < ApplicationRecord
     daily_cashflows.on_day(date).where(currency: currency).where(cashflow_type: cashflow_type).group(:purpose_id).sum(:amount).to_a.map{|k,v| [Purpose.find(k).purpose_name, v] }.to_h
   end
 
+  def cashflow_by_period_purpose(from, to, currency, cashflow_type)
+    daily_cashflows.between(from, to).where(currency: currency).where(cashflow_type: cashflow_type).group(:purpose_id).sum(:amount).to_a.map{|k,v| [Purpose.find(k).purpose_name, v] }.to_h
+  end
+
   def last_date
     daily_cashflows.pluck(:occur_at).max.to_date
   end 
@@ -40,6 +44,10 @@ class User < ApplicationRecord
 
   def period_cashflows(from, to)
     daily_cashflows.between(from, to)
+  end
+
+  def by_day_cashflows(date) 
+    daily_cashflows.on_day(date)
   end 
 
 end

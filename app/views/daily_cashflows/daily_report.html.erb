@@ -55,15 +55,10 @@
       </tr>
     </thead>
     <tbody>
-      <% ["USD", "VND"].each_with_index do |currency, index| %>
+      <% ["VND"].each_with_index do |currency, index| %>
         <tr>
           <td><%= currency %></td>
           <% if index == 0 %>
-            <td><%= @last_day_usd_sum_by_day["Income"] || @last_day_usd_sum_by_day["Income"] = 0 %></td>
-            <td><%= @last_day_usd_sum_by_day["Outcome"] || @last_day_usd_sum_by_day["Outcome"] = 0 %></td>
-            <td><%= (@last_day_usd_sum_by_day["Income"] - @last_day_usd_sum_by_day["Outcome"]) %></td>
-            
-          <% elsif index == 1 %>
             <td><%= @last_day_vnd_sum_by_day["Income"] || @last_day_vnd_sum_by_day["Income"] = 0 %></td>
             <td><%= @last_day_vnd_sum_by_day["Outcome"] || @last_day_vnd_sum_by_day["Outcome"] = 0 %></td>
             <td><%= (@last_day_vnd_sum_by_day["Income"] - @last_day_vnd_sum_by_day["Outcome"] )%></td>
