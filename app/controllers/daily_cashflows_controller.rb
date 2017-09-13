@@ -253,7 +253,11 @@ class DailyCashflowsController < ApplicationController
 
     @last_year_vnd_income_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_year, @last_day.end_of_year, "VND", "Income")
     @last_year_vnd_outcome_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_month, @last_day.end_of_month, "VND", "Outcome")
+    raise
+  end 
 
+  def all_report
+    @all_cashflows = current_user.daily_cashflows
   end 
 
 end

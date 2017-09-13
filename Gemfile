@@ -33,6 +33,7 @@ gem 'jquery-rails'
 gem "chartkick"
 gem 'groupdate'
 gem 'hightop'
+gem "font-awesome-rails"
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

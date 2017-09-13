@@ -78,3 +78,19 @@ def search
 Test average <%= line_chart current_user.daily_cashflows.where(currency: "VND").where(cashflow_type: "Income").group_by_month(:occur_at).average(:amount) %>
 
 <%= line_chart Purpose.all.map {|p| {name: p.purpose_name, data: p.daily_cashflows.group_by_day(:occur_at).sum(:amount)}} %>
+
+
+<div class="navbar-item has-dropdown is-hoverable is-active"> 
+        <%= link_to "Report", daily_report_path , class: "navbar-link  "%>
+        <div class="navbar-dropdown is-boxed">
+          <div class="navbar-item">
+            <%= link_to "Daily Report", daily_report_path %>
+          </div>
+          <div class="navbar-item">
+            <%= link_to "Test A", monthly_report_path %>
+          </div>
+          <div class="navbar-item">
+            <%= link_to "Test B", yearly_report_path %>
+          </div>
+        </div>
+      </div>
