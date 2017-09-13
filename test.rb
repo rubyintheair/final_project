@@ -72,3 +72,7 @@ def search
     <% end %>
   <% end %>
 <% end %>
+
+
+<h1>Welcome to monthly report</h1>High top: <%= DailyCashflow.top([:occur_at, :cashflow_type, :purpose_id, :amount])%>
+Test average <%= line_chart current_user.daily_cashflows.where(currency: "VND").where(cashflow_type: "Income").group_by_month(:occur_at).average(:amount) %>
