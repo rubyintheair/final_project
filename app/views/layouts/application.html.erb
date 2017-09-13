@@ -10,30 +10,55 @@
 
   <body class="<%= controller_name %> <%= action_name %>" >
     <div class="navbar">
-      <% unless current_user %>
-        <div class="navbar-item">
-          <%= link_to "Sign up",new_user_path %>
-        </div>
-        <div class="navbar-item">
-          <%= link_to "Login",login_path %>
-        </div>
-      <% else %>
-        <div class="navbar-item">
-          <%= link_to "Homepage",root_path %>
-        </div>
-        <div class="navbar-item">
-          <%= link_to "Logout",logout_path %>
-        </div>
-        <div class="navbar-item">
-          <%= link_to "Create new transaction", new_daily_cashflow_path %>
-        </div>
-        <div class="navbar-item">
-          <%= link_to "Daily Report", daily_report_path %>
-        </div>
-        <div class="navbar-item">
-          <%= link_to "Monthly Report", monthly_report_path %>
-        </div>
-      <% end %>
+      <div class="navbar-menu">
+        <% unless current_user %>
+          <div class="navbar-start">
+            <div class="navbar-item">
+              <%= link_to "Sign up",new_user_path %>
+            </div>
+            <div class="navbar-item">
+              <%= link_to "Login",login_path %>
+            </div>
+          </div>
+        <% else %>
+          <div class="navbar-start">
+            <div class="navbar-item">
+              <%= link_to "Homepage",root_path %>
+            </div>
+            <div class="navbar-item">
+              <%= link_to "Create new transaction", new_daily_cashflow_path %>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable"> 
+              <%= link_to "Report", daily_report_path , class: "navbar-link  is-active"%>
+              <div class="navbar-dropdown is-boxed">
+                <div class="navbar-item">
+                  <%= link_to "Daily Report", daily_report_path %>
+                </div>
+                <div class="navbar-item">
+                  <%= link_to "Test A", monthly_report_path %>
+                </div>
+                <div class="navbar-item">
+                  <%= link_to "Test B", yearly_report_path %>
+                </div>
+              </div>
+            </div>
+            <div class="navbar-item">
+              <%= link_to "Daily Report", daily_report_path %>
+            </div>
+            <div class="navbar-item">
+              <%= link_to "Test A", monthly_report_path %>
+            </div>
+            <div class="navbar-item">
+              <%= link_to "Test B", yearly_report_path %>
+            </div>
+          </div>
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <%= link_to "Logout",logout_path %>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
     <div class="container">
       <%= flash_messages %>

@@ -1,18 +1,20 @@
 
-<%= form_for User.new do |f| %>
-  <div class="field general-field new-user-field">
-    <%= f.text_field :name, placeholder: "Name", class: "input " %>
-  </div>
-  <div class="field general-field new-user-field">
-  <%= f.text_field :email, placeholder: "Email", class: "input" %>
-  </div>
-  <div class="field general-field new-user-field">
-  <%= f.password_field :password, placeholder: "Password", class: "input" %>
-  </div>
-  <div class="field general-field new-user-field">
-  <%= f.password_field :password_confirmation, placeholder: "Password confirmation", class: "input " %>
-  </div>
-  <div class="field general-submit new-user-submit">
-  <%= f.submit "Create new account", class: "button is-primary"%>
-  </div>
-<% end %>
+<div class="general-form user-form">
+  <%= form_for User.new do |f| %>
+    <div class="field general-field new-user-field">
+      <%= f.text_field :name, placeholder: "Name", class: "input " %>
+    </div>
+    <div class="field general-field new-user-field">
+    <%= f.text_field :email, placeholder: "Email", class: "input" %>
+    </div>
+    <div class="field general-field new-user-field">
+    <%= f.password_field :password, placeholder: "Password", class: "input" %>
+    </div>
+    <div class="field general-field new-user-field">
+    <%= f.password_field :password_confirmation, placeholder: "Password confirmation", class: "input " %>
+    </div>
+    <div class="field general-submit new-user-submit column is-centered" style="display: flex; align-items:center; justify-content: center">
+    <%= f.submit "Create new account", class: "button is-primary"%>
+    </div>
+  <% end %>
+</div>

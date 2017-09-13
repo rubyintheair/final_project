@@ -1,19 +1,19 @@
 
 <div class="jumbotron login-appear login-background">
 <div class="columns is-centered">
-  <div class="column is-4">
-    <div class="card login-form sign-up-form general-form">
+  <div class="column is-4 login-form general-form">
+    <div class="card sign-up-form">
       <div class="card-header">
         <div class="card-header-title">Login</div>
       </div>
       <%= form_tag login_path do %>
         <div class="field general-field">
-          <%= text_field_tag :email, params[:email], class: "input", placeholder: "Email" %>
+          <%= text_field_tag :email, params[:email], class: "input login-field", placeholder: "Email" %>
         </div>
-        <div class = "field general-field">
+        <div class = "field general-field login-field">
           <%= password_field_tag :password, nil, class: "input", placeholder: "Password" %>
         </div>
-        <div class="general-submit">
+        <div class="general-submit column is-centered" style="display: flex; align-items:center; justify-content: center">
           <%= submit_tag "Login", class: "button is-primary"%>
         </div>
       <% end %>

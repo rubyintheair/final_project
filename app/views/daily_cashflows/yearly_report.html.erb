@@ -1,18 +1,20 @@
+<h1>This is yearly report page</h1>
+
 
 <div class="monthly-report report">
   <div class="columns">
     <div class="column">
-      <%= render "pie_chart", chart:  @last_month_cashflow_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Outcome by month" %>
+      <%= render "pie_chart", chart:  @last_year_cashflows_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Outcome by month" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @last_month_vnd_income_purpose, title: "Income by purpose" %>
+      <%= render "pie_chart", chart:  @last_year_vnd_income_purpose, title: "Income by purpose" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @last_month_vnd_outcome_purpose, title: "Outcome by purpose" %>
+      <%= render "pie_chart", chart:  @last_year_vnd_outcome_purpose, title: "Outcome by purpose" %>
     </div>
   </div>
 
-  
+  <!--
   <div class="columns">
     <div class="column">
       <%= render "line_chart", chart: @last_month_cashflow_vnd.where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount), title: "Sum income by day" %>
@@ -23,5 +25,5 @@
   </div>
 
   <%= render "display_by_attribute", cashflows: @last_month_cashflow %>
-
+  -->
 </div>

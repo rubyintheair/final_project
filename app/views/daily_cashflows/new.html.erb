@@ -5,16 +5,16 @@
         <div class="card-header-title">Create new transaction</div>
       </div>
       <%= form_for @daily_cash_flow do |f| %>
-        <div class="field daily_cashflow_field">
+        <div class="field daily_cashflow_field general-field">
           <%= f.number_field :amount, placeholder: "Amount", class: "input" %>
         </div>
-        <div class="field daily_cashflow_field">
+        <div class="field daily_cashflow_field general-field">
           <%= f.datetime_field :occur_at, class: "input" %>
         </div>
-        <div class="field daily_cashflow_field">
+        <div class="field daily_cashflow_field general-field">
           <%= f.text_area :content, placeholder: "Content", class: "input" %>
         </div>
-        <div class="field daily_cashflow_field">
+        <div class="field daily_cashflow_field general-field">
           <label class="label">Cashflow type: </label>
           <div class="control">
             <div class="select">
@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        <div class="field daily_cashflow_field">
+        <div class="field daily_cashflow_field general-field">
           <label class="label">Purpose: </label>
           <div class="control">
             <div class="select">
@@ -30,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="field daily_cashflow_field">
+        <div class="field daily_cashflow_field general-field">
           <label class="label">Currency: </label>
           <div class="control">
             <div class="select">
@@ -38,7 +38,9 @@
             </div>
           </div>
         </div>
+        <div class="column is-centered" style="display: flex; align-items:center; justify-content: center">
         <%= f.submit "Submit", class: "button is-primary" %>
+        </div>
       <% end %>
     </div>
   </div>

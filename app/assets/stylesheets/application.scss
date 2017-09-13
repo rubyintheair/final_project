@@ -26,7 +26,6 @@
 }
 
 .button.is-primary {
-    margin-bottom: 10px;
     background-color: lighten($firstcolor, 10%);
 }
 
@@ -39,11 +38,15 @@
 }
 
 .general-field {
-  margin: 20px;
+  margin: 10px;
 }
 
 .general-submit {
   margin-bottom: 50px;
+}
+
+.general-form {
+  margin-top: 40px;
 }
 
 .card-header {

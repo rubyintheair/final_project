@@ -60,7 +60,7 @@
           <td><%= currency %></td>
           <% if index == 0 %>
             <td><%= @last_day_vnd_sum_by_day["Income"] || @last_day_vnd_sum_by_day["Income"] = 0 %></td>
-            <td><%= @last_day_vnd_sum_by_day["Outcome"] || @last_day_vnd_sum_by_day["Outcome"] = 0 %></td>
+            <td><%= @last_day_vnd_sum_by_day["Outcome"] || @last_day_vnd_sum_by_day["Outcome"] = 0 %></td>     
             <td><%= (@last_day_vnd_sum_by_day["Income"] - @last_day_vnd_sum_by_day["Outcome"] )%></td>
           <% end %>
         </tr>
@@ -69,3 +69,10 @@
   </table>
 <% end %>
 </div>
+
+<%#<%= line_chart @last_day_cashflows.where(currency: "VND").map {|e| 
+  {name: e.cashflow_type, data: e.amount } 
+} %>
+
+
+
