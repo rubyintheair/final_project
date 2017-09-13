@@ -14,16 +14,15 @@
     </div>
   </div>
 
-  <!--
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", chart: @last_month_cashflow_vnd.where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount), title: "Sum income by day" %>
+      <%= render "line_chart", chart: @last_year_cashflows_vnd.where(cashflow_type: "Income").group_by_month(:occur_at).sum(:amount), title: "Sum income by month" %>
     </div>
-    <div class="column">
-      <%= render "line_chart", chart: @last_month_cashflow_vnd.where(cashflow_type: "Outcome").group_by_day(:occur_at).sum(:amount), title: "Sum outcome by day" %>
+    <div class="column ">
+      <%= render "line_chart", chart: @last_year_cashflows_vnd.where(cashflow_type: "Outcome").group_by_month(:occur_at).sum(:amount), title: "Sum outcome by month" %>
     </div>
   </div>
 
-  <%= render "display_by_attribute", cashflows: @last_month_cashflow %>
-  -->
+  <%= render "display_by_attribute", cashflows: @last_year_cashflows %>
+  
 </div>

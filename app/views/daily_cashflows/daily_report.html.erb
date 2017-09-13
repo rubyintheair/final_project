@@ -41,8 +41,8 @@
     </div>
   </div>  
   <br>
-  
-  <h1>Report each transaction as excel file </h1>
+  <br>
+  <div class="title">Display all transactions </div>
   <%= render "display_by_attribute", {cashflows:@last_day_cashflows, total:  0, incomes:  0, outcomes:  0 }%>
 
   <table class="table is-bordered is-striped">
@@ -70,9 +70,6 @@
 <% end %>
 </div>
 
-<%#<%= line_chart @last_day_cashflows.where(currency: "VND").map {|e| 
-  {name: e.cashflow_type, data: e.amount } 
-} %>
 
 
 
