@@ -5,13 +5,13 @@
   </div>
   <div class="columns">
     <div class="column">
-      <%= render "pie_chart", chart:  @last_year_cashflows_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Outcome by month" %>
+      <%= render "pie_chart", chart:  @last_year_cashflows_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Expense by year" %>
     </div>
     <div class="column">
       <%= render "pie_chart", chart:  @last_year_vnd_income_purpose, title: "Income by purpose" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @last_year_vnd_outcome_purpose, title: "Outcome by purpose" %>
+      <%= render "pie_chart", chart:  @last_year_vnd_outcome_purpose, title: "Expense by purpose" %>
     </div>
   </div>
 
@@ -20,7 +20,7 @@
       <%= render "line_chart", chart: @last_year_cashflows_vnd.where(cashflow_type: "Income").group_by_month(:occur_at).sum(:amount), title: "Sum income by month" %>
     </div>
     <div class="column ">
-      <%= render "line_chart", chart: @last_year_cashflows_vnd.where(cashflow_type: "Outcome").group_by_month(:occur_at).sum(:amount), title: "Sum outcome by month" %>
+      <%= render "line_chart", chart: @last_year_cashflows_vnd.where(cashflow_type: "Expense").group_by_month(:occur_at).sum(:amount), title: "Sum expense by month" %>
     </div>
   </div>
 

@@ -2,7 +2,7 @@
   <div class="column is-4">
     <div class="card">
       <div class="card-header">
-        <div class="card-header-title">Create new transaction</div>
+        <div class="card-header-title">Create new <%= params[:type] %> transaction</div>
       </div>
       <%= form_for @daily_cash_flow do |f| %>
         <div class="field daily_cashflow_field general-field">
@@ -14,14 +14,7 @@
         <div class="field daily_cashflow_field general-field">
           <%= f.text_area :content, placeholder: "Content", class: "input" %>
         </div>
-        <div class="field daily_cashflow_field general-field">
-          <label class="label">Cashflow type: </label>
-          <div class="control">
-            <div class="select">
-              <%= f.select(:cashflow_type, DailyCashflow.cashflow_types.keys.map {|type| [type.titleize, type]}) %>
-            </div>
-          </div>
-        </div>
+          <%= f.hidden_field :cashflow_type, value: params[:type] %>
         <div class="field daily_cashflow_field general-field">
           <label class="label">Purpose: </label>
           <div class="control">

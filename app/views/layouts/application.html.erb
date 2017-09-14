@@ -37,7 +37,10 @@
           </div>
           <div class="navbar-end">
             <div class="navbar-item">
-              <%= link_to "Create", new_daily_cashflow_path %>
+              <%= link_to "+", new_daily_cashflow_path(type: "Income") %>
+            </div>
+            <div class="navbar-item">
+              <%= link_to "-", new_daily_cashflow_path(type: "Expense") %>
             </div>
             <div class="navbar-item">
               <%= link_to "Logout",logout_path %>

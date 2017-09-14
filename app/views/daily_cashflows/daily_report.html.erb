@@ -24,7 +24,7 @@
     </div>
 
     <div class="column">
-      <%= render "line_chart", chart: @this_week_vnd_outcome_cashflows, title: "Weekly Outcome" %>
+      <%= render "line_chart", chart: @this_week_vnd_outcome_cashflows, title: "Weekly Expense" %>
     </div>
   </div>  
   <br>
@@ -36,7 +36,7 @@
     <thead>
       <tr>
         <th>Currency</th>
-        <% ["Income", "Outcome", "Income - Outcome"].each do |e| %>
+        <% ["Income", "Expense", "Income - Expense"].each do |e| %>
           <th><%= e %></th>
         <% end %>
       </tr>
@@ -47,8 +47,8 @@
           <td><%= currency %></td>
           <% if index == 0 %>
             <td><%= @last_day_vnd_sum_by_day["Income"] || @last_day_vnd_sum_by_day["Income"] = 0 %></td>
-            <td><%= @last_day_vnd_sum_by_day["Outcome"] || @last_day_vnd_sum_by_day["Outcome"] = 0 %></td>     
-            <td><%= (@last_day_vnd_sum_by_day["Income"] - @last_day_vnd_sum_by_day["Outcome"] )%></td>
+            <td><%= @last_day_vnd_sum_by_day["Expense"] || @last_day_vnd_sum_by_day["Expense"] = 0 %></td>     
+            <td><%= (@last_day_vnd_sum_by_day["Income"] - @last_day_vnd_sum_by_day["Expense"] )%></td>
           <% end %>
         </tr>
       <% end %>

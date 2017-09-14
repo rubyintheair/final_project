@@ -7,9 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 if Purpose.count == 0 
-  @all_purposes = ["Housing", "Utilities", "Food", "Clothing", "Medical/Healthcare", "Donations/Gifts", 
-  "Savings and Insurance", "Entertainment and Recreation", "Beauty", "Travel", "Education", "Kids",
-  "Transportation", "Personal/Debt Payments/Misc"]
+  @all_purposes = ["Housing","Food", "Clothing", "Medical/Healthcare", 
+  "Savings and Insurance", "Entertainment", "Beauty", "Travel", "Education", "Kids",
+  "Transportation"]
   @all_purposes.each do |purpose|
     purpose = Purpose.create(purpose_name: purpose)
     if purpose.persisted?

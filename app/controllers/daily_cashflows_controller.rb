@@ -215,14 +215,14 @@ class DailyCashflowsController < ApplicationController
       
 
       @last_day_vnd_income_purpose = current_user.cashflow_by_day_purpose(@last_day, "VND", "Income")
-      @last_day_vnd_outcome_purpose = current_user.cashflow_by_day_purpose(@last_day, "VND", "Outcome")
+      @last_day_vnd_outcome_purpose = current_user.cashflow_by_day_purpose(@last_day, "VND", "Expense")
       @last_day_usd_income_purpose = current_user.cashflow_by_day_purpose(@last_day, "USD", "Income")
-      @last_day_usd_outcome_purpose = current_user.cashflow_by_day_purpose(@last_day, "USD", "Outcome")
+      @last_day_usd_outcome_purpose = current_user.cashflow_by_day_purpose(@last_day, "USD", "Expense")
       
       @this_week_vnd_income_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", "Income").group_by_day(:occur_at).sum(:amount)
-      @this_week_vnd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", "Outcome").group_by_day(:occur_at).sum(:amount)
+      @this_week_vnd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", "Expense").group_by_day(:occur_at).sum(:amount)
       @this_week_usd_income_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "USD", "Income").group_by_day(:occur_at).sum(:amount)
-      @this_week_usd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "USD", "Outcome").group_by_day(:occur_at).sum(:amount)
+      @this_week_usd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "USD", "Expense").group_by_day(:occur_at).sum(:amount)
   
       # current_user.daily_cashflows.where("occur_at >= ? AND occur_at <= ?", Date.today.beginning_of_week, Date.today).where(currency: "VND").where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount)
     else 
@@ -245,7 +245,7 @@ class DailyCashflowsController < ApplicationController
       @last_month_cashflow_vnd = @last_month_cashflow.where(currency: "VND")
       # use for pie chart purpose only
       @last_month_vnd_income_purpose = current_user.cashflow_by_period_purpose(@last_month.beginning_of_month, @last_month.end_of_month, "VND", "Income")
-      @last_month_vnd_outcome_purpose = current_user.cashflow_by_period_purpose(@last_month.beginning_of_month, @last_month.end_of_month, "VND", "Outcome")
+      @last_month_vnd_outcome_purpose = current_user.cashflow_by_period_purpose(@last_month.beginning_of_month, @last_month.end_of_month, "VND", "Expense")
     
   end  
 
@@ -256,7 +256,7 @@ class DailyCashflowsController < ApplicationController
     @last_year_cashflows_vnd = @last_year_cashflows.where(currency: "VND")
 
     @last_year_vnd_income_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_year, @last_day.end_of_year, "VND", "Income")
-    @last_year_vnd_outcome_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_month, @last_day.end_of_month, "VND", "Outcome")
+    @last_year_vnd_outcome_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_month, @last_day.end_of_month, "VND", "Expense")
   end 
 
   def all_report

@@ -2,14 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// body.daily_cashflows.new {
-//   background-image: url("http://static1.squarespace.com/static/529932aae4b09eb8019084ca/t/54c13b7ee4b04b34af22a62e/1421949832431/coffee+table+flat+lay"); 
-//   height: 100vh;
-//   background-position: center;
-//   background-repeat: no-repeat;
-//   background-attachment: fixed;
-//   background-size: cover;
-// }
+body.daily_cashflows.new {
+  background-image: url("http://static1.squarespace.com/static/529932aae4b09eb8019084ca/t/54c13b7ee4b04b34af22a62e/1421949832431/coffee+table+flat+lay"); 
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
 
 // body.daily_cashflows.daily_report {
 //   background:url("http://media.beam.usnews.com/a9/5e/8b8add6c43e7a8fd7d784bb8f437/170103-stock.jpg");
@@ -64,4 +64,12 @@ form#new_daily_cashflow {
 
 .report {
   margin-top: 30px;
+}
+
+.income {
+  background-color: #CFF9E3;
+}
+
+.expense {
+  background-color: #FFF0EF;
 }

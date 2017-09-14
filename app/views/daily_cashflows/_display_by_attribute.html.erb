@@ -1,7 +1,7 @@
 <table class="table is-bordered is-striped is-fullwidth">
   <thead>
     <tr>
-    <% ["Amount", "Description", "Currency", "Occur at", "Cashflow_type", "Purpose"].each do |e| %>
+    <% ["Currency", "Description", "Amount", "Occur at", "Type", "Purpose"].each do |e| %>
       <th><%= e %></th>
     <% end %>
     </tr>
@@ -9,12 +9,12 @@
   <tbody>
     <% cashflows.each do |transaction, index| %>
       <tr>
-        <td><%= transaction.amount %></td>
-        <td><%= transaction.content %></td>
-        <td><%= transaction.currency %></td>
-        <td><%= transaction.occur_at %></td>
-        <td><%= transaction.cashflow_type %></td>
-        <td><%= transaction.purpose.purpose_name %></td>
+        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.currency %></td>
+        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.content %></td>
+        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.amount %></td>
+        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.occur_at.to_date %></td>
+        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.cashflow_type %></td>
+        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.purpose.purpose_name %></td>
       </tr>
     <% end %>
   </tbody>

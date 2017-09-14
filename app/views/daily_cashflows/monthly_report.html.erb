@@ -3,13 +3,13 @@
   <div class="title", style="text-align: center">Report from <%= @last_month.beginning_of_month %> to <%= @last_month.end_of_month %></div>
   <div class="columns">
     <div class="column">
-      <%= render "pie_chart", chart:  @last_month_cashflow_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Outcome by month" %>
+      <%= render "pie_chart", chart:  @last_month_cashflow_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Expense by month" %>
     </div>
     <div class="column">
       <%= render "pie_chart", chart:  @last_month_vnd_income_purpose, title: "Income by purpose" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @last_month_vnd_outcome_purpose, title: "Outcome by purpose" %>
+      <%= render "pie_chart", chart:  @last_month_vnd_outcome_purpose, title: "Expense by purpose" %>
     </div>
   </div>
 
@@ -19,7 +19,7 @@
       <%= render "line_chart", chart: @last_month_cashflow_vnd.where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount), title: "Sum income by day" %>
     </div>
     <div class="column">
-      <%= render "line_chart", chart: @last_month_cashflow_vnd.where(cashflow_type: "Outcome").group_by_day(:occur_at).sum(:amount), title: "Sum outcome by day" %>
+      <%= render "line_chart", chart: @last_month_cashflow_vnd.where(cashflow_type: "Expense").group_by_day(:occur_at).sum(:amount), title: "Sum expense by day" %>
     </div>
   </div>
 
