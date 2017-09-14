@@ -1,7 +1,7 @@
 
 <div class="daily-report report">
 <% if current_user.daily_cashflows.count >= 1 %>
-  <div class="title">This is the report for <%= @last_day %></div>
+  <div class="title report-title", style="text-align: center">Report for <%= @last_day %></div>
   <div class="columns">
     <div class="column is-4">
       <%= render "pie_chart", {chart: @last_day_cashflows_vnd, title: "Income VS outcome" }%>
@@ -20,16 +20,16 @@
   
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", chart: @this_week_vnd_income_cashflows, title: "Income in VND currency of this week" %>
+      <%= render "line_chart", chart: @this_week_vnd_income_cashflows, title: "Weekly Income" %>
     </div>
 
     <div class="column">
-      <%= render "line_chart", chart: @this_week_vnd_outcome_cashflows, title: "Outcome in VND currency of this week" %>
+      <%= render "line_chart", chart: @this_week_vnd_outcome_cashflows, title: "Weekly Outcome" %>
     </div>
   </div>  
   <br>
   <br>
-  <div class="title">Display all transactions </div>
+  <div class="title report-title">Display all transactions </div>
   <%= render "display_by_attribute", {cashflows:@last_day_cashflows, total:  0, incomes:  0, outcomes:  0 }%>
 
   <table class="table is-bordered is-striped">

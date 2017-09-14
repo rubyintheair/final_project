@@ -1,5 +1,6 @@
 
 <div class="monthly-report report">
+  <div class="title", style="text-align: center">Report from <%= @last_month.beginning_of_month %> to <%= @last_month.end_of_month %></div>
   <div class="columns">
     <div class="column">
       <%= render "pie_chart", chart:  @last_month_cashflow_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Outcome by month" %>
