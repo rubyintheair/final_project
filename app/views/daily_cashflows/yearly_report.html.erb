@@ -1,7 +1,15 @@
-<h1>This is yearly report page</h1>
-
 
 <div class="monthly-report report">
+  <div class="report-summary">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-title">
+        </div>
+      </div>
+      <div class="card-content">
+      </div>
+    </div>
+  </div>
   <div class="columns">
     <div class="column">
       <%= render "pie_chart", chart:  @last_year_cashflows_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Outcome by month" %>

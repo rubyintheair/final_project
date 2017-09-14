@@ -1,6 +1,7 @@
 
 <div class="daily-report report">
 <% if current_user.daily_cashflows.count >= 1 %>
+  <div class="title">This is the report for <%= @last_day %></div>
   <div class="columns">
     <div class="column is-4">
       <%= render "pie_chart", {chart: @last_day_cashflows_vnd, title: "Income VS outcome" }%>
@@ -19,25 +20,11 @@
   
   <div class="columns">
     <div class="column">
-      <div class="card">
-        <div class="card-header" style="margin-bottom: 15px">
-          <div class="card-header-title">
-            Income in VND currency of this week
-          </div>
-        </div>
-        <%= line_chart @this_week_vnd_income_cashflows, width: "550px", height: "300px" %>
-      </div>
+      <%= render "line_chart", chart: @this_week_vnd_income_cashflows, title: "Income in VND currency of this week" %>
     </div>
 
     <div class="column">
-      <div class="card">
-        <div class="card-header" style="margin-bottom: 15px">
-          <div class="card-header-title">
-            Outcome in VND currency of this week
-          </div>
-        </div>
-        <%= line_chart @this_week_vnd_outcome_cashflows, colors: ["pink", "#999"], width: "500px", height: "300px" %>
-      </div>
+      <%= render "line_chart", chart: @this_week_vnd_outcome_cashflows, title: "Outcome in VND currency of this week" %>
     </div>
   </div>  
   <br>

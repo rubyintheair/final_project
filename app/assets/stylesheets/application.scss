@@ -49,20 +49,20 @@
   margin-top: 40px;
 }
 
-.card-header {
-    background-color:  $firstcolor;
-    // border: 0.1px solid #19324d;
-    .card-header-title {
-        color: white;
-        font-family: "Helvetica";
-    }
-    
-}
+
 
 .card {
     // border: 0.1px solid #005580;
     border: hidden;
     opacity: 0.9;
+    .card-header {
+    background-color:  $firstcolor;
+    // border: 0.1px solid #19324d;
+        .card-header-title {
+            color: white;
+            font-family: "Helvetica";
+        }   
+    }
 }
 
 .table{

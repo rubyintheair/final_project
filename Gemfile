@@ -34,6 +34,7 @@ gem "chartkick"
 gem 'groupdate'
 gem 'hightop'
 gem "font-awesome-rails"
+gem 'bootstrap-datepicker-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

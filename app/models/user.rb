@@ -16,7 +16,6 @@ class User < ApplicationRecord
   end 
 
   def sum_by_between_general(from, to, currency, cashflow_type)
-    cashflow_by_between_general(from, to, currency, cashflow_type).sum(:amount)
     daily_cashflows.between(from, to).where(currency: currency).where(cashflow_type: cashflow_type)
   end 
 
@@ -35,11 +34,15 @@ class User < ApplicationRecord
   end
 
   def last_date
-    daily_cashflows.pluck(:occur_at).max.to_date
+    if daily_cashflows.pluck(:occur_at).max
+      daily_cashflows.pluck(:occur_at).max.to_date
+    end
   end 
 
   def last_date_cashflows
-    daily_cashflows.on_day(last_date)
+    if last_date
+      daily_cashflows.on_day(last_date)
+    end 
   end 
 
   def period_cashflows(from, to)
