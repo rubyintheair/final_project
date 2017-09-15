@@ -205,7 +205,7 @@ class DailyCashflowsController < ApplicationController
     # 7. list as file excel xong
 
     if current_user.last_date 
-      @last_day = current_user.last_date
+      @last_day = Date.today
       @last_day_cashflows = current_user.last_date_cashflows.where(currency: "VND")
       @last_day_cashflows_vnd = current_user.cashflow_by_day(@last_day, "VND")
       @last_day_cashflows_usd = current_user.cashflow_by_day(@last_day, "USD")
