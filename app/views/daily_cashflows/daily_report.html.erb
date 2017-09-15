@@ -4,7 +4,7 @@
   <div class="title report-title", style="text-align: center">Report for <%= @last_day %></div>
   <div class="columns">
     <div class="column is-4">
-      <%= render "pie_chart", {chart: @last_day_cashflows_vnd, title: "Income VS outcome" }%>
+      <%= render "pie_chart", {chart: @last_day_cashflows_vnd, title: "Income VS Expense" }%>
     </div>
 
     <div class="column is-4">
@@ -12,7 +12,7 @@
     </div>
 
     <div class="column is-4">
-      <%= render "pie_chart", {chart: @last_day_vnd_outcome_purpose, title: "Outcome based on purpose" }%>
+      <%= render "pie_chart", {chart: @last_day_vnd_outcome_purpose, title: "Expense based on purpose" }%>
     </div>
   </div>
 

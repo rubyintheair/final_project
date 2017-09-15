@@ -2,7 +2,7 @@ class DailyCashflowsController < ApplicationController
   before_action :authenticate_user!
   
   def new
-    @daily_cash_flow = current_user.daily_cashflows.build(occur_at: Time.now)
+    @daily_cash_flow = current_user.daily_cashflows.build(occur_at: Date.today)
   end
 
   def create 
@@ -204,7 +204,7 @@ class DailyCashflowsController < ApplicationController
     # 6. Line 1.week.ago income/outcome usd xong
     # 7. list as file excel xong
 
-    if  current_user.last_date 
+    if current_user.last_date 
       @last_day = current_user.last_date
       @last_day_cashflows = current_user.last_date_cashflows.where(currency: "VND")
       @last_day_cashflows_vnd = current_user.cashflow_by_day(@last_day, "VND")
@@ -223,7 +223,7 @@ class DailyCashflowsController < ApplicationController
       @this_week_vnd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", "Expense").group_by_day(:occur_at).sum(:amount)
       @this_week_usd_income_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "USD", "Income").group_by_day(:occur_at).sum(:amount)
       @this_week_usd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "USD", "Expense").group_by_day(:occur_at).sum(:amount)
-  
+      # raise
       # current_user.daily_cashflows.where("occur_at >= ? AND occur_at <= ?", Date.today.beginning_of_week, Date.today).where(currency: "VND").where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount)
     else 
       flash[:error] = "You don't have any transaction to report! Let's make one"
@@ -239,6 +239,7 @@ class DailyCashflowsController < ApplicationController
 
   def monthly_report
     #Trong monthly report, Quy muon co gi?
+    if current_user.last_date 
       @last_day = current_user.last_date
       @last_month = @last_day.last_month
       @last_month_cashflow = current_user.period_cashflows(@last_month.beginning_of_month, @last_month.end_of_month)
@@ -246,17 +247,25 @@ class DailyCashflowsController < ApplicationController
       # use for pie chart purpose only
       @last_month_vnd_income_purpose = current_user.cashflow_by_period_purpose(@last_month.beginning_of_month, @last_month.end_of_month, "VND", "Income")
       @last_month_vnd_outcome_purpose = current_user.cashflow_by_period_purpose(@last_month.beginning_of_month, @last_month.end_of_month, "VND", "Expense")
-    
+    else 
+      flash[:error] = "You don't have any transaction to report! Let's make one"
+      redirect_to new_daily_cashflow_path
+    end 
   end  
 
   def yearly_report
-    @last_day = current_user.last_date
-    @last_year = @last_day.year
-    @last_year_cashflows = current_user.period_cashflows(@last_day.beginning_of_year, @last_day.end_of_year)
-    @last_year_cashflows_vnd = @last_year_cashflows.where(currency: "VND")
+    if current_user.last_date 
+      @last_day = current_user.last_date
+      @last_year = @last_day.year
+      @last_year_cashflows = current_user.period_cashflows(@last_day.beginning_of_year, @last_day.end_of_year)
+      @last_year_cashflows_vnd = @last_year_cashflows.where(currency: "VND")
 
-    @last_year_vnd_income_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_year, @last_day.end_of_year, "VND", "Income")
-    @last_year_vnd_outcome_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_month, @last_day.end_of_month, "VND", "Expense")
+      @last_year_vnd_income_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_year, @last_day.end_of_year, "VND", "Income")
+      @last_year_vnd_outcome_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_year, @last_day.end_of_year, "VND", "Expense")
+    else 
+      flash[:error] = "You don't have any transaction to report! Let's make one"
+      redirect_to new_daily_cashflow_path
+    end
   end 
 
   def all_report

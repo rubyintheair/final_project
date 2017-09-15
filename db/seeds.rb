@@ -37,6 +37,17 @@ user = User.first
   )
 end 
 
+5.times do 
+  user.daily_cashflows.create(
+    amount: rand(1..500) * 1000,
+    occur_at: Faker::Time.between(Date.today.beginning_of_week, Date.today.end_of_week),
+    content: Faker::Simpsons.quote,
+    purpose_id: rand(0..Purpose.count),
+    cashflow_type: DailyCashflow::CASHFLOW_TYPES.sample,
+    currency: DailyCashflow::CURRENCIES.sample 
+  )
+end 
+
 
 5.times do 
   user.daily_cashflows.create(
@@ -45,12 +56,12 @@ end
     content: Faker::Simpsons.quote,
     purpose_id: rand(0..Purpose.count),
     cashflow_type: DailyCashflow::CASHFLOW_TYPES.sample,
-    currency: "USD"
+    currency: "VND"
   )
 end 
 
 
-5.times do 
+3.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
     occur_at: Date.today,
@@ -62,7 +73,7 @@ end
 end 
 
 
-5.times do 
+10.times do 
   user.daily_cashflows.create(
     amount: rand(1..500) * 1000,
     occur_at: Faker::Date.between(1.year.ago, 2.days.ago),
@@ -72,6 +83,44 @@ end
     currency: "VND" 
   )
 end 
+
+# user_2 = User.create(name: "Quy Nguyen 2", email: "quy.nguyenngoctp2@gmail.com", password: "heo1010") if User.count >= 1
+
+ 
+
+# 10.times do 
+#   user_2.daily_cashflows.create(
+#     amount: rand(1..500) * 1000,
+#     occur_at: Faker::Time.between(1.year.ago, 2.days.ago),
+#     content: Faker::Simpsons.quote,
+#     purpose_id: rand(0..Purpose.count),
+#     cashflow_type: DailyCashflow::CASHFLOW_TYPES.sample,
+#     currency: DailyCashflow::CURRENCIES.sample 
+#   )
+# end 
+
+
+# 10.times do 
+#   user_2.daily_cashflows.create(
+#     amount: rand(1..500) * 1000,
+#     occur_at: Date.today,
+#     content: Faker::Simpsons.quote,
+#     purpose_id: rand(0..Purpose.count),
+#     cashflow_type: DailyCashflow::CASHFLOW_TYPES.sample,
+#     currency: "VND"
+#   )
+# end 
+
+# 10.times do 
+#   user_2.daily_cashflows.create(
+#     amount: rand(1..500) * 1000,
+#     occur_at: Faker::Date.between(1.year.ago, 2.days.ago),
+#     content: Faker::Simpsons.quote,
+#     purpose_id: rand(0..Purpose.count),
+#     cashflow_type: DailyCashflow::CASHFLOW_TYPES.sample,
+#     currency: "VND" 
+#   )
+# end 
 
 
 

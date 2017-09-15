@@ -2,6 +2,15 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+body.users.new {
+  background-image: url("https://blog.trafalgar.com/wp-content/uploads/2016/07/SmartphoneTravel_iStock_TARIK-KIZILKAYA_www.istockphoto.jpg"); 
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
 .sign-up-form{
   margin-top: 20px;
   padding-bottom: 10px;
