@@ -12,7 +12,7 @@
         <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.currency %></td>
         <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.content %></td>
         <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.amount %></td>
-        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.occur_at.to_date %></td>
+        <td class=<%= transaction.cashflow_type.downcase %> style="width: 125px"><%= transaction.occur_at.to_date %></td>
         <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.cashflow_type %></td>
         <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.purpose.purpose_name %></td>
       </tr>
