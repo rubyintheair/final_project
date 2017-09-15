@@ -37,10 +37,14 @@
           </div>
           <div class="navbar-end">
             <div class="navbar-item">
-              <%= link_to "+", new_daily_cashflow_path(type: "Income") %>
+              <%= link_to new_daily_cashflow_path(type: "Income", date: params[:date]), class: "button is-outlined is-info" do %>
+                <%= icon("plus-circle", "Income") %>
+              <% end %>
             </div>
             <div class="navbar-item">
-              <%= link_to "-", new_daily_cashflow_path(type: "Expense") %>
+              <%= link_to new_daily_cashflow_path(type: "Expense"), class: "button is-outlined is-info" do %>
+                <%= icon("minus-circle", "Expense") %>
+              <% end %> 
             </div>
             <div class="navbar-item">
               <%= link_to "Logout",logout_path %>

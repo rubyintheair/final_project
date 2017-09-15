@@ -1,7 +1,21 @@
 
 <div class="daily-report report">
 <% if current_user.daily_cashflows.count >= 1 %>
-  <div class="title report-title", style="text-align: center">Report for <%= @last_day %></div>
+  <div class="title report-title", style="text-align: center">
+    <div class="level">
+      <div class="level-item">
+        <% day_before = @last_day - 1.day %>
+        <%= link_to icon("arrow-left"), url_for(date: day_before) %>
+      </div>
+      <div class="level-item">
+        <%= @last_day %>
+      </div>
+      <div class="level-item"></div>
+        <% day_after = @last_day + 1.day %>
+        <%= link_to icon("arrow-right"), url_for(date: day_after) %>
+      </div>
+    </div>
+  </div>
   <div class="columns">
     <div class="column is-4">
       <%= render "pie_chart", {chart: @last_day_cashflows_vnd, title: "Income VS Expense" }%>

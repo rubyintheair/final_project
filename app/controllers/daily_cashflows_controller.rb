@@ -2,7 +2,12 @@ class DailyCashflowsController < ApplicationController
   before_action :authenticate_user!
   
   def new
-    @daily_cash_flow = current_user.daily_cashflows.build(occur_at: Date.today)
+    @daily_cash_flow = current_user.daily_cashflows.build
+    if params[:date]
+      @daily_cash_flow.occur_at = Date.parse(params[:date])
+    else 
+      @daily_cash_flow.occur_at = Date.today
+    end 
   end
 
   def create 
@@ -203,9 +208,14 @@ class DailyCashflowsController < ApplicationController
     # 5. Line 1.week.ago income/outcome vnd xong 
     # 6. Line 1.week.ago income/outcome usd xong
     # 7. list as file excel xong
+    
 
     if current_user.last_date 
-      @last_day = Date.today
+      if params[:date]
+        @last_day = Date.parse params[:date]
+      else 
+        @last_day = Date.today
+      end 
       @last_day_cashflows = current_user.last_date_cashflows.where(currency: "VND")
       @last_day_cashflows_vnd = current_user.cashflow_by_day(@last_day, "VND")
       @last_day_cashflows_usd = current_user.cashflow_by_day(@last_day, "USD")
