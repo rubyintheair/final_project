@@ -3,15 +3,15 @@
   <div class="title", style="text-align: center">
     <div class="level">
       <div class="level-item">
-        <% month_before = @last_month - 1.month %>
-        <%= link_to icon("arrow-left"), url_for(date: month_before) %>
+        <% month_before = @last_day.month - 1.month %>
+        <%= link_to icon("arrow-left"), url_for(month: month_before) %>
       </div>
       <div class="level-item">
-        <%= @last_month %>
+        <%= @last_day.month %>
       </div>
       <div class="level-item"></div>
-        <% month_after = @last_day + 1.month %>
-        <%= link_to icon("arrow-right"), url_for(date: month_after) %>
+        <% month_after = @last_day.month + 1.month %>
+        <%= link_to icon("arrow-right"), url_for(month: month_after) %>
       </div>
     </div>
   </div>

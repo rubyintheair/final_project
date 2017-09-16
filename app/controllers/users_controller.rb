@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       flash[:success] = "User created"
       redirect_to new_daily_cashflow_path(type: "Income")
     else 
-      flash[:error] = "Can not create user"
+      flash[:error] = "Can not create user beacuse #{@user.errors.full_messages.to_sentence}"
       redirect_to new_user_path
     end 
   end 

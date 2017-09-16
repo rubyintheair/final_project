@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   validates :name, :email, presence: true, uniqueness: true
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   has_secure_password
   has_many :daily_cashflows, dependent: :destroy
-  
+
   def cashflow_by_day(date, currency)
     daily_cashflows.on_day(date).where(currency: currency).group(:cashflow_type).sum(:amount)
   end
