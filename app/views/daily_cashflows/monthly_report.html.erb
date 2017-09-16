@@ -1,6 +1,20 @@
 
 <div class="monthly-report report">
-  <div class="title", style="text-align: center">Report from <%= @last_month.beginning_of_month %> to <%= @last_month.end_of_month %></div>
+  <div class="title", style="text-align: center">
+    <div class="level">
+      <div class="level-item">
+        <% month_before = @last_month - 1.month %>
+        <%= link_to icon("arrow-left"), url_for(date: month_before) %>
+      </div>
+      <div class="level-item">
+        <%= @last_month %>
+      </div>
+      <div class="level-item"></div>
+        <% month_after = @last_day + 1.month %>
+        <%= link_to icon("arrow-right"), url_for(date: month_after) %>
+      </div>
+    </div>
+  </div>
   <div class="columns">
     <div class="column">
       <%= render "pie_chart", chart:  @last_month_cashflow_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Expense by month" %>
