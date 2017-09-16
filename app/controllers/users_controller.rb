@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     if @user.save 
       login(@user)
       flash[:success] = "User created"
-      redirect_to new_daily_cashflow_path
+      redirect_to new_daily_cashflow_path(type: "Income")
     else 
       flash[:error] = "Can not create user"
       redirect_to new_user_path

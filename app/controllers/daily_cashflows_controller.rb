@@ -14,7 +14,7 @@ class DailyCashflowsController < ApplicationController
     @daily_cash_flow = current_user.daily_cashflows.build(daily_cashflow_params)
     if @daily_cash_flow.save 
       flash[:success] = "Create Daily Cashflow without friend successfully"
-      redirect_to daily_report_path(type: "Income")
+      redirect_to daily_report_path
     else 
       flash[:error] = "Fail to create a daily Cashflow #{@daily_cash_flow.errors.full_messages.to_sentence}"
       redirect_to new_daily_cashflow_path 
