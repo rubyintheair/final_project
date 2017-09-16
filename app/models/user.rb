@@ -8,6 +8,10 @@ class User < ApplicationRecord
     daily_cashflows.on_day(date).where(currency: currency).group(:cashflow_type).sum(:amount)
   end
 
+  def cashflows_by_day_and_currency(date, currency)
+    daily_cashflows.on_day(date).where(currency: currency)
+  end
+
   def cashflow_by_between(from, to, currency, cashflow_type)
     daily_cashflows.between(from, to).where(currency: currency).where(cashflow_type: cashflow_type).group_by_day(:occur_at).count
   end 

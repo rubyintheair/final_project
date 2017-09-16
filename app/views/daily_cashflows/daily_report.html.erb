@@ -22,11 +22,11 @@
     </div>
 
     <div class="column is-4">
-      <%= render "pie_chart", {chart: @last_day_vnd_income_purpose, title: "Income based on purpose" }%>
+      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash["VND"]["Income"], title: "Income based on purpose" }%>
     </div>
 
     <div class="column is-4">
-      <%= render "pie_chart", {chart: @last_day_vnd_outcome_purpose, title: "Expense based on purpose" }%>
+      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash["VND"]["Expense"], title: "Expense based on purpose" }%>
     </div>
   </div>
 
@@ -34,17 +34,17 @@
   
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", chart: @this_week_vnd_income_cashflows, title: "Weekly Income" %>
+      <%= render "line_chart", chart: @sum_by_period_hash["VND"]["Income"], title: "Weekly Income" %>
     </div>
 
     <div class="column">
-      <%= render "line_chart", chart: @this_week_vnd_outcome_cashflows, title: "Weekly Expense" %>
+      <%= render "line_chart", chart: @sum_by_period_hash["VND"]["Expense"], title: "Weekly Expense" %>
     </div>
   </div>  
   <br>
   <br>
   <div class="title report-title">Display all transactions </div>
-  <%= render "display_by_attribute", {cashflows:@last_day_cashflows, total:  0, incomes:  0, outcomes:  0 }%>
+  <%= render "display_by_attribute", {cashflows: @cashflows_by_day_and_currency, total:  0, incomes:  0, outcomes:  0 }%>
 
   <table class="table is-bordered is-striped">
     <thead>
@@ -60,9 +60,9 @@
         <tr>
           <td><%= currency %></td>
           <% if index == 0 %>
-            <td><%= @last_day_vnd_sum_by_day["Income"] || @last_day_vnd_sum_by_day["Income"] = 0 %></td>
-            <td><%= @last_day_vnd_sum_by_day["Expense"] || @last_day_vnd_sum_by_day["Expense"] = 0 %></td>     
-            <td><%= (@last_day_vnd_sum_by_day["Income"] - @last_day_vnd_sum_by_day["Expense"] )%></td>
+            <td><%= @sum_by_day_hash["VND"]["Income"] || @sum_by_day_hash["VND"]["Income"] = 0 %></td>
+            <td><%= @sum_by_day_hash["VND"]["Expense"] || @sum_by_day_hash["VND"]["Expense"] = 0 %></td>     
+            <td><%= (@sum_by_day_hash["VND"]["Income"] - @sum_by_day_hash["VND"]["Expense"] )%></td>
           <% end %>
         </tr>
       <% end %>

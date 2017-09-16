@@ -60,15 +60,6 @@ class DailyCashflowsController < ApplicationController
   end 
 
   def daily_report
-    #Daily report se co gi?
-    # 1. Pie daily income, outcome vnd xong
-    # 2. Pie daily income, outcome usd 
-    # 3. Pie donut daily purpose income/outcome vnd xong  
-    # 4. Pie donut daily purpose income/outcome usd xong
-    # 5. Line 1.week.ago income/outcome vnd xong 
-    # 6. Line 1.week.ago income/outcome usd xong
-    # 7. list as file excel xong
-    
 
     if current_user.last_date 
       if params[:date]
@@ -77,11 +68,10 @@ class DailyCashflowsController < ApplicationController
         @last_day = Date.today
       end 
 
-
-
       @currency = params[:currency] || "VND"
       @currencies = ["USD", "VND"]
       @cashflows_by_currency = current_user.cashflow_by_day(@last_day, @currency)
+      @cashflows_by_day_and_currency = current_user.cashflows_by_day_and_currency(@last_day, @currency)
 
       @cashflows_hash = {}
       @currencies.each do |currency|
@@ -93,23 +83,22 @@ class DailyCashflowsController < ApplicationController
         @sum_by_day_hash[currency] = current_user.sum_by_day(@last_day, currency)
       end 
 
-      @last_day_cashflows = current_user.last_date_cashflows.where(currency: "VND")
-      @last_day_cashflows_vnd = current_user.cashflow_by_day(@last_day, "VND")
-      @last_day_cashflows_usd = current_user.cashflow_by_day(@last_day, "USD")
+      @sum_by_day_and_purpose_hash = {}
+      @currencies.each do |currency|
+        @sum_by_day_and_purpose_hash[currency] = {}
+        ["Income", "Expense"].each do |type|
+          @sum_by_day_and_purpose_hash[currency][type] = current_user.cashflow_by_day_purpose(@last_day, currency, type)
+        end 
+      end 
 
-      @last_day_vnd_sum_by_day = current_user.sum_by_day(@last_day, "VND")
-      @last_day_usd_sum_by_day = current_user.sum_by_day(@last_day, "USD")
+      @sum_by_period_hash = {}
+      @currencies.each do |currency|
+        @sum_by_period_hash[currency] = {}
+        ["Income", "Expense"].each do |type|
+          @sum_by_period_hash[currency][type] = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, currency, type).group_by_day(:occur_at).sum(:amount)
+        end 
+      end 
       
-
-      @last_day_vnd_income_purpose = current_user.cashflow_by_day_purpose(@last_day, "VND", "Income")
-      @last_day_vnd_outcome_purpose = current_user.cashflow_by_day_purpose(@last_day, "VND", "Expense")
-      @last_day_usd_income_purpose = current_user.cashflow_by_day_purpose(@last_day, "USD", "Income")
-      @last_day_usd_outcome_purpose = current_user.cashflow_by_day_purpose(@last_day, "USD", "Expense")
-      
-      @this_week_vnd_income_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", "Income").group_by_day(:occur_at).sum(:amount)
-      @this_week_vnd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", "Expense").group_by_day(:occur_at).sum(:amount)
-      @this_week_usd_income_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "USD", "Income").group_by_day(:occur_at).sum(:amount)
-      @this_week_usd_outcome_cashflows = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "USD", "Expense").group_by_day(:occur_at).sum(:amount)
       # raise
       # current_user.daily_cashflows.where("occur_at >= ? AND occur_at <= ?", Date.today.beginning_of_week, Date.today).where(currency: "VND").where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount)
     else 
