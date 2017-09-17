@@ -3,15 +3,17 @@
   <div class="title", style="text-align: center">
     <div class="level">
       <div class="level-item">
-        <% month_before = @last_day.month - 1.month %>
-        <%= link_to icon("arrow-left"), url_for(month: month_before) %>
+        <% day_before = @last_day %>
+        <% month_before = day_before.month %>
+        <%= link_to icon("arrow-left"), url_for(date_before: day_before) %>
       </div>
       <div class="level-item">
         <%= @last_day.month %>
       </div>
       <div class="level-item"></div>
-        <% month_after = @last_day.month + 1.month %>
-        <%= link_to icon("arrow-right"), url_for(month: month_after) %>
+        <% day_after = @last_day %>
+        <% month_after = day_after.month %>
+        <%= link_to icon("arrow-right"), url_for(date_after: day_after) %>
       </div>
     </div>
   </div>
@@ -30,10 +32,10 @@
   
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", chart: @last_month_cashflow_vnd.where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount), title: "Sum income by day" %>
+      <%= render "line_chart", chart: @purpose_multiline_chart, title: "Purpose by day" %>
     </div>
     <div class="column">
-      <%= render "line_chart", chart: @last_month_cashflow_vnd.where(cashflow_type: "Expense").group_by_day(:occur_at).sum(:amount), title: "Sum expense by day" %>
+      <%= render "line_chart", chart: @cashflow_type_multiline_chart, title: "Cashflow Type by day" %>
     </div>
   </div>
 
@@ -41,3 +43,5 @@
   <%= render "display_by_attribute", cashflows: @last_month_cashflow %>
 
 </div>
+
+

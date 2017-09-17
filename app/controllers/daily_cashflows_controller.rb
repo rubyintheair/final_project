@@ -124,17 +124,26 @@ class DailyCashflowsController < ApplicationController
   def monthly_report
     #Trong monthly report, Quy muon co gi?
     if current_user.last_date 
-      if params[:date]
-        @last_day = Date.parse params[:date]
+      if params[:date_before]
+        @last_day = Date.parse(params[:date_before]).last_month
+      elsif params[:date_after]
+        @last_day = Date.parse(params[:date_after]).next_month
       else 
         @last_day = Date.today
       end 
-      @last_month = @last_day.month
       @last_month_cashflow = current_user.period_cashflows(@last_day.beginning_of_month, @last_day.end_of_month)
       @last_month_cashflow_vnd = @last_month_cashflow.where(currency: "VND")
       # use for pie chart purpose only
       @last_month_vnd_income_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_month, @last_day.end_of_month, "VND", "Income")
       @last_month_vnd_outcome_purpose = current_user.cashflow_by_period_purpose(@last_day.beginning_of_month, @last_day.end_of_month, "VND", "Expense")
+      #use for multiline chart
+      @purpose_multiline_chart = Purpose.all.map { |purpose|
+          {name: purpose.purpose_name, data: purpose.daily_cashflows.between(@last_day.beginning_of_month, @last_day.end_of_month).group_by_day(:occur_at).sum(:amount)}
+      }
+      @cashflow_type_multiline_chart = DailyCashflow::CASHFLOW_TYPES.map {|type| 
+          {name: type, data: current_user.sum_by_between_general(@last_day.beginning_of_month, @last_day.end_of_month, "VND", type).group_by_day(:occur_at).sum(:amount)}
+      }
+    
   else 
       flash[:error] = "You don't have any transaction to report! Let's make one"
       redirect_to new_daily_cashflow_path
