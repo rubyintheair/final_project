@@ -1,29 +1,44 @@
 
 <div class="monthly-report report">
   <div class="title", style="text-align: center">
-    Report for <%= @last_year %>
+    <div class="level">
+      <div class="level-item">
+        <% day_before = @last_day %>
+        <%= link_to icon("arrow-left"), url_for(date_before: day_before) %>
+      </div>
+      <div class="level-item">
+        <%= @last_day.year %>
+      </div>
+      <div class="level-item"></div>
+        <% day_after = @last_day %>
+        <%= link_to icon("arrow-right"), url_for(date_after: day_after) %>
+      </div>
+    </div>
   </div>
   <div class="columns">
     <div class="column">
-      <%= render "pie_chart", chart:  @last_year_cashflows_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Expense by year" %>
+      <%= render "pie_chart", chart:  @last_year_cashflows.where(currency: "VND").group(:cashflow_type).sum(:amount), title: "Income VS Expense by year" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @last_year_vnd_income_purpose, title: "Income by purpose" %>
+      <%= render "pie_chart", chart:  @sum_by_month_and_purpose_hash["VND"]["Income"], title: "Income by purpose" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @last_year_vnd_outcome_purpose, title: "Expense by purpose" %>
+      <%= render "pie_chart", chart:  @sum_by_month_and_purpose_hash["VND"]["Expense"], title: "Expense by purpose" %>
     </div>
   </div>
 
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", chart: @last_year_cashflows_vnd.where(cashflow_type: "Income").group_by_month(:occur_at).sum(:amount), title: "Sum income by month" %>
+      <%= render "line_chart", chart:  @purpose_multiline_chart_hash["VND"], title: "Purpose by year" %>
     </div>
     <div class="column ">
-      <%= render "line_chart", chart: @last_year_cashflows_vnd.where(cashflow_type: "Expense").group_by_month(:occur_at).sum(:amount), title: "Sum expense by month" %>
+      <%= render "line_chart", chart: @cashflow_type_multiline_chart_hash["VND"], title: "Cashflow Type by year" %>
     </div>
   </div>
 
   <%= render "display_by_attribute", cashflows: @last_year_cashflows %>
   
 </div>
+
+
+

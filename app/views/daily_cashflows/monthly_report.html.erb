@@ -19,13 +19,13 @@
   </div>
   <div class="columns">
     <div class="column">
-      <%= render "pie_chart", chart:  @last_month_cashflow_vnd.group(:cashflow_type).sum(:amount), title: "Income VS Expense by month" %>
+      <%= render "pie_chart", chart:   @last_month_cashflow.where(currency: "VND").group(:cashflow_type).sum(:amount), title: "Income VS Expense by month" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @last_month_vnd_income_purpose, title: "Income by purpose" %>
+      <%= render "pie_chart", chart:  @sum_by_day_and_purpose_hash["VND"]["Income"], title: "Income by purpose" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @last_month_vnd_outcome_purpose, title: "Expense by purpose" %>
+      <%= render "pie_chart", chart:  @sum_by_day_and_purpose_hash["VND"]["Expense"], title: "Expense by purpose" %>
     </div>
   </div>
 
