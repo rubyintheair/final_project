@@ -83,6 +83,7 @@ class DailyCashflowsController < ApplicationController
         @sum_by_day_hash[currency] = current_user.sum_by_day(@last_day, currency)
       end 
 
+      #sum for purpose pie chart
       @sum_by_day_and_purpose_hash = {}
       @currencies.each do |currency|
         @sum_by_day_and_purpose_hash[currency] = {}
@@ -91,6 +92,7 @@ class DailyCashflowsController < ApplicationController
         end 
       end 
 
+      #use for weekly report
       @sum_by_period_hash = {}
       @currencies.each do |currency|
         @sum_by_period_hash[currency] = {}
@@ -98,12 +100,23 @@ class DailyCashflowsController < ApplicationController
           @sum_by_period_hash[currency][type] = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, currency, type).group_by_day(:occur_at).sum(:amount)
         end 
       end 
+
+      #use for multi line chart
+      @purpose_multiline_chart = Purpose.all.map { |purpose|
+          {name: purpose.purpose_name, data: purpose.daily_cashflows.between(@last_day.beginning_of_week, @last_day).group_by_day(:occur_at).sum(:amount)}
+      }
+
+      @cashflow_type_multiline_chart = DailyCashflow::CASHFLOW_TYPES.map { |type|
+          {name: type, data: current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", type).group_by_day(:occur_at).sum(:amount)}
+      }
+
       
+
       # raise
       # current_user.daily_cashflows.where("occur_at >= ? AND occur_at <= ?", Date.today.beginning_of_week, Date.today).where(currency: "VND").where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount)
     else 
       flash[:error] = "You don't have any transaction to report! Let's make one"
-      redirect_to new_daily_cashflow_path
+      redirect_to new_daily_cashflow_path(type: "Income")
     end 
   end 
 

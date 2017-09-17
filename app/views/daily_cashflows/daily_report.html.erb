@@ -34,11 +34,11 @@
   
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", chart: @sum_by_period_hash["VND"]["Income"], title: "Weekly Income" %>
+      <%= render "line_chart", {chart: @purpose_multiline_chart, title: "Purpose Weekly Report"}%>
     </div>
 
     <div class="column">
-      <%= render "line_chart", chart: @sum_by_period_hash["VND"]["Expense"], title: "Weekly Expense" %>
+      <%= render "line_chart", {chart: @cashflow_type_multiline_chart, title: "Income/Expense Weekly Report"} %>
     </div>
   </div>  
   <br>
@@ -70,6 +70,10 @@
   </table>
 <% end %>
 </div>
+
+
+
+
 
 
 
