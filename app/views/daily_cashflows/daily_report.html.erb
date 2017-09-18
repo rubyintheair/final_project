@@ -34,15 +34,17 @@
   
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", {chart: @purpose_multiline_chart, title: "Purpose Weekly Report"}%>
+      <%= render "line_chart", {chart: @purpose_multiline_chart_hash["VND"]["Income"], title: "Income Purpose Weekly Report"}%>
     </div>
 
     <div class="column">
-      <%= render "line_chart", {chart: @cashflow_type_multiline_chart, title: "Income/Expense Weekly Report"} %>
+      <%= render "line_chart", {chart: @purpose_multiline_chart_hash["VND"]["Expense"], title: "Expense Purpose Weekly Report"} %>
     </div>
   </div>  
   <br>
   <br>
+  <%= render "line_chart", {chart: @cashflow_type_multiline_chart_hash["VND"], title: "Income/Expense Weekly Report"} %>
+
   <div class="title report-title">Display all transactions </div>
   <%= render "display_by_attribute", {cashflows: @cashflows_by_day_and_currency, total:  0, incomes:  0, outcomes:  0 }%>
 

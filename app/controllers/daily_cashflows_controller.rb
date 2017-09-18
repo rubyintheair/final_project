@@ -102,13 +102,24 @@ class DailyCashflowsController < ApplicationController
       end 
 
       #use for multi line chart
-      @purpose_multiline_chart = Purpose.all.map { |purpose|
-          {name: purpose.purpose_name, data: purpose.daily_cashflows.between(@last_day.beginning_of_week, @last_day).group_by_day(:occur_at).sum(:amount)}
-      }
-
-      @cashflow_type_multiline_chart = DailyCashflow::CASHFLOW_TYPES.map { |type|
-          {name: type, data: current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, "VND", type).group_by_day(:occur_at).sum(:amount)}
-      }
+      @purpose_multiline_chart_hash = {}
+      @currencies.each do |currency|
+        @purpose_multiline_chart_hash[currency] = {}
+        DailyCashflow::CASHFLOW_TYPES.each do |type|
+          @purpose_multiline_chart_hash[currency][type] = Purpose.all.map { |purpose|
+            {name: purpose.purpose_name, 
+            data: purpose.daily_cashflows.between(@last_day.beginning_of_week, @last_day).where(currency: currency).where(cashflow_type: type).group_by_day(:occur_at).sum(:amount)}
+          }
+        end 
+      end 
+      
+      @cashflow_type_multiline_chart_hash = {}
+      @currencies.each do |currency|
+        @cashflow_type_multiline_chart_hash[currency] = DailyCashflow::CASHFLOW_TYPES.map { |type|
+          { name: type, 
+            data: current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, currency, type).group_by_day(:occur_at).sum(:amount) }
+        }
+      end
 
       
 
@@ -144,12 +155,25 @@ class DailyCashflowsController < ApplicationController
       end 
       
       #use for multiline chart
-      @purpose_multiline_chart = Purpose.all.map { |purpose|
-          {name: purpose.purpose_name, data: purpose.daily_cashflows.between(@last_day.beginning_of_month, @last_day.end_of_month).group_by_day(:occur_at).sum(:amount)}
-      }
-      @cashflow_type_multiline_chart = DailyCashflow::CASHFLOW_TYPES.map {|type| 
-          {name: type, data: current_user.sum_by_between_general(@last_day.beginning_of_month, @last_day.end_of_month, "VND", type).group_by_day(:occur_at).sum(:amount)}
-      }
+      @purpose_multiline_chart_hash = {}
+      @currencies.each do |currency|
+        @purpose_multiline_chart_hash[currency] = {}
+        DailyCashflow::CASHFLOW_TYPES.each do |type|
+          @purpose_multiline_chart_hash[currency][type] = Purpose.all.map do |purpose|
+            {name: purpose.purpose_name, 
+            data: purpose.daily_cashflows.between(@last_day.beginning_of_month, @last_day.end_of_month).where(currency: currency).where(cashflow_type: type).group_by_day(:occur_at).sum(:amount)}
+          end
+      end
+    end 
+
+
+      @cashflow_type_multiline_chart_hash = {}
+      @currencies.each do |currency|
+        @cashflow_type_multiline_chart_hash[currency] = DailyCashflow::CASHFLOW_TYPES.map {|type| 
+          {name: type, data: current_user.sum_by_between_general(@last_day.beginning_of_month, @last_day.end_of_month, currency, type).group_by_day(:occur_at).sum(:amount)}
+        }
+      end 
+      
     
   else 
       flash[:error] = "You don't have any transaction to report! Let's make one"
@@ -174,8 +198,11 @@ class DailyCashflowsController < ApplicationController
       #use for multi line
       @purpose_multiline_chart_hash = {}
       @currencies.each do |currency|
-        @purpose_multiline_chart_hash[currency] = Purpose.all.map do |purpose|
-          {name: purpose.purpose_name, data: purpose.daily_cashflows.between(@last_day.beginning_of_year, @last_day.end_of_year).group_by_month(:occur_at).sum(:amount)}
+        @purpose_multiline_chart_hash[currency] = {}
+        DailyCashflow::CASHFLOW_TYPES.each do |type|
+            @purpose_multiline_chart_hash[currency][type] = Purpose.all.map do |purpose|
+              {name: purpose.purpose_name, data: purpose.daily_cashflows.where(currency: currency).where(cashflow_type: type).between(@last_day.beginning_of_year, @last_day.end_of_year).group_by_month(:occur_at).sum(:amount) }
+            end 
         end 
       end 
 
