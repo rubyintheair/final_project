@@ -41,7 +41,7 @@
   </div>
   <br>
 
-  <%= render "display_by_attribute", cashflows: @last_year_cashflows %>
+  <%= render "display_by_attribute", cashflows: @last_year_cashflows.order(:occur_at) %>
   
 </div>
 

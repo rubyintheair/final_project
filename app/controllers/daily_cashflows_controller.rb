@@ -121,8 +121,6 @@ class DailyCashflowsController < ApplicationController
         }
       end
 
-      
-
       # raise
       # current_user.daily_cashflows.where("occur_at >= ? AND occur_at <= ?", Date.today.beginning_of_week, Date.today).where(currency: "VND").where(cashflow_type: "Income").group_by_day(:occur_at).sum(:amount)
     else 
