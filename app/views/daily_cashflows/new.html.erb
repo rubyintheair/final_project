@@ -15,13 +15,21 @@
           <%= f.text_area :content, placeholder: "Content", class: "input" %>
         </div>
           <%= f.hidden_field :cashflow_type, value: params[:type] %>
+        <label class="label">Purpose: </label>
         <div class="field daily_cashflow_field general-field">
-          <label class="label">Purpose: </label>
-          <div class="control">
-            <div class="select">
-              <%= f.select :purpose_id, options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
+          <%#= f.select :purpose_id, options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
+          <% Purpose.all.each_slice(5).each do |group| %>
+            <div class="field is-horizontal horizontal-field">
+              <div class="control">
+                <% group.each do |purpose| %>
+                <label class="radio purpose-radio" >
+                  <%= icon(purpose.icon_class) %>
+                  <%= f.radio_button :purpose_id, purpose.id %>
+                </label>
+                <% end %>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
         <div class="field daily_cashflow_field general-field">
           <label class="label">Currency: </label>
