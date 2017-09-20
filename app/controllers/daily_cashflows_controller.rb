@@ -175,7 +175,7 @@ class DailyCashflowsController < ApplicationController
     
   else 
       flash[:error] = "You don't have any transaction to report! Let's make one"
-      redirect_to new_daily_cashflow_path
+      redirect_to new_daily_cashflow_path(type: "Income")
     end 
   end  
 
@@ -223,7 +223,7 @@ class DailyCashflowsController < ApplicationController
 
     else 
       flash[:error] = "You don't have any transaction to report! Let's make one"
-      redirect_to new_daily_cashflow_path
+      redirect_to new_daily_cashflow_path(type: "Income")
     end
   end 
 
