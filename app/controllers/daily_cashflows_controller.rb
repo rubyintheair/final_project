@@ -199,7 +199,7 @@ class DailyCashflowsController < ApplicationController
         @purpose_multiline_chart_hash[currency] = {}
         DailyCashflow::CASHFLOW_TYPES.each do |type|
             @purpose_multiline_chart_hash[currency][type] = Purpose.all.map do |purpose|
-              {name: purpose.purpose_name, data: purpose.daily_cashflows.where(currency: currency).where(cashflow_type: type).between(@last_day.beginning_of_year, @last_day.end_of_year).group_by_month(:occur_at).sum(:amount) }
+              {name: purpose.purpose_name, data: purpose.daily_cashflows.where(user_id: current_user.id).where(currency: currency).where(cashflow_type: type).between(@last_day.beginning_of_year, @last_day.end_of_year).group_by_month(:occur_at).sum(:amount) }
             end 
         end 
       end 
