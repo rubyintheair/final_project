@@ -9,16 +9,16 @@ class Purpose < ApplicationRecord
   def icon_class 
     case purpose_name 
     when "Housing" then "home"
-    when "Food" then Dir.chdir("/app/assets/images/if_meet_416384.png")
-    when "Clothing" then 
-    when /Medical/ then 
-    when /Savings/ then 
-    when "Entertainment" then 
-    when "Beauty" then 
-    when "Travel" then 
-    when "Education" then 
-    when "Kids" then 
-    when "Transportation" then 
+    when "Food" then "cutlery"
+    when "Clothing" then "eye"
+    when /Medical/ then "ambulance"
+    when /Savings/ then "money"
+    when "Entertainment" then "coffee"
+    when "Beauty" then "shopping-bag"
+    when "Travel" then "suitcase"
+    when "Education" then "graduation-cap"
+    when "Kids" then "child"
+    when "Transportation" then "car"
     else "question" 
     end 
   end 
