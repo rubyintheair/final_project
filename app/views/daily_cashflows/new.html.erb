@@ -23,8 +23,10 @@
               <div class="control">
                 <% group.each do |purpose| %>
                 <label class="radio purpose-radio" >
-                  <%= icon(purpose.icon_class) %>
-                  <%= f.radio_button :purpose_id, purpose.id %>
+                  <div class="image icon-image">
+                    <%= image_tag(purpose.icon_display)%>
+                    <%= f.radio_button :purpose_id, purpose.id %>
+                  </div>
                 </label>
                 <% end %>
               </div>

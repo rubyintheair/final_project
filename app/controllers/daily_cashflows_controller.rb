@@ -140,7 +140,7 @@ class DailyCashflowsController < ApplicationController
       else 
         @last_day = Date.today
       end 
-      @last_month_cashflow = current_user.period_cashflows(@last_day.beginning_of_month, @last_day.end_of_month)
+      @last_month_cashflow = current_user.period_cashflows(@last_day.beginning_of_month, @last_day.end_of_month).where(currency: "VND")
       
       # use for pie chart purpose 
       @sum_by_day_and_purpose_hash = {}
@@ -190,7 +190,7 @@ class DailyCashflowsController < ApplicationController
       end 
       
       @currencies = ["USD", "VND"]
-      @last_year_cashflows = current_user.period_cashflows(@last_day.beginning_of_year, @last_day.end_of_year)
+      @last_year_cashflows = current_user.period_cashflows(@last_day.beginning_of_year, @last_day.end_of_year).where(currency: "VND")
       
       
       #use for multi line
