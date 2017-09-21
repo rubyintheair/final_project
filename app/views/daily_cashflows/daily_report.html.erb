@@ -2,17 +2,28 @@
 <div class="daily-report report">
 <% if current_user.daily_cashflows.count >= 1 %>
   <div class="title report-title", style="text-align: center">
+    <div>
+      <div class="button is-primary">
+        <%= link_to "VND", url_for(currency: "VND") %>
+      </div>
+      <div class="button is-primary">
+        <%= link_to "USD", url_for(currency: "USD") %>
+      </div>
+      <div class="button is-primary">
+        <%= link_to "EUR", url_for(currency: "EUR") %>
+      </div>
+    </div>
     <div class="level">
       <div class="level-item">
         <% day_before = @last_day - 1.day %>
-        <%= link_to icon("arrow-left"), url_for(date: day_before) %>
+        <%= link_to icon("arrow-left"), url_for(date: day_before, currency: @currency) %>
       </div>
       <div class="level-item">
         <%= @last_day %>
       </div>
       <div class="level-item"></div>
         <% day_after = @last_day + 1.day %>
-        <%= link_to icon("arrow-right"), url_for(date: day_after) %>
+        <%= link_to icon("arrow-right"), url_for(date: day_after, currency: @currency) %>
       </div>
     </div>
   </div>
@@ -22,11 +33,11 @@
     </div>
 
     <div class="column is-4">
-      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash["VND"]["Income"], title: "Income based on purpose" }%>
+      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash[@currency]["Income"], title: "Income based on purpose" }%>
     </div>
 
     <div class="column is-4">
-      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash["VND"]["Expense"], title: "Expense based on purpose" }%>
+      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash[@currency]["Expense"], title: "Expense based on purpose" }%>
     </div>
   </div>
 
@@ -34,16 +45,16 @@
   
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", {chart: @purpose_multiline_chart_hash["VND"]["Income"], title: "Income Purpose Weekly Report"}%>
+      <%= render "line_chart", {chart: @purpose_multiline_chart_hash[@currency]["Income"], title: "Income Purpose Weekly Report"}%>
     </div>
 
     <div class="column">
-      <%= render "line_chart", {chart: @purpose_multiline_chart_hash["VND"]["Expense"], title: "Expense Purpose Weekly Report"} %>
+      <%= render "line_chart", {chart: @purpose_multiline_chart_hash[@currency]["Expense"], title: "Expense Purpose Weekly Report"} %>
     </div>
   </div>  
   <br>
   <br>
-  <%= render "line_chart_for_cashflow_type", {chart: @cashflow_type_multiline_chart_hash["VND"], title: "Income/Expense Weekly Report"} %>
+  <%= render "line_chart_for_cashflow_type", {chart: @cashflow_type_multiline_chart_hash[@currency], title: "Income/Expense Weekly Report"} %>
 
   <div class="title report-title">Display all transactions </div>
   <%= render "display_by_attribute", {cashflows: @cashflows_by_day_and_currency.order(:occur_at), total:  0, incomes:  0, outcomes:  0 }%>

@@ -69,7 +69,7 @@ class DailyCashflowsController < ApplicationController
       end 
 
       @currency = params[:currency] || "VND"
-      @currencies = ["USD", "VND"]
+      @currencies = ["USD", "VND", "EUR"]
       @cashflows_by_currency = current_user.cashflow_by_day(@last_day, @currency)
       @cashflows_by_day_and_currency = current_user.cashflows_by_day_and_currency(@last_day, @currency)
 

@@ -1,6 +1,6 @@
 class DailyCashflow < ApplicationRecord
   CASHFLOW_TYPES = ["Income", "Expense"]
-  CURRENCIES = ["USD", "VND"]
+  CURRENCIES = ["USD", "VND", "EUR"]
   belongs_to :user
   belongs_to :purpose # need a model because there are many of them
   enum cashflow_type: CASHFLOW_TYPES #Quy co the call DailyCashflow.cashflow_types
