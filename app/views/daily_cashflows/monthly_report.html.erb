@@ -38,8 +38,7 @@
   </div>
 
   <br>
-  <%= render "line_chart", chart: @cashflow_type_multiline_chart_hash["VND"], title: "Cashflow Type by day" %>
-
+  <%= render "line_chart_for_cashflow_type", chart: @cashflow_type_multiline_chart_hash["VND"], title: "Cashflow Type by day" %>
   <br>
   <%= render "display_by_attribute", cashflows: @last_month_cashflow.order(:occur_at) %>
 
