@@ -9,7 +9,7 @@
 if Purpose.count == 0 
   @all_purposes = ["Housing","Food", "Clothing", "Medical/Healthcare", 
   "Savings and Insurance", "Entertainment", "Beauty", "Travel", "Education", "Kids",
-  "Transportation"]
+  "Transportation", "Utilities"]
   @all_purposes.each do |purpose|
     purpose = Purpose.create(purpose_name: purpose)
     if purpose.persisted?

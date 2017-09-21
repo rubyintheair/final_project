@@ -4,7 +4,7 @@ class Purpose < ApplicationRecord
 
   @all_purposes = ["Housing","Food", "Clothing", "Medical/Healthcare", 
   "Savings and Insurance", "Entertainment", "Beauty", "Travel", "Education", "Kids",
-  "Transportation"]
+  "Transportation", "Utilities"]
 
   def icon_class 
     case purpose_name 
@@ -36,6 +36,7 @@ class Purpose < ApplicationRecord
     when "Education" then "https://image.flaticon.com/icons/svg/201/201614.svg"
     when "Kids" then "http://icons.iconarchive.com/icons/dapino/baby-boy/256/baby-sucking-icon.png"
     when "Transportation" then "https://png.icons8.com/ground-transportation/office/1600"
+    when "Utilities" then "https://www.iconexperience.com/_img/g_collection_png/standard/512x512/water_tap.png"
     else "http://images1.cafef.vn/Images/Uploaded/DuLieuDownload/logodn/SSI.jpg" 
     end 
   end 

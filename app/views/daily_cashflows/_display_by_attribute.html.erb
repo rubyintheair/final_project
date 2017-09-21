@@ -2,19 +2,30 @@
   <thead>
     <tr>
     <% ["Currency", "Description", "Amount", "Occur at", "Type", "Purpose"].each do |e| %>
-      <th><%= e %></th>
+      <th><div class="is-center-general"><%= e %></div></th>
     <% end %>
     </tr>
   </thead>
   <tbody>
     <% cashflows.each do |transaction, index| %>
       <tr>
-        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.currency %></td>
+        <td class=<%= transaction.cashflow_type.downcase %>>
+          <div class="is-center-table is-center-general">
+            <%= transaction.currency %>
+          </div>
+        </td>
         <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.content %></td>
         <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.amount %></td>
-        <td class=<%= transaction.cashflow_type.downcase %> style="width: 125px"><%= transaction.occur_at.to_date %></td>
+        <td class=<%= transaction.cashflow_type.downcase %> style="width: 125px">
+          <div class="is-center-table is-center-general">
+            <%= transaction.occur_at.to_date %></td>
+          </div>
         <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.cashflow_type %></td>
-        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.purpose.purpose_name %></td>
+        <td class=<%= transaction.cashflow_type.downcase %>>
+          <div class="image icon-image-table is-center-general">
+            <%= image_tag(transaction.purpose.icon_display) %>
+          </div>
+        </td>
       </tr>
     <% end %>
   </tbody>
