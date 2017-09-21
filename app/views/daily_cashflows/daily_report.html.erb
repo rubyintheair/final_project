@@ -43,7 +43,7 @@
   </div>  
   <br>
   <br>
-  <%= render "line_chart", {chart: @cashflow_type_multiline_chart_hash["VND"], title: "Income/Expense Weekly Report"} %>
+  <%= render "line_chart_for_cashflow_type", {chart: @cashflow_type_multiline_chart_hash["VND"], title: "Income/Expense Weekly Report"} %>
 
   <div class="title report-title">Display all transactions </div>
   <%= render "display_by_attribute", {cashflows: @cashflows_by_day_and_currency.order(:occur_at), total:  0, incomes:  0, outcomes:  0 }%>
