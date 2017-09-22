@@ -1,43 +1,54 @@
 
 <div class="monthly-report report">
   <div class="title report-title", style="text-align: center">
+    <div>
+      <div class="button is-primary">
+        <%= link_to "VND", url_for(currency: "VND") %>
+      </div>
+      <div class="button is-primary">
+        <%= link_to "USD", url_for(currency: "USD") %>
+      </div>
+      <div class="button is-primary">
+        <%= link_to "EUR", url_for(currency: "EUR") %>
+      </div>
+    </div>
     <div class="level">
       <div class="level-item">
         <% day_before = @last_day %>
-        <%= link_to icon("arrow-left"), url_for(date_before: day_before) %>
+        <%= link_to icon("arrow-left"), url_for(date_before: day_before, currency: @currency) %>
       </div>
       <div class="level-item">
         <%= @last_day.year %>
       </div>
       <div class="level-item"></div>
         <% day_after = @last_day %>
-        <%= link_to icon("arrow-right"), url_for(date_after: day_after) %>
+        <%= link_to icon("arrow-right"), url_for(date_after: day_after, currency: @currency) %>
       </div>
     </div>
   </div>
   <div class="columns">
     <div class="column">
-      <%= render "pie_chart", chart:  @last_year_cashflows.where(currency: "VND").group(:cashflow_type).sum(:amount), title: "Income VS Expense by year" %>
+      <%= render "pie_chart", chart:  @last_year_cashflows.where(currency: @currency).group(:cashflow_type).sum(:amount), title: "Income VS Expense by year" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @sum_by_month_and_purpose_hash["VND"]["Income"], title: "Income by purpose" %>
+      <%= render "pie_chart", chart:  @sum_by_month_and_purpose_hash[@currency]["Income"], title: "Income by purpose" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @sum_by_month_and_purpose_hash["VND"]["Expense"], title: "Expense by purpose" %>
+      <%= render "pie_chart", chart:  @sum_by_month_and_purpose_hash[@currency]["Expense"], title: "Expense by purpose" %>
     </div>
   </div>
 
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", chart:  @purpose_multiline_chart_hash["VND"]["Income"], title: "Purpose Income by year" %>
+      <%= render "line_chart", chart:  @purpose_multiline_chart_hash[@currency]["Income"], title: "Purpose Income by year" %>
     </div>
     <div class="column">
-      <%= render "line_chart", chart:  @purpose_multiline_chart_hash["VND"]["Expense"], title: "Purpose Expense by year" %>
+      <%= render "line_chart", chart:  @purpose_multiline_chart_hash[@currency]["Expense"], title: "Purpose Expense by year" %>
     </div>
   </div>
   
   <div>
-    <%= render "line_chart_for_cashflow_type", chart: @cashflow_type_multiline_chart_hash["VND"], title: "Cashflow Type by year" %>
+    <%= render "line_chart_for_cashflow_type", chart: @cashflow_type_multiline_chart_hash[@currency], title: "Cashflow Type by year" %>
   </div>
   <br>
 

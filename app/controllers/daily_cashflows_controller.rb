@@ -69,23 +69,22 @@ class DailyCashflowsController < ApplicationController
       end 
 
       @currency = params[:currency] || "VND"
-      @currencies = ["USD", "VND", "EUR"]
       @cashflows_by_currency = current_user.cashflow_by_day(@last_day, @currency)
       @cashflows_by_day_and_currency = current_user.cashflows_by_day_and_currency(@last_day, @currency)
 
       @cashflows_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @cashflows_hash[currency] = current_user.cashflow_by_day(@last_day, currency)
       end 
 
       @sum_by_day_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @sum_by_day_hash[currency] = current_user.sum_by_day(@last_day, currency)
       end 
 
       #sum for purpose pie chart
       @sum_by_day_and_purpose_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @sum_by_day_and_purpose_hash[currency] = {}
         DailyCashflow::CASHFLOW_TYPES.each do |type|
           @sum_by_day_and_purpose_hash[currency][type] = current_user.cashflow_by_day_purpose(@last_day, currency, type)
@@ -94,7 +93,7 @@ class DailyCashflowsController < ApplicationController
 
       #use for weekly report
       @sum_by_period_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @sum_by_period_hash[currency] = {}
         DailyCashflow::CASHFLOW_TYPES.each do |type|
           @sum_by_period_hash[currency][type] = current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, currency, type).group_by_day(:occur_at).sum(:amount)
@@ -103,7 +102,7 @@ class DailyCashflowsController < ApplicationController
 
       #use for multi line chart
       @purpose_multiline_chart_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @purpose_multiline_chart_hash[currency] = {}
         DailyCashflow::CASHFLOW_TYPES.each do |type|
           @purpose_multiline_chart_hash[currency][type] = Purpose.all.map { |purpose|
@@ -114,7 +113,7 @@ class DailyCashflowsController < ApplicationController
       end 
       
       @cashflow_type_multiline_chart_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @cashflow_type_multiline_chart_hash[currency] = DailyCashflow::CASHFLOW_TYPES.map { |type|
           { name: type, 
             data: current_user.sum_by_between_general(@last_day.beginning_of_week, @last_day, currency, type).group_by_day(:occur_at).sum(:amount) }
@@ -140,12 +139,13 @@ class DailyCashflowsController < ApplicationController
       else 
         @last_day = Date.today
       end 
-      @last_month_cashflow = current_user.period_cashflows(@last_day.beginning_of_month, @last_day.end_of_month).where(currency: "VND")
+      @currency = params[:currency] || "VND"
+
+      @last_month_cashflow = current_user.period_cashflows(@last_day.beginning_of_month, @last_day.end_of_month).where(currency: @currency)
       
       # use for pie chart purpose 
       @sum_by_day_and_purpose_hash = {}
-      @currencies = ["USD", "VND"]
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @sum_by_day_and_purpose_hash[currency] = {}
         DailyCashflow::CASHFLOW_TYPES.each do |type|
           @sum_by_day_and_purpose_hash[currency][type] = current_user.cashflow_by_period_purpose(@last_day.beginning_of_month, @last_day.end_of_month, currency, type)
@@ -154,7 +154,7 @@ class DailyCashflowsController < ApplicationController
       
       #use for multiline chart
       @purpose_multiline_chart_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @purpose_multiline_chart_hash[currency] = {}
         DailyCashflow::CASHFLOW_TYPES.each do |type|
           @purpose_multiline_chart_hash[currency][type] = Purpose.all.map do |purpose|
@@ -166,7 +166,7 @@ class DailyCashflowsController < ApplicationController
 
 
       @cashflow_type_multiline_chart_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @cashflow_type_multiline_chart_hash[currency] = DailyCashflow::CASHFLOW_TYPES.map {|type| 
           {name: type, data: current_user.sum_by_between_general(@last_day.beginning_of_month, @last_day.end_of_month, currency, type).group_by_day(:occur_at).sum(:amount)}
         }
@@ -188,14 +188,13 @@ class DailyCashflowsController < ApplicationController
       else 
         @last_day = Date.today
       end 
-      
-      @currencies = ["USD", "VND"]
-      @last_year_cashflows = current_user.period_cashflows(@last_day.beginning_of_year, @last_day.end_of_year).where(currency: "VND")
+      @currency = params[:currency] || "VND"
+      @last_year_cashflows = current_user.period_cashflows(@last_day.beginning_of_year, @last_day.end_of_year).where(currency: @currency)
       
       
       #use for multi line
       @purpose_multiline_chart_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @purpose_multiline_chart_hash[currency] = {}
         DailyCashflow::CASHFLOW_TYPES.each do |type|
             @purpose_multiline_chart_hash[currency][type] = Purpose.all.map do |purpose|
@@ -205,7 +204,7 @@ class DailyCashflowsController < ApplicationController
       end 
 
       @cashflow_type_multiline_chart_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @cashflow_type_multiline_chart_hash[currency] = DailyCashflow::CASHFLOW_TYPES.map {|type| 
           {name: type, data: current_user.sum_by_between_general(@last_day.beginning_of_year, @last_day.end_of_year, currency, type).group_by_month(:occur_at).sum(:amount)}
         }
@@ -214,7 +213,7 @@ class DailyCashflowsController < ApplicationController
 
       #use for pie chart purpose
       @sum_by_month_and_purpose_hash = {}
-      @currencies.each do |currency|
+      DailyCashflow::CURRENCIES.each do |currency|
         @sum_by_month_and_purpose_hash[currency] = {}
         DailyCashflow::CASHFLOW_TYPES.each do |type|
           @sum_by_month_and_purpose_hash[currency][type] = current_user.cashflow_by_period_purpose(@last_day.beginning_of_year, @last_day.end_of_year, currency, type)

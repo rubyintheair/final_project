@@ -1,44 +1,55 @@
 
 <div class="monthly-report report">
   <div class="title report-title", style="text-align: center">
+    <div>
+      <div class="button is-primary">
+        <%= link_to "VND", url_for(currency: "VND") %>
+      </div>
+      <div class="button is-primary">
+        <%= link_to "USD", url_for(currency: "USD") %>
+      </div>
+      <div class="button is-primary">
+        <%= link_to "EUR", url_for(currency: "EUR") %>
+      </div>
+    </div>
     <div class="level">
       <div class="level-item">
         <% day_before = @last_day %>
-        <%= link_to icon("arrow-left"), url_for(date_before: day_before) %>
+        <%= link_to icon("arrow-left"), url_for(date_before: day_before, currency: @currency) %>
       </div>
       <div class="level-item">
         <%= @last_day.month %> - <%= @last_day.year %>
       </div>
       <div class="level-item"></div>
         <% day_after = @last_day %>
-        <%= link_to icon("arrow-right"), url_for(date_after: day_after) %>
+        <%= link_to icon("arrow-right"), url_for(date_after: day_after, currency: @currency) %>
       </div>
     </div>
   </div>
   <div class="columns">
     <div class="column">
-      <%= render "pie_chart", chart:   @last_month_cashflow.where(currency: "VND").group(:cashflow_type).sum(:amount), title: "Income VS Expense by month" %>
+      <%= render "pie_chart", chart:   @last_month_cashflow.where(currency: @currency).group(:cashflow_type).sum(:amount), title: "Income VS Expense by month" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @sum_by_day_and_purpose_hash["VND"]["Income"], title: "Income by purpose" %>
+      <%= render "pie_chart", chart:  @sum_by_day_and_purpose_hash[@currency]["Income"], title: "Income by purpose" %>
     </div>
     <div class="column">
-      <%= render "pie_chart", chart:  @sum_by_day_and_purpose_hash["VND"]["Expense"], title: "Expense by purpose" %>
+      <%= render "pie_chart", chart:  @sum_by_day_and_purpose_hash[@currency]["Expense"], title: "Expense by purpose" %>
     </div>
   </div>
 
   
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", chart: @purpose_multiline_chart_hash["VND"]["Income"], title: "Income Purpose by day" %>
+      <%= render "line_chart", chart: @purpose_multiline_chart_hash[@currency]["Income"], title: "Income Purpose by day" %>
     </div>
     <div class="column">
-      <%= render "line_chart", chart: @purpose_multiline_chart_hash["VND"]["Expense"], title: "Expense Purpose by day" %>
+      <%= render "line_chart", chart: @purpose_multiline_chart_hash[@currency]["Expense"], title: "Expense Purpose by day" %>
     </div>
   </div>
 
   <br>
-  <%= render "line_chart_for_cashflow_type", chart: @cashflow_type_multiline_chart_hash["VND"], title: "Cashflow Type by day" %>
+  <%= render "line_chart_for_cashflow_type", chart: @cashflow_type_multiline_chart_hash[@currency], title: "Cashflow Type by day" %>
   <br>
   <%= render "display_by_attribute", cashflows: @last_month_cashflow.order(:occur_at) %>
 
