@@ -27,7 +27,10 @@
 }
 
 .button.is-primary {
-    background-color: lighten($firstcolor, 10%);
+    background-color: lighten($firstcolor, 15%);
+    a {
+        color: white;
+    }
 }
 
 .navbar {

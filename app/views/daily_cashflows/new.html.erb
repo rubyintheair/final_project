@@ -1,12 +1,19 @@
 <div class="columns is-centered daily_cashflow_form">
-  <div class="column is-4">
+  <div class="column is-6">
     <div class="card">
       <div class="card-header">
         <div class="card-header-title">Create new <%= params[:type] %> transaction</div>
       </div>
       <%= form_for @daily_cash_flow do |f| %>
-        <div class="field daily_cashflow_field general-field">
-          <%= f.number_field :amount, placeholder: "Amount", class: "input" %>
+        <div class="field daily_cashflow_field general-field has-addons">
+          <div class="control">
+            <span class="select">
+              <%= f.select(:currency, DailyCashflow::CURRENCIES.map {|currency| currency.titleize.upcase }) %>
+            </span>
+          </div>
+          <div class="control is-expanded">
+            <%= f.number_field :amount, placeholder: "Amount", class: "input" %>
+          </div>
         </div>
         <div class="field daily_cashflow_field general-field">
           <%= f.datetime_field :occur_at, class: "input" %>
@@ -15,10 +22,10 @@
           <%= f.text_area :content, placeholder: "Content", class: "input" %>
         </div>
           <%= f.hidden_field :cashflow_type, value: params[:type] %>
-        <label class="label">Purpose: </label>
+        <label class="label">Category: </label>
         <div class="field daily_cashflow_field general-field">
           <%#= f.select :purpose_id, options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
-          <% Purpose.all.each_slice(5).each do |group| %>
+          <% Purpose.all.each_slice(7).each do |group| %>
             <div class="field is-horizontal horizontal-field">
               <div class="control">
                 <% group.each do |purpose| %>
@@ -32,14 +39,6 @@
               </div>
             </div>
           <% end %>
-        </div>
-        <div class="field daily_cashflow_field general-field">
-          <label class="label">Currency: </label>
-          <div class="control">
-            <div class="select">
-              <%= f.select(:currency, DailyCashflow.currencies.keys.map {|currency| [currency.titleize.upcase, currency]}) %>
-            </div>
-          </div>
         </div>
         <div class="column is-centered" style="display: flex; align-items:center; justify-content: center">
         <%= f.submit "Submit", class: "button is-primary" %>
