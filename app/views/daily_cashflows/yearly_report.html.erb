@@ -18,7 +18,7 @@
         <%= link_to icon("arrow-left"), url_for(date_before: day_before, currency: @currency) %>
       </div>
       <div class="level-item">
-        <%= @last_day.year %>
+        <%= @last_day.year %>( <%= @currency %> )
       </div>
       <div class="level-item"></div>
         <% day_after = @last_day %>
@@ -51,7 +51,8 @@
     <%= render "line_chart_for_cashflow_type", chart: @cashflow_type_multiline_chart_hash[@currency], title: "Cashflow Type by year" %>
   </div>
   <br>
-
+  <br>
+  <div class="title report-title">Display all transactions </div>
   <%= render "display_by_attribute", cashflows: @last_year_cashflows.order(:occur_at) %>
   
 </div>

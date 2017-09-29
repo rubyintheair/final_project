@@ -19,7 +19,7 @@
         <%= link_to icon("arrow-left"), url_for(date: day_before, currency: @currency) %>
       </div>
       <div class="level-item">
-        <%= @last_day %>
+        <%= @last_day %>( <%= @currency %> )
       </div>
       <div class="level-item"></div>
         <% day_after = @last_day + 1.day %>
@@ -33,11 +33,11 @@
     </div>
 
     <div class="column is-4">
-      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash[@currency]["Income"], title: "Income based on purpose" }%>
+      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash[@currency]["Income"], title: "Income by purpose" }%>
     </div>
 
     <div class="column is-4">
-      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash[@currency]["Expense"], title: "Expense based on purpose" }%>
+      <%= render "pie_chart", {chart: @sum_by_day_and_purpose_hash[@currency]["Expense"], title: "Expense by purpose" }%>
     </div>
   </div>
 
@@ -45,42 +45,19 @@
   
   <div class="columns">
     <div class="column">
-      <%= render "line_chart", {chart: @purpose_multiline_chart_hash[@currency]["Income"], title: "Income Purpose Weekly Report"}%>
+      <%= render "line_chart", {chart: @purpose_multiline_chart_hash[@currency]["Income"], title: "Income by purpose( Weekly Report )"}%>
     </div>
 
     <div class="column">
-      <%= render "line_chart", {chart: @purpose_multiline_chart_hash[@currency]["Expense"], title: "Expense Purpose Weekly Report"} %>
+      <%= render "line_chart", {chart: @purpose_multiline_chart_hash[@currency]["Expense"], title: "Expense by purpose( Weekly Report )"} %>
     </div>
   </div>  
   <br>
   <br>
-  <%= render "line_chart_for_cashflow_type", {chart: @cashflow_type_multiline_chart_hash[@currency], title: "Income/Expense Weekly Report"} %>
-
+  <%= render "line_chart_for_cashflow_type", {chart: @cashflow_type_multiline_chart_hash[@currency], title: "Income VS Expense( Weekly Report )"} %>
+  <br>
   <div class="title report-title">Display all transactions </div>
   <%= render "display_by_attribute", {cashflows: @cashflows_by_day_and_currency.order(:occur_at), total:  0, incomes:  0, outcomes:  0 }%>
-
-  <table class="table is-bordered is-striped">
-    <thead>
-      <tr>
-        <th>Currency</th>
-        <% ["Income", "Expense", "Income - Expense"].each do |e| %>
-          <th><%= e %></th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% ["VND"].each_with_index do |currency, index| %>
-        <tr>
-          <td><%= currency %></td>
-          <% if index == 0 %>
-            <td><%= @sum_by_day_hash["VND"]["Income"] || @sum_by_day_hash["VND"]["Income"] = 0 %></td>
-            <td><%= @sum_by_day_hash["VND"]["Expense"] || @sum_by_day_hash["VND"]["Expense"] = 0 %></td>     
-            <td><%= (@sum_by_day_hash["VND"]["Income"] - @sum_by_day_hash["VND"]["Expense"] )%></td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
 <% end %>
 </div>
 
