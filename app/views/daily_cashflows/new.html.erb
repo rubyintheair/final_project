@@ -1,5 +1,5 @@
 <div class="columns is-centered daily_cashflow_form">
-  <div class="column is-6">
+  <div class="column is-7">
     <div class="card">
       <div class="card-header">
         <div class="card-header-title">Create new <%= params[:type] %> transaction</div>
@@ -25,16 +25,23 @@
         <label class="label">Category: </label>
         <div class="field daily_cashflow_field general-field">
           <%#= f.select :purpose_id, options_from_collection_for_select(Purpose.all, "id", "purpose_name") %>
-          <% Purpose.all.each_slice(7).each do |group| %>
+          <% Purpose.all.each_slice(6).each do |group| %>
             <div class="field is-horizontal horizontal-field">
               <div class="control">
                 <% group.each do |purpose| %>
-                <label class="radio purpose-radio" >
-                  <div class="image icon-image">
-                    <%= image_tag(purpose.icon_display)%>
-                    <%= f.radio_button :purpose_id, purpose.id %>
-                  </div>
-                </label>
+                  <label class="radio purpose-radio" >
+                    <div class="purpose-display">
+                      <div class="image purpose-image">
+                        <%= image_tag(purpose.icon_display)%>
+                      </div>
+                      <div class="purpose-text">
+                        <%= purpose.purpose_name %>
+                      </div>
+                      <div class="purpose-radio-button">
+                        <%= f.radio_button :purpose_id, purpose.id %>
+                      </div>
+                    </div>
+                  </label>
                 <% end %>
               </div>
             </div>

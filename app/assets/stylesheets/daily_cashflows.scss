@@ -51,15 +51,29 @@ form#new_daily_cashflow {
 }
 
 .purpose-radio {
-  margin: 10px;
+  margin: 0px;
 }
 
-.icon-image{
-  width: 37px;
-  height: 37px;
-  margin-left: 8px;
+.purpose-display {
+  margin-right: 42px;
+  width: 40px;
+  height: 40px;
   background-color: white;
+  font-size: 10px;
+  .purpose-image{
+    margin: auto;
+    width: 35px;
+    height: 35px;
+  }
+  .purpose-text{
+    text-align: center;
+  }
+  .purpose-radio-button{
+    margin-left: 12px;
+  }
 }
+
+
 
 .icon-image-table {
   margin: auto;

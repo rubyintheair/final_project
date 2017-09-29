@@ -14,8 +14,6 @@ Rails.application.routes.draw do
   post "login" => "sessions#create"
   get "logout" => "sessions#destroy"
   get "bank" => "banks#display"
-  get "index_1" => "daily_cashflows#index_1"
-  get "index_2" => "daily_cashflows#index_2"
   get "daily_report" => "daily_cashflows#daily_report"
   get "monthly_report" => "daily_cashflows#monthly_report"
   get "yearly_report" => "daily_cashflows#yearly_report"
