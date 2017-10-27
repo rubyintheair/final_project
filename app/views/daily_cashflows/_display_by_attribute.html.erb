@@ -7,26 +7,28 @@
     </tr>
   </thead>
   <tbody>
-    <% cashflows.each do |transaction, index| %>
-      <tr>
-        <td class=<%= transaction.cashflow_type.downcase %>>
-          <div class="is-center-table is-center-general">
-            <%= transaction.currency %>
-          </div>
-        </td>
-        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.content %></td>
-        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.amount %></td>
-        <td class=<%= transaction.cashflow_type.downcase %> style="width: 125px">
-          <div class="is-center-table is-center-general">
-            <%= transaction.occur_at.to_date %></td>
-          </div>
-        <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.cashflow_type %></td>
-        <td class=<%= transaction.cashflow_type.downcase %>>
-          <div class="image icon-image-table is-center-general">
-            <%= image_tag(transaction.purpose.icon_display) %>
-          </div>
-        </td>
-      </tr>
+    <% if cashflows %>
+      <% cashflows.each do |transaction, index| %>
+        <tr>
+          <td class=<%= transaction.cashflow_type %>>
+            <div class="is-center-table is-center-general">
+              <%= transaction.currency %>
+            </div>
+          </td>
+          <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.content %></td>
+          <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.amount %></td>
+          <td class=<%= transaction.cashflow_type.downcase %> style="width: 125px">
+            <div class="is-center-table is-center-general">
+              <%= transaction.occur_at.to_date %></td>
+            </div>
+          <td class=<%= transaction.cashflow_type.downcase %>><%= transaction.cashflow_type %></td>
+          <td class=<%= transaction.cashflow_type.downcase %>>
+            <div class="image icon-image-table is-center-general">
+              <%= image_tag(transaction.purpose.icon_display) %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

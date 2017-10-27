@@ -5,7 +5,7 @@ class DailyCashflow < ApplicationRecord
   belongs_to :purpose # need a model because there are many of them
   enum cashflow_type: CASHFLOW_TYPES #Quy co the call DailyCashflow.cashflow_types
   enum currency: CURRENCIES
-  validates :amount, :occur_at, :content, presence: true
+  validates :amount, :occur_at, presence: true
   validate :not_longer_than_year_ago?
   
   # before_save :set_purpose_name

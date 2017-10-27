@@ -16,7 +16,7 @@ class DailyCashflowsController < ApplicationController
       flash[:success] = "Create Daily Cashflow successfully"
       redirect_to daily_report_path
     else 
-      flash[:error] = "Fail to create a daily Cashflow #{@daily_cash_flow.errors.full_messages.to_sentence}"
+      flash[:error] = "Fail to create a daily Cashflow. \n#{@daily_cash_flow.errors.full_messages.to_sentence}"
       redirect_to new_daily_cashflow_path 
     end 
   end 
@@ -131,7 +131,7 @@ class DailyCashflowsController < ApplicationController
 
   def monthly_report
     #Trong monthly report, Quy muon co gi?
-    if current_user.last_date 
+    if current_user.last_date
       if params[:date_before]
         @last_day = Date.parse(params[:date_before]).last_month
       elsif params[:date_after]
